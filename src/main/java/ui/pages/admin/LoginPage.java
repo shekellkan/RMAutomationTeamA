@@ -3,7 +3,6 @@ package ui.pages.admin;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
 
@@ -21,19 +20,18 @@ public class LoginPage extends BasePageObject {
     WebElement passwordInput;
 
     @FindBy(xpath = "//button[@type='submit']")
-    WebElement signInBtn;
+    WebElement signInButton;
 
     /**
      * This method is the constructor
      */
     public LoginPage() {
-        PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();
     }
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(signInBtn));
+        wait.until(ExpectedConditions.visibilityOf(signInButton));
     }
 
     /**
@@ -63,7 +61,7 @@ public class LoginPage extends BasePageObject {
      * @return the Main page
      */
     private MainPage clickLoginBtnSuccessful() {
-        signInBtn.click();
+        signInButton.click();
         return new MainPage();
     }
 
