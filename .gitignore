@@ -1,0 +1,7 @@
+# IDE working files
+*.iws
+*.ipr
+*.iml
+.idea/
+target/
+report/
