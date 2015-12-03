@@ -1,5 +1,5 @@
 @Meetings
-Feature: Rooms
+Feature: Meetings
   Background:
     Given I navigate to Tablet page
     And I log on as "awagner" with password "Client123"
