@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 
 /**
  * Created with IntelliJ IDEA.
- * User: jeancarlorodriguez
- * Date: 11/14/15
+ * User: Jean Carlo Rodriguez
+ * Date: 12/03/15
  * Time: 3:42 PM
  * To change this template use File | Settings | File Templates.
  */

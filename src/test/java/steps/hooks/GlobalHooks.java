@@ -9,9 +9,9 @@ import org.openqa.selenium.WebDriver;
 
 /**
  * Created with IntelliJ IDEA.
- * User: jeancarlorodriguez
- * Date: 11/16/15
- * Time: 8:07 PM
+ * User: Jean Carlo Rodriguez
+ * Date: 12/03/15
+ * Time: 10:45: AM
  * To change this template use File | Settings | File Templates.
  */
 public class GlobalHooks {
