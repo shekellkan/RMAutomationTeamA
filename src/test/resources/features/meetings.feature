@@ -1,8 +1,7 @@
 @Meetings
 Feature: Meetings
   Background:
-    Given I navigate to Tablet page
-    And I log on as "awagner" with password "Client123"
+    Given Im logged in with the user "" and password "" in the tablet main page
 
   Scenario Outline: Create meeting
     Given I select the room "FloorRoom10"

@@ -2,7 +2,6 @@ package ui.pages.admin;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
 
@@ -15,7 +14,6 @@ public class MainAdminPage extends BasePageObject {
     WebElement applicationNameLabel;
 
     public MainAdminPage(){
-        PageFactory.initElements(driver, this);
         waitUntilPageObjectIsLoaded();
     }
 

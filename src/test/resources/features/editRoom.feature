@@ -1,8 +1,7 @@
 @Rooms
 Feature: Rooms
   Background:
-    Given I navigate to login page
-    And I login as "awagner" with password "Client123"
+    Given Im logged in with the user "" and password ""
 
   Scenario Outline: Edit a room
     Given I navigate to Conference Rooms tab

@@ -1,11 +1,11 @@
 @Rooms
 Feature: Rooms
   Background:
-    Given I navigate to login page
-    And I login as "awagner" with password "Client123"
+    Given Im logged in with the user "" and password ""
 
 
   Scenario Outline: Place a room to out of order
+    Given I navigate to Conference Rooms tab
     When I navigate to "Floor1Room10" room for edit
       And I navigate the Out of Order Planning Tab
       And I select a option for out of order "<Out Of Order>"
@@ -19,6 +19,7 @@ Feature: Rooms
       | Closed for reparations |
 
   Scenario Outline: Place a room to out of order with invalid date
+    Given I navigate to Conference Rooms tab
     When I navigate to "Floor1Room10" room for edit
       And I navigate the Out of Order Planning Tab
       And I select a option for out of order "<Out Of Order>"
