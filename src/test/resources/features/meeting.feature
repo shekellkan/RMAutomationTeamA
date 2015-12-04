@@ -19,10 +19,17 @@ Feature: Meetings
     Then a error message is displayed
     And the error should be displayed using the API
 
-Scenario: remove a meeting
-  Given I select the room "FloorRoom13"
+  Scenario: remove a meeting
+    Given I select the room "FloorRoom13"
     And I create a meeting with the user "" password "" with the subject "" at the time "","" with the attenders ""
-  When I remove the meeting
-  Then a message confirming the remove is displayed
+    When I remove the meeting
+    Then a message confirming the remove is displayed
     And the meeting is not in the schedule meetings for the room
+
+  Scenario: Create a meeting room with state out of order
+    Given I have a room "" with a state Out Of Order between the hours "" to ""
+    And I select the same room ""
+    And I navigate to available section for create a meeting
+    Given I create a meeting with the user "" password "" with the subject "" at the time "","" with the attenders ""
+    Then a error message is displayed
 
