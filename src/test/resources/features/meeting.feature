@@ -19,9 +19,9 @@ Feature: Meetings
     Then a error message is displayed
     And the error should be displayed using the API
 
-Scenario: remove a meeting
+Scenario: Remove a meeting
   Given I select the room "FloorRoom13"
-    And I create a meeting with the user "" password "" with the subject "" at the time "","" with the attenders ""
+    And I create a meeting with the user "JeanCarlo.Rodriguez" password "Client123" with the subject "Daily scrum meeting" at the time "08:30","09:00" with the attenders "Ariel.Rojas"
   When I remove the meeting
   Then a message confirming the remove is displayed
     And the meeting is not in the schedule meetings for the room
