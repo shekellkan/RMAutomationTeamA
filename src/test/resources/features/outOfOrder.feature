@@ -8,7 +8,7 @@ Feature: Rooms
     Given I navigate to Conference Rooms tab
     When I navigate to "Floor1Room10" room for edit
       And I navigate the Out of Order Planning Tab
-      And I select a option for out of order "<Out Of Order>"
+      And I configure the room with the option out of order "<Out Of Order>"
     Then a information message should be displayed
     And should display an icon on the Out Of Order column
     And the out of order state should be obtained using the API
@@ -22,7 +22,7 @@ Feature: Rooms
     Given I navigate to Conference Rooms tab
     When I navigate to "Floor1Room10" room for edit
       And I navigate the Out of Order Planning Tab
-      And I select a option for out of order "<Out Of Order>"
+      And I configure the room with the option out of order "<Out Of Order>"
       And I place a date with invalid hour range
     Then a error message should be displayed
       And the out of order state should not be obtained using the API
