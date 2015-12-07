@@ -3,7 +3,7 @@ Feature: resource
   Description: create, remove, filter
 
   Background:
-    Given Im logged in with the user "" and password ""
+    Given I'm logged in with the user "test" and password "Client123"
 
   Scenario: create a resource
     Given I go to Resources page
