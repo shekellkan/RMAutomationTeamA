@@ -9,8 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class ConferenceRoomsPage extends MainAdminPage {
 
-    @FindBy(xpath = "//span[contains(text(), 'Filter By Room')]")
-    WebElement filterByRoomLabel;
+    @FindBy(xpath = "//div[@id = 'roomsGrid']")
+    WebElement roomsGridContainer;
 
     /**
      * This method is the constructor
@@ -21,6 +21,6 @@ public class ConferenceRoomsPage extends MainAdminPage {
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(filterByRoomLabel));
+        wait.until(ExpectedConditions.visibilityOf(roomsGridContainer));
     }
 }
