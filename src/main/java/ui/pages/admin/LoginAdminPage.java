@@ -60,7 +60,7 @@ public class LoginAdminPage extends BasePageObject {
      * This method allows press the logIn button having a valid account
      * @return the Main page
      */
-    private MainAdminPage clickLoginBtnSuccessful() {
+    private MainAdminPage clickLoginButtonSuccessful() {
         signInButton.click();
         return new MainAdminPage();
     }
@@ -83,6 +83,6 @@ public class LoginAdminPage extends BasePageObject {
      */
     public MainAdminPage loginSuccessful(String userName, String password) {
         login(userName, password);
-        return clickLoginBtnSuccessful();
+        return clickLoginButtonSuccessful();
     }
 }
