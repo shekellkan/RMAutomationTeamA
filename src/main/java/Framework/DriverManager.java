@@ -18,8 +18,9 @@ public class DriverManager {
     private static DriverManager instance;
     private static WebDriver driver;
     private static WebDriverWait wait;
-
+    private static ExternalVariablesManager externalVariablesManager = ExternalVariablesManager.getInstance();
     final static Logger logger = Logger.getLogger(DriverManager.class);
+    private static JsonReader jsonReader;
 
     protected DriverManager(){
     }
@@ -29,19 +30,29 @@ public class DriverManager {
         if(instance == null)
         {
             instance = new DriverManager();
+            jsonReader = new JsonReader("config.json");
             if(driver == null)
             {
-                //System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-                //driver = new ChromeDriver();
-                driver = new FirefoxDriver();
-                logger.info("initializing the driver");
-                driver.manage().timeouts().implicitlyWait(Integer.parseInt(CommonMethods.readJsonFile("implicitWait")), TimeUnit.SECONDS);
+                String browserName = externalVariablesManager.getBrowserName();
+                if(browserName.equalsIgnoreCase("Firefox"))
+                {
+                    driver = new FirefoxDriver();
+
+                }
+                else if(browserName.equalsIgnoreCase("Chrome"))
+                {
+                    System.setProperty("webdriver.chrome.driver", jsonReader.getKeyFromSingleJson("chrome driver path"));
+                    driver = new ChromeDriver();
+                }
+                logger.info("initializing the web driver: "+ browserName);
+
+                driver.manage().timeouts().implicitlyWait(Integer.parseInt(jsonReader.getKeyFromSingleJson("implicitWait")), TimeUnit.SECONDS);
                 driver.manage().window().maximize();
-                driver.get(CommonMethods.readJsonFile("rootUrl"));
+                driver.get(externalVariablesManager.getAdminURL());
             }
             if(wait == null)
             {
-                wait = new WebDriverWait(driver,Integer.parseInt(CommonMethods.readJsonFile("explicitWait")));
+                wait = new WebDriverWait(driver,Integer.parseInt(jsonReader.getKeyFromSingleJson("explicitWait")));
             }
 
         }

@@ -31,18 +31,4 @@ public class CommonMethods {
                     element, "");
         }
     }
-
-    public static String readJsonFile(String tag) {
-        String workingDir = System.getProperty("user.dir");
-        JSONParser parser = new JSONParser();
-        String value = "";
-        try {
-            Object obj = parser.parse(new FileReader(workingDir+"/config.json"));
-            JSONObject jsonObject = (JSONObject) obj;
-            value = (String) jsonObject.get(tag);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return value;
-    }
 }

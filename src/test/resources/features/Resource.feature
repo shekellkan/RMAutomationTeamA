@@ -8,15 +8,15 @@ Feature: resource
 
   Scenario Outline: create a Resource
     Given I go to Resources page
-    When I create a Resource with values: "<Name>","<Display_Name>" and "<Icon>"
+    When I create a Resource with values: "<Name>","<Display_Name>","<Description>" and "<Icon>"
     Then the Resource is displayed in the list of Resources
     And the Resource should be displayed as a button in the Conference Room page header
     And the Resource should be obtained using the API
   Examples:
-  | Name        |Display_Name| Icon|
-  |Data_display |Data_display|     |
-  |Data_display |Data display|     |
-  |Board1       |Board       |     |
+  | Name        |Display_Name|Description                             | Icon          |
+  |Data_display |Data_display|the name and display name are the same  | fa-eye        |
+  |Data_display |Data display|the name and display name are different | fa-eye-slash  |
+  |Board1       |Board       |the name contains a number              | fa-edit       |
 
 
   Scenario: remove a Resource

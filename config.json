@@ -1,8 +1,6 @@
 {
     "implicitWait" : "10",
     "explicitWait" : "20",
-    "rootUrl":"https://172.20.208.194:4040/admin",
-    "loginUrl" : "https://172.20.208.194:4040/admin/#/login",
-    "mainUrl" : "https://172.20.208.194:4040/admin/#/admin",
+    "chrome driver path" : "src/main/resources/chromedriver.exe",
     "NumberOfTriesForElementDeleted" : "10"
 }

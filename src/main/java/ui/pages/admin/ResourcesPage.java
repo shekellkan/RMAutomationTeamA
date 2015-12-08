@@ -14,6 +14,9 @@ public class ResourcesPage extends MainAdminPage {
     @FindBy(id = "resourcesGrid")
     WebElement resourcesGrid;
 
+    @FindBy(xpath = "//button[@ng-click='addResourceDialog()']")
+    WebElement addButton;
+
     public ResourcesPage()
     {
         waitUntilPageObjectIsLoaded();
@@ -22,5 +25,16 @@ public class ResourcesPage extends MainAdminPage {
     public void waitUntilPageObjectIsLoaded()
     {
         wait.until(ExpectedConditions.visibilityOf(resourcesGrid));
+    }
+
+    public ResourcesPage createResource(String name, String displayName, String description, String icon)
+    {
+
+        return this;
+    }
+
+    public ResourceFormPage goToAddNewResource() {
+        addButton.click();
+        return new ResourceFormPage();
     }
 }
