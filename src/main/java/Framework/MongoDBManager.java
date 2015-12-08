@@ -33,17 +33,4 @@ public class MongoDBManager {
     public void close(){
         mongoClient.close();
     }
-    /**
-     * Example!!!
-    public static void main(String arg[])
-    {
-        MongoDBManager mongo = MongoDBManager.getInstance();
-        MongoCollection<Document> resources = mongo.getCollection("resourcemodels");
-
-        Document firstResource = resources.find(eq("customName","Data")).first();
-        System.out.println("first Resource "+ firstResource.toJson());
-
-        mongo.close();
-    }
-     */
 }
