@@ -24,6 +24,13 @@ public class ResourceModel {
     public void setIconName(String iconName){ this.iconName = iconName; }
     public String getIconName(){return iconName;}
 
+    /**
+     * Fill all the Field in one method
+     * @param name
+     * @param displayName
+     * @param description
+     * @param iconName
+     */
     public void fillAllFields(String name, String displayName, String description, String iconName)
     {
         this.name = name;

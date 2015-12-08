@@ -27,12 +27,10 @@ public class ResourcesPage extends MainAdminPage {
         wait.until(ExpectedConditions.visibilityOf(resourcesGrid));
     }
 
-    public ResourcesPage createResource(String name, String displayName, String description, String icon)
-    {
-
-        return this;
-    }
-
+    /**
+     * click on Add
+     * @return new instance of ResourceFormPage
+     */
     public ResourceFormPage goToAddNewResource() {
         addButton.click();
         return new ResourceFormPage();
