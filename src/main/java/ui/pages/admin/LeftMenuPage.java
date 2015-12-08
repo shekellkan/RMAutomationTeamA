@@ -16,6 +16,9 @@ public class LeftMenuPage extends BasePageObject {
     @FindBy(xpath = "//a[contains(text(), 'Conference Rooms')]")
     WebElement conferenceRoomsTab;
 
+    @FindBy(xpath = "//a[contains(text(), 'Resources')]")
+    WebElement resourceButton;
+
     /**
      * This method is the constructor
      */
@@ -35,5 +38,10 @@ public class LeftMenuPage extends BasePageObject {
     public ConferenceRoomsPage clickConferenceRoomsTab() {
         conferenceRoomsTab.click();
         return new ConferenceRoomsPage();
+    }
+
+    public ResourcesPage goToResources() {
+        resourceButton.click();
+        return new ResourcesPage();
     }
 }
