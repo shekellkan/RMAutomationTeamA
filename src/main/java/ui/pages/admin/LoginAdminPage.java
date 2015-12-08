@@ -9,7 +9,7 @@ import ui.BasePageObject;
 /**
  * Created by Ariel Rojas on 02/12/2015.
  */
-public class LoginPage extends BasePageObject {
+public class LoginAdminPage extends BasePageObject {
 
     @FindBy(xpath = "//input[@id='loginUsername']")
     @CacheLookup
@@ -25,7 +25,7 @@ public class LoginPage extends BasePageObject {
     /**
      * This method is the constructor
      */
-    public LoginPage() {
+    public LoginAdminPage() {
         waitUntilPageObjectIsLoaded();
     }
 
@@ -39,7 +39,7 @@ public class LoginPage extends BasePageObject {
      * @param userName
      * @return the Login page
      */
-    private LoginPage setUserNameInput(String userName) {
+    private LoginAdminPage setUserNameInput(String userName) {
         userNameInput.clear();
         userNameInput.sendKeys(userName);
         return this;
@@ -50,7 +50,7 @@ public class LoginPage extends BasePageObject {
      * @param password
      * @return the Login page
      */
-    private LoginPage setPasswordInput(String password) {
+    private LoginAdminPage setPasswordInput(String password) {
         passwordInput.clear();
         passwordInput.sendKeys(password);
         return this;
@@ -60,9 +60,9 @@ public class LoginPage extends BasePageObject {
      * This method allows press the logIn button having a valid account
      * @return the Main page
      */
-    private MainPage clickLoginBtnSuccessful() {
+    private MainAdminPage clickLoginButtonSuccessful() {
         signInButton.click();
-        return new MainPage();
+        return new MainAdminPage();
     }
 
     /**
@@ -81,8 +81,8 @@ public class LoginPage extends BasePageObject {
      * @param password
      * @return
      */
-    public MainPage loginSuccessful(String userName, String password) {
+    public MainAdminPage loginSuccessful(String userName, String password) {
         login(userName, password);
-        return clickLoginBtnSuccessful();
+        return clickLoginButtonSuccessful();
     }
 }
