@@ -16,5 +16,4 @@ public class LoginAdmin {
         loginAdminPage.loginSuccessful(user, password);
 
     }
-
 }
