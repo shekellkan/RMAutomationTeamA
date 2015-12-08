@@ -1,9 +1,9 @@
 package ui.common;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,7 +16,7 @@ import org.json.simple.parser.ParseException;
 public class JsonReader {
 
     private JSONObject jsonObjectMain;
-    public String filePath = "C:\\Users\\ArielWagner\\Downloads\\Fase4\\RMAutomationTeamA\\src\\main\\resources\\Environments.json";
+    public String filePath = new File("src/main/resources/Environments.json").getAbsolutePath();
     final static Logger logger = Logger.getLogger(JsonReader.class);
 
     public JsonReader() {
