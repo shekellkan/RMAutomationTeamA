@@ -5,7 +5,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
-import ui.common.CommonMethods;
 
 /**
  * Created with IntelliJ IDEA.
