@@ -1,0 +1,67 @@
+{
+  "Environments": [
+    {
+      "id": "RM1",
+      "admin URL": "https://172.20.208.194:4040/admin",
+      "tablet URL": "https://172.20.208.194:4040/tablet",
+      "room manager service": "https://172.20.208.194:4040/",
+      "admin user": {
+        "name": "test",
+        "password": "Client123"
+      },
+      "tablet user": {
+        "name": "test",
+        "password": "Client123"
+      },
+      "exchange user": {
+        "name": "JeanCarlo.Rodriguez",
+        "password": "Client123"
+      },
+      "API ": {
+        "server": ""
+      }
+    },
+    {
+      "id": "RM2",
+      "admin URL": "https://172.20.208.250:4040/admin",
+      "tablet URL": "https://172.20.208.250:4040/tablet",
+      "room manager service": "https://172.20.208.250:4040/",
+      "admin user": {
+        "name": "test",
+        "password": "Client123"
+      },
+      "tablet user": {
+        "name": "test",
+        "password": "Client123"
+      },
+      "exchange user": {
+        "name": "miguel.terceros",
+        "password": "Client123"
+      },
+      "API ": {
+        "server": ""
+      }
+    },
+    {
+      "id": "RM3",
+      "admin URL": "https://172.20.208.195:4040/admin",
+      "tablet URL": "https://172.20.208.195:4040/tablet",
+      "room manager service": "https://172.20.208.195:4040/",
+      "admin user": {
+        "name": "awagner",
+        "password": "Client123"
+      },
+      "tablet user": {
+        "name": "awagner",
+        "password": "Client123"
+      },
+      "exchange user": {
+        "name": "Ariel.Rojas",
+        "password": "Client123"
+      },
+      "API ": {
+        "server": ""
+      }
+    }
+  ]
+}
