@@ -38,6 +38,11 @@ public class ResourceFormPage extends BasePageObject {
         wait.until(ExpectedConditions.visibilityOf(nameInput));
     }
 
+    /**
+     * Set name of a Resource
+     * @param name
+     * @return
+     */
     public ResourceFormPage setName(String name)
     {
         nameInput.clear();
@@ -45,6 +50,11 @@ public class ResourceFormPage extends BasePageObject {
         return this;
     }
 
+    /**
+     * Set display name of a Resource
+     * @param displayName
+     * @return
+     */
     public ResourceFormPage setDisplayName(String displayName)
     {
         displayNameInput.clear();
@@ -52,6 +62,11 @@ public class ResourceFormPage extends BasePageObject {
         return this;
     }
 
+    /**
+     * Set description of a Resource
+     * @param description
+     * @return
+     */
     public ResourceFormPage setDescription(String description)
     {
         descriptionTextarea.clear();
@@ -59,6 +74,11 @@ public class ResourceFormPage extends BasePageObject {
         return this;
     }
 
+    /**
+     * Set icon of a Resource
+     * @param iconName
+     * @return
+     */
     public ResourceFormPage setIcon(String iconName)
     {
         iconMenuButton.click();
@@ -68,6 +88,14 @@ public class ResourceFormPage extends BasePageObject {
         return this;
     }
 
+    /**
+     * This method set all the field of a resource and click in the button save to create a new resource
+     * @param name
+     * @param displayName
+     * @param description
+     * @param icon
+     * @return
+     */
     public ResourcesPage createAResource(String name, String displayName, String description, String icon) {
         setName(name);
         setDisplayName(displayName);

@@ -4,6 +4,7 @@ import Models.ResourceModel;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.testng.Assert;
 import ui.pages.admin.MainAdminPage;
 import ui.pages.admin.ResourcesPage;
 
@@ -43,6 +44,13 @@ public class Resource {
     @Then("^the Resource is displayed in the list of Resources$")
     public void theResourceIsDisplayedInTheListOfResources()
     {
-        System.out.println("***********************************"+resourceModel.getName());
+        ResourcesPage resourcesPage = new ResourcesPage();
+        String actualName = resourcesPage.getName(resourceModel.getName());
+        String actualDisplayName = resourcesPage.getDisplayName(resourceModel.getName());
+        String actualIconName = resourcesPage.getIconName(resourceModel.getName());
+
+        Assert.assertEquals(actualName,resourceModel.getName());
+        Assert.assertEquals(actualDisplayName,resourceModel.getDisplayName());
+        Assert.assertEquals(actualIconName,"fa "+resourceModel.getIconName());
     }
 }

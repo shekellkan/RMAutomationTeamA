@@ -1,13 +1,9 @@
 package ui.common;
 
 import Framework.DriverManager;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.io.FileReader;
 
 
 /**
