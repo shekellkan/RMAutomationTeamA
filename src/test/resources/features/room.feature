@@ -5,9 +5,9 @@ Feature: Rooms
       And I go to Conference Rooms page
 
   @EditRoom
-  Scenario Outline: Edit a room
+  Scenario Outline: Edit a Room
     When I open to "Floor1Room11" Room for edit
-      And I edit its displayName "<displayName>" ,code "<code>" and capacity "<capacity>"
+      And I edit the displayName "<displayName>" ,code "<code>" and capacity "<capacity>"
     Then a information message should be displayed
       And the Room data should be the edited
       And the Room edited should be obtained using the API
@@ -18,11 +18,11 @@ Feature: Rooms
       | RoomNew     | NR   | 300      |
 
 
-  Scenario Outline: filter the rooms for display name, code and capacity
-    Given I open to "Floor1Room10" room
-    And I edit the displayName "Custom", code "om11" and capacity "400"
+  Scenario Outline: filter the Rooms for display name, code and capacity
+    Given I open to "Floor1Room10" Room for edit
+      And I edit the displayName "Custom" ,code "om11" and capacity "400"
     When I search a Room by "<Criteria>"
-    Then the Room "" should be listed
+      Then the Room or Rooms "" should be listed
     Examples:
       |   Criteria   |
       | Room1        |

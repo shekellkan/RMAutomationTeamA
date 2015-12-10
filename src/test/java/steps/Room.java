@@ -37,10 +37,10 @@ public class Room {
         roomInfoPage = conferenceRoomsPage.selectRoom(displayName);
     }
 
-    @And("^I edit its displayName \"([^\"]*)\" ,code \"([^\"]*)\" and capacity \"([^\"]*)\"$")
+    @And("^I edit the displayName \"([^\"]*)\" ,code \"([^\"]*)\" and capacity \"([^\"]*)\"$")
     public void editDataRoom(String displayName, String code, String capacity) {
         roomInfoPage.editRoom(displayName, code, capacity);
-        roomModel.fillAllFields(displayName, code, capacity);
+        roomModel.setAllFields(displayName, code, capacity);
         conferenceRoomsPage = roomInfoPage.clickSaveRoom();
         roomInfoPage = conferenceRoomsPage.selectRoom(displayName);
     }

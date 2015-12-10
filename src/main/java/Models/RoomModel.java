@@ -34,12 +34,12 @@ public class RoomModel {
     }
 
     /**
-     * Fill all the Field in one method
+     * set all the Field in one method
      * @param displayName
      * @param code
      * @param capacity
      */
-    public void fillAllFields(String displayName, String code, String capacity)
+    public void setAllFields(String displayName, String code, String capacity)
     {
         this.displayName = displayName;
         this.code = code;
