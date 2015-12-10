@@ -12,16 +12,15 @@ import ui.common.CommonMethods;
 public class LeftMenuPage extends BasePageObject {
 
     @FindBy(xpath = "//a[contains(text(), 'Email Servers')]")
-    WebElement emailServerButton;
+    WebElement emailServerMenuItem;
 
     @FindBy(xpath = "//a[contains(text(), 'Conference Rooms')]")
-    WebElement conferenceRoomsButton;
-
+    WebElement conferenceRoomsMenuItem;
     @FindBy(xpath = "//a[contains(text(), 'Resources')]")
-    WebElement resourcesButton;
+    WebElement resourcesMenuItem;
 
     @FindBy(xpath = "//a[contains(text(), 'Locations')]")
-    WebElement locationsButton;
+    WebElement locationsMenuItem;
 
     /**
      * This method is the constructor
@@ -32,7 +31,7 @@ public class LeftMenuPage extends BasePageObject {
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(emailServerButton));
+        wait.until(ExpectedConditions.visibilityOf(emailServerMenuItem));
     }
 
     /**
@@ -40,26 +39,26 @@ public class LeftMenuPage extends BasePageObject {
      * @return the ConferenceRooms page
      */
     public ConferenceRoomsPage clickConferenceRoomsTab() {
-        wait.until(ExpectedConditions.elementToBeClickable(conferenceRoomsButton));
-        conferenceRoomsButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(conferenceRoomsMenuItem));
+        conferenceRoomsMenuItem.click();
         return new ConferenceRoomsPage();
     }
 
     public ResourcesPage goToResources() {
-        resourcesButton.click();
-        CommonMethods.elementHighlight(resourcesButton);
+        resourcesMenuItem.click();
+        CommonMethods.elementHighlight(resourcesMenuItem);
         return new ResourcesPage();
     }
 
     public LocationsPage goToLocations() {
-        CommonMethods.elementHighlight(locationsButton);
-        locationsButton.click();
+        CommonMethods.elementHighlight(locationsMenuItem);
+        locationsMenuItem.click();
         return new LocationsPage();
     }
 
     public ConferenceRoomsPage goToRooms() {
-        conferenceRoomsButton.click();
-        CommonMethods.elementHighlight(conferenceRoomsButton);
+        conferenceRoomsMenuItem.click();
+        CommonMethods.elementHighlight(conferenceRoomsMenuItem);
         return new ConferenceRoomsPage();
     }
 }
