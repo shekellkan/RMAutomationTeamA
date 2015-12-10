@@ -1,5 +1,6 @@
 package ui.pages.admin;
 
+import entities.ResourceEntity;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -90,18 +91,16 @@ public class ResourceFormPage extends BasePageObject {
 
     /**
      * This method set all the field of a resource and click in the button save to create a new resource
-     * @param name
-     * @param displayName
-     * @param description
-     * @param icon
+     * @param resource
      * @return
      */
-    public ResourcesPage createAResource(String name, String displayName, String description, String icon) {
-        setName(name);
-        setDisplayName(displayName);
-        setDescription(description);
-        setIcon(icon);
+    public ResourcesPage createAResource(ResourceEntity resource) {
+        setName(resource.getName());
+        setDisplayName(resource.getDisplayName());
+        setDescription(resource.getDescription());
+        setIcon(resource.getIconName());
         saveButton.click();
+        isDeleted(10,By.xpath("//div[@class='modal-content']"));
         return new ResourcesPage();
     }
 }

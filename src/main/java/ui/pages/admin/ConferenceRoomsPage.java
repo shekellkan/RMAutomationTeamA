@@ -1,39 +1,30 @@
 package ui.pages.admin;
-
+import entities.ResourceEntity;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.common.CommonMethods;
-
 /**
  * Created by ArielWagner on 07/12/2015.
  */
 public class ConferenceRoomsPage extends MainAdminPage {
-
     @FindBy(xpath = "//div[@id = 'roomsGrid']")
     WebElement roomsGridContainer;
 
-    @FindBy(xpath = "//input[contains(@ng-model, 'filterOptions')]")
-    WebElement filterByRoomInput;
-
     @FindBy(xpath = "//div[contains(text(), 'Room successfully Modified')]")
     WebElement roomModifiedMessagePopUp;
-
     By roomNameLbl;
-
     /**
      * This method is the constructor
      */
     public ConferenceRoomsPage() {
         waitUntilPageObjectIsLoaded();
     }
-
     @Override
     public void waitUntilPageObjectIsLoaded() {
         wait.until(ExpectedConditions.visibilityOf(roomsGridContainer));
     }
-
     /**
      * This method allows selectRoom for edit
      * @param room
@@ -44,7 +35,6 @@ public class ConferenceRoomsPage extends MainAdminPage {
         CommonMethods.doubleClick(driver.findElement(roomNameLbl));
         return new RoomInfoPage();
     }
-
     /**
      * This method allows get the message displayed after of edit a room
      * @return a String
@@ -53,12 +43,8 @@ public class ConferenceRoomsPage extends MainAdminPage {
         return roomModifiedMessagePopUp.getText();
     }
 
-    /**
-     * This method allows set the value for the filter by room
-     * @param criteria
-     */
-    public void setFilterByRoom(String criteria) {
-        filterByRoomInput.clear();
-        filterByRoomInput.sendKeys(criteria);
+    public boolean isResourceButtonPresent(ResourceEntity resource)
+    {
+        return isPresent(By.xpath("//div[@class='row']//span[text()='" + resource.getDisplayName() + "']"));
     }
 }

@@ -10,7 +10,7 @@ import ui.BasePageObject;
  */
 public class TopHeaderPage extends BasePageObject {
 
-    @FindBy(xpath = "//a[contains(text(), 'Room Manager')]")
+    @FindBy(xpath = "//a[contains(text(),'Room Manager')]")
     WebElement applicationNameLabel;
 
     /**

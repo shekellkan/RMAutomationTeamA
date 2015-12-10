@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
+import ui.common.CommonMethods;
 
 /**
  * Created by ArielWagner on 07/12/2015.
@@ -11,16 +12,15 @@ import ui.BasePageObject;
 public class LeftMenuPage extends BasePageObject {
 
     @FindBy(xpath = "//a[contains(text(), 'Email Servers')]")
-    WebElement emailServerTab;
+    WebElement emailServerMenuItem;
 
     @FindBy(xpath = "//a[contains(text(), 'Conference Rooms')]")
-    WebElement conferenceRoomsTab;
-
+    WebElement conferenceRoomsMenuItem;
     @FindBy(xpath = "//a[contains(text(), 'Resources')]")
-    WebElement resourcesButton;
+    WebElement resourcesMenuItem;
 
     @FindBy(xpath = "//a[contains(text(), 'Locations')]")
-    WebElement locationsButton;
+    WebElement locationsMenuItem;
 
     /**
      * This method is the constructor
@@ -31,7 +31,7 @@ public class LeftMenuPage extends BasePageObject {
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(emailServerTab));
+        wait.until(ExpectedConditions.visibilityOf(emailServerMenuItem));
     }
 
     /**
@@ -39,17 +39,26 @@ public class LeftMenuPage extends BasePageObject {
      * @return the ConferenceRooms page
      */
     public ConferenceRoomsPage clickConferenceRoomsTab() {
-        conferenceRoomsTab.click();
+        wait.until(ExpectedConditions.elementToBeClickable(conferenceRoomsMenuItem));
+        conferenceRoomsMenuItem.click();
         return new ConferenceRoomsPage();
     }
 
     public ResourcesPage goToResources() {
-        resourcesButton.click();
+        resourcesMenuItem.click();
+        CommonMethods.elementHighlight(resourcesMenuItem);
         return new ResourcesPage();
     }
 
     public LocationsPage goToLocations() {
-        locationsButton.click();
+        CommonMethods.elementHighlight(locationsMenuItem);
+        locationsMenuItem.click();
         return new LocationsPage();
+    }
+
+    public ConferenceRoomsPage goToRooms() {
+        conferenceRoomsMenuItem.click();
+        CommonMethods.elementHighlight(conferenceRoomsMenuItem);
+        return new ConferenceRoomsPage();
     }
 }
