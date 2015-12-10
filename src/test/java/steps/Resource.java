@@ -46,4 +46,20 @@ public class Resource {
         Assert.assertEquals(actualDisplayName, resourceEntity.getDisplayName());
         Assert.assertEquals(actualIconName,"fa "+ resourceEntity.getIconName());
     }
+
+    @Then("^the Resource is not longer displayed in the Resource list$")
+    public void theResourceIsNotLongerDisplayedInTheResourceList()
+    {
+        boolean actualResult = resourcesPage.isResourceInTheResourceList(resourceEntity);
+        Assert.assertTrue(actualResult);
+    }
+
+    @When("^I remove the Resource$")
+    public void iRemoveTheResource()
+    {
+        resourcesPage.removeResource(resourceEntity).ClickOnRemoveButton();
+        //walk around step to avoid the resource issue(at create a resources the list of resource is empty)
+        mainAdminPage.getLeftMenuPage().goToLocations();
+        mainAdminPage.getLeftMenuPage().goToResources();
+    }
 }

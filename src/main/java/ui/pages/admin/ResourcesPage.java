@@ -1,5 +1,6 @@
 package ui.pages.admin;
 
+import entities.ResourceEntity;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +18,9 @@ public class ResourcesPage extends MainAdminPage {
 
     @FindBy(xpath = "//button[@ng-click='addResourceDialog()']")
     WebElement addButton;
+
+    @FindBy(id = "btnRemove")
+    WebElement removeButton;
 
     public ResourcesPage()
     {
@@ -39,7 +43,7 @@ public class ResourcesPage extends MainAdminPage {
 
     public String getIconName(String resourceName)
     {
-        return driver.findElement(By.xpath("//div[contains(@class,'col2')]//span[text()='"+resourceName+"']/ancestor::div[contains(@class,'ng-scope ngRow')]//div[contains(@class,'col1 colt1')]//span")).getAttribute("class");
+        return driver.findElement(By.xpath("//div[contains(@class,'col2')]//span[text()='" + resourceName + "']/ancestor::div[contains(@class,'ng-scope ngRow')]//div[contains(@class,'col1 colt1')]//span")).getAttribute("class");
     }
 
     public String getName(String resourceName)
@@ -50,5 +54,19 @@ public class ResourcesPage extends MainAdminPage {
     public String getDisplayName(String resourceName)
     {
         return driver.findElement(By.xpath("//div[contains(@class,'col2')]//span[text()='"+resourceName+"']/ancestor::div[contains(@class,'ng-scope ngRow')]//div[contains(@class,'col3 colt3')]//span")).getText();
+    }
+
+    public RemoveResourcesConfirmationPage removeResource(ResourceEntity resourceEntity) {
+        String resourceName = resourceEntity.getName();
+        WebElement resourceCheckInput
+                = driver.findElement(By.xpath("//div[contains(@class,'col2')]//span[text()='"+resourceName+"']/ancestor::div[contains(@class,'ng-scope ngRow')]//div[contains(@class,'col0 colt0')]//input"));
+        resourceCheckInput.click();
+        removeButton.click();
+        return new RemoveResourcesConfirmationPage();
+    }
+
+    public boolean isResourceInTheResourceList(ResourceEntity resourceEntity) {
+        String resourceName = resourceEntity.getName();
+        return isDeleted(10,By.xpath("//div[contains(@class,'col2')]//span[text()='"+resourceEntity+"']/ancestor::div[contains(@class,'ng-scope ngRow')]"));
     }
 }

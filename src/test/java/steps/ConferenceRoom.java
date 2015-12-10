@@ -26,4 +26,12 @@ public class ConferenceRoom {
         boolean expectedResult = true;
         Assert.assertEquals(conferenceRoomsPage.isResourceButtonPresent(resourceEntity),expectedResult);
     }
+
+    @Then("^the Resource should be not displayed as a button in the Conference Room page header$")
+    public void theResourceShouldBeNotDisplayAsAButtonInTheConferenceRoomPageHeader()
+    {
+        conferenceRoomsPage = new ConferenceRoomsPage();
+        boolean expectedResult = false;
+        Assert.assertEquals(conferenceRoomsPage.isResourceButtonPresent(resourceEntity),expectedResult);
+    }
 }

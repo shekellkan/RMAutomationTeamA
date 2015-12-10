@@ -10,7 +10,7 @@ Feature: resource
     Given I go to Resources page
     When I create a Resource with values: "<Name>","<Display_Name>","<Description>" and "<Icon>"
     Then the Resource is displayed in the list of Resources
-      When I go to Conference Room page
+      When I go to Conference Rooms page
       Then the Resource should be displayed as a button in the Conference Room page header
     #And the Resource should be obtained using the API
   Examples:
@@ -19,5 +19,13 @@ Feature: resource
   |Board_Display|Board display|the display name have spaces                  | fa-eye-slash  |
   |Board1       |Board        |the name contains a number                    | fa-edit       |
 
+  Scenario: remove a Resource
+    Given I go to Resources page
+    And I create a Resource with values: "Mac","Mac computer","My mac computer" and "fa-desktop"
+    When I remove the Resource
+    Then the Resource is not longer displayed in the Resource list
+      When I go to Conference Rooms page
+    And the Resource should be not displayed as a button in the Conference Room page header
+#    And the resource should not be obtained using the API
 
 
