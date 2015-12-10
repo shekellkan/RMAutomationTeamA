@@ -1,6 +1,6 @@
 package steps;
 
-import Models.ResourceModel;
+import entities.ResourceEntity;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -15,27 +15,21 @@ import ui.pages.admin.ResourcesPage;
  */
 public class Resource {
     MainAdminPage mainAdminPage;
-    ResourceModel resourceModel;
-    public Resource(MainAdminPage mainAdminPage,ResourceModel resourceModel)
+    ResourceEntity resourceEntity;
+    ResourcesPage resourcesPage;
+    public Resource(MainAdminPage mainAdminPage, ResourceEntity resourceEntity)
     {
         this.mainAdminPage = mainAdminPage;
-        this.resourceModel = resourceModel;
-    }
-
-    @Given("^I go to Resources page$")
-    public void iGoToResourcesPage()
-    {
-        mainAdminPage.getLeftMenuPage().goToResources();
+        this.resourceEntity = resourceEntity;
     }
 
     @When("^I create a Resource with values: \"([^\\\"]*)\",\"([^\\\"]*)\",\"([^\\\"]*)\" and \"([^\\\"]*)\"$")
     public void iCreateAResourceWithValues(String name, String displayName, String description, String icon)
     {
-        mainAdminPage.getLeftMenuPage()
-                .goToResources()
-                .goToAddNewResource()
-                .createAResource(name, displayName, description, icon);
-        resourceModel.fillAllFields(name, displayName, description, icon);
+        resourcesPage = new ResourcesPage();
+        resourceEntity.setAllFields(name, displayName, description, icon);
+        resourcesPage.goToAddNewResource()
+                .createAResource(resourceEntity);
         //walk around step to avoid the resource issue(at create a resources the list of resource is empty)
         mainAdminPage.getLeftMenuPage().goToLocations();
         mainAdminPage.getLeftMenuPage().goToResources();
@@ -44,13 +38,12 @@ public class Resource {
     @Then("^the Resource is displayed in the list of Resources$")
     public void theResourceIsDisplayedInTheListOfResources()
     {
-        ResourcesPage resourcesPage = new ResourcesPage();
-        String actualName = resourcesPage.getName(resourceModel.getName());
-        String actualDisplayName = resourcesPage.getDisplayName(resourceModel.getName());
-        String actualIconName = resourcesPage.getIconName(resourceModel.getName());
+        String actualName = resourcesPage.getName(resourceEntity.getName());
+        String actualDisplayName = resourcesPage.getDisplayName(resourceEntity.getName());
+        String actualIconName = resourcesPage.getIconName(resourceEntity.getName());
 
-        Assert.assertEquals(actualName,resourceModel.getName());
-        Assert.assertEquals(actualDisplayName,resourceModel.getDisplayName());
-        Assert.assertEquals(actualIconName,"fa "+resourceModel.getIconName());
+        Assert.assertEquals(actualName, resourceEntity.getName());
+        Assert.assertEquals(actualDisplayName, resourceEntity.getDisplayName());
+        Assert.assertEquals(actualIconName,"fa "+ resourceEntity.getIconName());
     }
 }

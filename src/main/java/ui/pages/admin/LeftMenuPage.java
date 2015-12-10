@@ -46,14 +46,12 @@ public class LeftMenuPage extends BasePageObject {
     }
 
     public ResourcesPage goToResources() {
-        wait.until(ExpectedConditions.elementToBeClickable(resourcesButton));
         resourcesButton.click();
         CommonMethods.elementHighlight(resourcesButton);
         return new ResourcesPage();
     }
 
     public LocationsPage goToLocations() {
-        wait.until(ExpectedConditions.elementToBeClickable(locationsButton));
         CommonMethods.elementHighlight(locationsButton);
         locationsButton.click();
         return new LocationsPage();
@@ -61,6 +59,7 @@ public class LeftMenuPage extends BasePageObject {
 
     public ConferenceRoomsPage goToRooms() {
         conferenceRoomsButton.click();
+        CommonMethods.elementHighlight(conferenceRoomsButton);
         return new ConferenceRoomsPage();
     }
 }

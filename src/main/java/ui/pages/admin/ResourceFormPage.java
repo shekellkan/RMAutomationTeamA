@@ -100,8 +100,7 @@ public class ResourceFormPage extends BasePageObject {
         setDescription(resource.getDescription());
         setIcon(resource.getIconName());
         saveButton.click();
-        // wait until the creating form disappears
-        //wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(saveButton)));
+        isDeleted(10,By.xpath("//div[@class='modal-content']"));
         return new ResourcesPage();
     }
 }
