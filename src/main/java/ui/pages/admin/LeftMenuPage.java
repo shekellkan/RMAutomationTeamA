@@ -34,16 +34,6 @@ public class LeftMenuPage extends BasePageObject {
         wait.until(ExpectedConditions.visibilityOf(emailServerMenuItem));
     }
 
-    /**
-     * This method allows press the conference rooms tab
-     * @return the ConferenceRooms page
-     */
-    public ConferenceRoomsPage clickConferenceRoomsTab() {
-        wait.until(ExpectedConditions.elementToBeClickable(conferenceRoomsMenuItem));
-        conferenceRoomsMenuItem.click();
-        return new ConferenceRoomsPage();
-    }
-
     public ResourcesPage goToResources() {
         resourcesMenuItem.click();
         CommonMethods.elementHighlight(resourcesMenuItem);

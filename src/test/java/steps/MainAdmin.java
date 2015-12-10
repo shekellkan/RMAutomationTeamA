@@ -21,7 +21,7 @@ public class MainAdmin {
         mainAdminPage.getLeftMenuPage().goToResources();
     }
 
-    @Given("^I go to Conference Room page$")
+    @Given("^I go to Conference Rooms page$")
     public void iGoToRoomsPage()
     {
         mainAdminPage.getLeftMenuPage().goToRooms();
