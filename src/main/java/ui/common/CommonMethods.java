@@ -4,6 +4,7 @@ import Framework.DriverManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 
 /**
@@ -26,5 +27,11 @@ public class CommonMethods {
                     "arguments[0].setAttribute('style', arguments[1]);",
                     element, "");
         }
+    }
+
+    public static void doubleClick(WebElement webElement) {
+        Actions action = new Actions(DriverManager.getInstance().getWebDriver());
+        action.doubleClick(webElement);
+        action.perform();
     }
 }
