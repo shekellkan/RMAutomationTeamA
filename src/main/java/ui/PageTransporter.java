@@ -36,4 +36,11 @@ public class PageTransporter {
         driver.get(externalVariablesManager.getMainAdminURL());
         return new MainAdminPage();
     }
+
+    public boolean imInTheLoginAdminPage() {
+        if(driver.getCurrentUrl().contains("admin/#/login"))
+            return true;
+        else
+            return false;
+    }
 }

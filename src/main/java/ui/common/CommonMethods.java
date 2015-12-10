@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import ui.PageTransporter;
 
 
 /**
@@ -30,12 +31,10 @@ public class CommonMethods {
     }
     public static boolean isUserLoginInAdminPage()
     {
-        try {
-            DriverManager.getInstance().getWebDriver().findElement(By.xpath("//div[@class='navbar-header']//a[text()='Room Manager']"));
-            return true;
-        }catch (Exception e)
-        {
+        if(PageTransporter.getInstance().imInTheLoginAdminPage()){
             return false;
+        }else{
+            return true;
         }
     }
 }
