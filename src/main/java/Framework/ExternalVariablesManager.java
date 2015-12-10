@@ -7,6 +7,7 @@ public class ExternalVariablesManager {
 
     private String browserName;
     private String adminURL;
+    private String mainAdminURL;
     private String adminUserName;
     private String adminUserPassword;
 
@@ -54,7 +55,7 @@ public class ExternalVariablesManager {
         browserName = System.getProperty("browserName");
         if(browserName==null || browserName.isEmpty())
         {
-            browserName = "Firefox";
+            browserName = new JsonReader("/config.json").getKeyFromSingleJson("default browser");
         }
 
         //json reader
@@ -62,6 +63,7 @@ public class ExternalVariablesManager {
 
         //URL first lvl
         adminURL = jsonReader.getKeyValue("Environments", "id", envId, "admin URL");
+        mainAdminURL = jsonReader.getKeyValue("Environments", "id", envId, "admin main url");
         tabletURL = jsonReader.getKeyValue("Environments", "id", envId, "tablet URL");
         roomManagerService = jsonReader.getKeyValue("Environments", "id", envId, "room manager service");
 
@@ -154,5 +156,9 @@ public class ExternalVariablesManager {
      */
     public String getExchangeUserPassword() {
         return exchangeUserPassword;
+    }
+
+    public String getMainAdminURL() {
+        return mainAdminURL;
     }
 }

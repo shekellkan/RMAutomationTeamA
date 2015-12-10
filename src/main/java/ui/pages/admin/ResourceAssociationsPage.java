@@ -3,25 +3,25 @@ package ui.pages.admin;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ui.BasePageObject;
 
 /**
- * Created by ArielWagner on 07/12/2015.
+ * Created by ArielWagner on 09/12/2015.
  */
-public class TopHeaderPage extends BasePageObject {
+public class ResourceAssociationsPage extends RoomPage {
 
-    @FindBy(xpath = "//a[contains(text(),'Room Manager')]")
-    WebElement applicationNameLabel;
+    @FindBy(xpath = "//a[contains(text(), 'Resource Associations')]")
+    WebElement resourceAssociationsTab;
 
     /**
      * This method is the constructor
      */
-    public TopHeaderPage() {
+    public ResourceAssociationsPage() {
         waitUntilPageObjectIsLoaded();
     }
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(applicationNameLabel));
+        wait.until(ExpectedConditions.visibilityOf(resourceAssociationsTab));
     }
+
 }

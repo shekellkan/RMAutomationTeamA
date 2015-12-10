@@ -5,7 +5,7 @@ import Framework.ExternalVariablesManager;
 import org.openqa.selenium.WebDriver;
 import ui.pages.admin.LoginAdminPage;
 import ui.pages.tablet.LoginTabletPage;
-
+import ui.pages.admin.MainAdminPage;
 /**
  * Created with IntelliJ IDEA.
  * User: Jean Carlo Rodriguez
@@ -14,12 +14,13 @@ import ui.pages.tablet.LoginTabletPage;
  * To change this template use File | Settings | File Templates.
  */
 public class PageTransporter {
-    private static WebDriver driver = DriverManager.getInstance().getWebDriver();
-    private static ExternalVariablesManager externalVariablesManager = ExternalVariablesManager.getInstance();
+    private static WebDriver driver;
     private static PageTransporter instance;
-
+    private static ExternalVariablesManager externalVariablesManager;
     private PageTransporter()
     {
+        driver = DriverManager.getInstance().getWebDriver();
+        externalVariablesManager = ExternalVariablesManager.getInstance();
     }
 
     public static PageTransporter getInstance()
@@ -44,8 +45,20 @@ public class PageTransporter {
         return new LoginTabletPage();
     }
 
-    public static LoginAdminPage goToLoginAdminPage(){
+    public static LoginAdminPage goToLoginAdminPage() {
         goToURL(externalVariablesManager.getAdminURL());
         return new LoginAdminPage();
+    }
+
+    public MainAdminPage goToAdminMainPage() {
+        driver.get(externalVariablesManager.getMainAdminURL());
+        return new MainAdminPage();
+    }
+
+    public boolean imInTheLoginAdminPage() {
+        if(driver.getCurrentUrl().contains("admin/#/login"))
+            return true;
+        else
+            return false;
     }
 }

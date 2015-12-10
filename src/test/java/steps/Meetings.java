@@ -41,7 +41,7 @@ public class Meetings {
 
     @And("^the Meeting should be displayed in the Schedule bar$")
     public void theMeetingShouldBeDisplayedInTheScheduleBar(){
-        
+
     }
 
     @And("^the Meeting information should be displayed in the Next section$")

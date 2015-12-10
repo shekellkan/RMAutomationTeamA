@@ -1,27 +1,28 @@
 @Rooms
 Feature: Rooms
   Background:
-    Given I'm logged in with the user "" and password ""
-    And I navigate to Conference Rooms page
+    Given I'm logged in with the user "admin" in the admin page
+      And I go to Conference Rooms page
 
-
-  Scenario Outline: Edit a room
-    When I open to "Floor1Room1" Room for edit
-      And I edit its displayName "<displayName>" ,code "<code>" and capacity "<capacity>"
+  @EditRoom
+  Scenario Outline: Edit a Room
+    When I open to "Floor1Room11" Room for edit
+      And I edit the displayName "<displayName>" ,code "<code>" and capacity "<capacity>"
     Then a information message should be displayed
       And the Room data should be the edited
       And the Room edited should be obtained using the API
+
      Examples:
       | displayName | code | capacity |
-      | Room1       | R1   | 100      |
+      | Room11      | R11  | 100      |
       | RoomNew     | NR   | 300      |
 
 
-  Scenario Outline: filter the rooms for display name, code and capacity
-    Given I open to "Floor1Room10" room
-    And I edit the displayName "Custom", code "om11" and capacity "400"
+  Scenario Outline: filter the Rooms for display name, code and capacity
+    Given I open to "Floor1Room10" Room for edit
+      And I edit the displayName "Custom" ,code "om11" and capacity "400"
     When I search a Room by "<Criteria>"
-    Then the Room "" should be listed
+      Then the Room or Rooms "" should be listed
     Examples:
       |   Criteria   |
       | Room1        |
@@ -37,6 +38,7 @@ Feature: Rooms
     Then a information message should be displayed
     And should display an icon on the Out Of Order column
     And the Out Of Order state should be obtained using the API
+
     Examples:
       | Out Of Order |
       | Closed for maintenance |
@@ -49,7 +51,10 @@ Feature: Rooms
     And I configure the Room with the option Out Of Order "<Out Of Order>" at the time "10:00" to "8:00"
     Then a error message should be displayed
     And the Out Of Order state should not be obtained using the API
+
     Examples:
       | Out Of Order |
       | Closed for maintenance |
       | Closed for reparations |
+
+

@@ -1,6 +1,7 @@
 {
     "implicitWait" : "10",
     "explicitWait" : "20",
+    "default browser" : "Firefox",
     "chrome driver path" : "src/main/resources/chromedriver.exe",
     "NumberOfTriesForElementDeleted" : "10"
 }
