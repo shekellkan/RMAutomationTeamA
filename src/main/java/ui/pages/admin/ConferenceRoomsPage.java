@@ -14,6 +14,9 @@ public class ConferenceRoomsPage extends MainAdminPage {
     @FindBy(xpath = "//div[@id = 'roomsGrid']")
     WebElement roomsGridContainer;
 
+    @FindBy(xpath = "//input[contains(@ng-model, 'filterOptions')]")
+    WebElement filterByRoomInput;
+
     @FindBy(xpath = "//div[contains(text(), 'Room successfully Modified')]")
     WebElement roomModifiedMessagePopUp;
 
@@ -48,5 +51,14 @@ public class ConferenceRoomsPage extends MainAdminPage {
      */
     public String getRoomModifiedMessagePopUp() {
         return roomModifiedMessagePopUp.getText();
+    }
+
+    /**
+     * This method allows set the value for the filter by room
+     * @param criteria
+     */
+    public void setFilterByRoom(String criteria) {
+        filterByRoomInput.clear();
+        filterByRoomInput.sendKeys(criteria);
     }
 }
