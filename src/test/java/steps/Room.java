@@ -26,11 +26,6 @@ public class Room {
         this.roomModel = roomModel;
     }
 
-    @And("^I go to Conference Rooms page$")
-    public void goToConferenceRoomsPage() {
-        conferenceRoomsPage = mainAdminPage.getLeftMenuPage().clickConferenceRoomsTab();
-    }
-
     @When("^I open to \"([^\"]*)\" Room for edit$")
     public void openRoomForEdit(String displayName) {
         displayNameRoom = displayName;
