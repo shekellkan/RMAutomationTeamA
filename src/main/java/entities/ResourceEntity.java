@@ -1,11 +1,11 @@
-package Models;
+package entities;
 
 /**
  * User: jeancarlorodriguez
  * Date: 12/8/15
  * Time: 5:25 PM
  */
-public class ResourceModel {
+public class ResourceEntity {
 
     private String name;
     private String displayName;
@@ -31,7 +31,7 @@ public class ResourceModel {
      * @param description
      * @param iconName
      */
-    public void fillAllFields(String name, String displayName, String description, String iconName)
+    public void setAllFields(String name, String displayName, String description, String iconName)
     {
         this.name = name;
         this.displayName = displayName;

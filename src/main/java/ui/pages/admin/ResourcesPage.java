@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
- * User: jeancarlorodriguez
+ * User: Jean Carlo Rodriguez
  * Date: 12/7/15
  * Time: 8:45 PM
  */
@@ -40,7 +40,7 @@ public class ResourcesPage extends MainAdminPage {
     //Todo
     private WebElement getRowOfAResource(String resourceName)
     {
-        return driver.findElement(By.xpath("//div[contains(@class,'col2')]//span[text()='"+resourceName+"']//ancestor::div[contains(@class,'ng-scope ngRow')]"));
+        return driver.findElement(By.xpath("//div[contains(@class,'col2')]//span[text()='"+resourceName+"']/ancestor::div[contains(@class,'ng-scope ngRow')]"));
     }
 
     public String getIconName(String resourceName)

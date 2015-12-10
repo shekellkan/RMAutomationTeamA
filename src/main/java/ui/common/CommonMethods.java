@@ -1,6 +1,7 @@
 package ui.common;
 
 import Framework.DriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,6 +26,16 @@ public class CommonMethods {
             js.executeScript(
                     "arguments[0].setAttribute('style', arguments[1]);",
                     element, "");
+        }
+    }
+    public static boolean isUserLoginInAdminPage()
+    {
+        try {
+            DriverManager.getInstance().getWebDriver().findElement(By.xpath("//div[@class='navbar-header']//a[text()='Room Manager']"));
+            return true;
+        }catch (Exception e)
+        {
+            return false;
         }
     }
 }
