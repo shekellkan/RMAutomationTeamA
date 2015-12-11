@@ -1,6 +1,5 @@
 package steps;
 
-import db.DBMethods;
 import db.DBRoomsMethods;
 import entities.RoomEntity;
 import cucumber.api.java.After;
@@ -74,7 +73,7 @@ public class Room {
         conferenceRoomsPage = roomInfoPage.clickSaveRoom();
         conferenceRoomsPage.setFilterByRoom(criteria);
         dbRoomsMethods = new DBRoomsMethods();
-        ArrayList<String> roomNames = dbRoomsMethods.likeFilterByCriteria("displayName",criteria);
+        ArrayList<String> roomNames = dbRoomsMethods.likeFilterByCriteria("displayName", criteria);
         for(String name: roomNames) {
             System.out.println("name...." + name);
             if(!(name.equals(null))) {

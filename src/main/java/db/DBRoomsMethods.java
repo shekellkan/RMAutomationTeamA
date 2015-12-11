@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class DBRoomsMethods {
     MongoDBManager mongoDBManager;
-    final static Logger logger = Logger.getLogger(DBMethods.class);
+    final static Logger logger = Logger.getLogger(DBRoomsMethods.class);
 
     public DBRoomsMethods() {
         logger.info("Using DBRoomsMethods");
