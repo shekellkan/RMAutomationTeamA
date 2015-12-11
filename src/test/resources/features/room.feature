@@ -17,12 +17,12 @@ Feature: Rooms
       | Room11      | R11  | 100      |
       | RoomNew     | NR   | 300      |
 
-
-  Scenario Outline: filter the Rooms for display name, code and capacity
-    Given I open to "Floor1Room10" Room for edit
-      And I edit the displayName "Custom" ,code "om11" and capacity "400"
+  @FilterRoom
+  Scenario Outline: Filter the Rooms for display name, code and capacity
+    Given I open to "Floor1Room12" Room for edit
+    And I edit the displayName "Custom" ,code "om11" and capacity "400"
     When I search a Room by "<Criteria>"
-      Then the Room or Rooms "" should be listed
+    Then the Room or Rooms "" should be listed
     Examples:
       |   Criteria   |
       | Room1        |
@@ -32,7 +32,7 @@ Feature: Rooms
 
 
   Scenario Outline: Place a room to out of order
-    Given I open to Room "Floor1Room10" for edit
+    Given I open to "Floor1Room12" Room
     When I go to the Out of Order Planning Tab
     And I configure the Room with the option out of order "<Out Of Order>" at the time "8:00" to "10:00"
     Then a information message should be displayed
