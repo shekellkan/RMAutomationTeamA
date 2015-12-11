@@ -34,7 +34,7 @@ public class MongoDBManager {
 
         return instance;
     }
-    //is this needed?
+
     public MongoCollection getCollection(String collectionName){
         return database.getCollection(collectionName);
     }

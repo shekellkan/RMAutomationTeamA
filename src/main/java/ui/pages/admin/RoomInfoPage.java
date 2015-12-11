@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 /**
  * Created by ArielWagner on 09/12/2015.
  */
-public class RoomInfoPage extends RoomPage {
+public class RoomInfoPage extends RoomMenuPage {
 
     @FindBy(xpath = "//button[contains(@ng-click, 'enableDisableRoom')]")
     WebElement enableDisableRoomButton;
@@ -21,9 +21,6 @@ public class RoomInfoPage extends RoomPage {
     @FindBy(xpath = "//input[contains(@ng-model, 'capacity')]")
     WebElement capacityInput;
 
-    @FindBy(xpath = "//button[contains(@ng-click, 'save')]")
-    WebElement saveButton;
-
     /**
      * This method is the constructor
      */
@@ -34,15 +31,6 @@ public class RoomInfoPage extends RoomPage {
     @Override
     public void waitUntilPageObjectIsLoaded() {
         wait.until(ExpectedConditions.visibilityOf(enableDisableRoomButton));
-    }
-
-    /**
-     * This method allows press the save button
-     * @return the ConferenceRooms page
-     */
-    public ConferenceRoomsPage clickSaveRoom(){
-        saveButton.click();
-        return new ConferenceRoomsPage();
     }
 
     /**

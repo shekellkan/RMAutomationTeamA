@@ -54,6 +54,11 @@ public class ConferenceRoomsPage extends MainAdminPage {
         return isPresent(By.xpath("//div[@class='row']//span[text()='" + resource.getDisplayName() + "']"));
     }
 
+    public void clickOnResourceButton(ResourceEntity resource)
+    {
+        driver.findElement(By.xpath("//div[@class='row']//span[text()='"+ resource.getDisplayName() +"']")).click();
+    }
+
     /**
      * This method allows set the value for the filter by room
      * @param criteria
