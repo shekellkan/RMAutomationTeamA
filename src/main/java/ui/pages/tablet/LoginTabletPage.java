@@ -2,6 +2,7 @@ package ui.pages.tablet;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
@@ -13,10 +14,13 @@ public class LoginTabletPage extends BasePageObject{
     @FindBy(xpath = "//div[contains(@class,'account-header')]/div/h1/bold[contains(text(),'Room Manager')]")
     WebElement roomManagerLabel;
     @FindBy(xpath = "//div[contains(@class,'input-group')]/input[contains(@id,'service-url-input')]")
+    @CacheLookup
     WebElement serviceURLInput;
     @FindBy(xpath = "//div[contains(@class,'form-group')]/input[contains(@id,'username')]")
+    @CacheLookup
     WebElement userNameInput;
     @FindBy(xpath = "//div[contains(@class,'form-group')]/input[contains(@id,'password')]")
+    @CacheLookup
     WebElement passwordInput;
     @FindBy(xpath = "//div[contains(@form,'account-register-for')]//span[contains(text(),'Sign In')]")
     WebElement singInButton;

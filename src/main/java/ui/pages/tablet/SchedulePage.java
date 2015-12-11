@@ -1,5 +1,6 @@
 package ui.pages.tablet;
 
+import entities.MeetingEntity;
 import org.apache.log4j.chainsaw.Main;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,7 @@ import ui.BasePageObject;
  */
 public class SchedulePage extends BasePageObject {
     private TopMenuPage topMenuPage;
+    private MeetingEntity meetingEntity;
     @FindBy(xpath = "//div[contains(@class,'item-title')]/span")
     WebElement scheduleLabel;
     @FindBy(xpath = "//div[contains(@class,'form-group')]/input[contains(@id,'txtOrganizer')]")
@@ -30,8 +32,11 @@ public class SchedulePage extends BasePageObject {
     WebElement createButton;
 
     WebElement meetingLabel;
+    WebElement meetingForDelete;
     @FindBy(xpath = "//div[contains(text(),'Meeting successfully created')]")
-    WebElement succesfullyMessage;
+    WebElement successfullyMessage;
+    @FindBy(xpath = "//div[contains(@class,'form-bar')]/button/span[contains(text(),'Remove')]")
+    WebElement removeButton;
 
     /**
      * This method is the constructor
@@ -84,9 +89,9 @@ public class SchedulePage extends BasePageObject {
         return this;
     }
 
-    public SchedulePage setAttendesInput(String attendes){
+    public SchedulePage setAttendeesInput(String attendees){
         attendeesInput.clear();
-        attendeesInput.sendKeys(attendes);
+        attendeesInput.sendKeys(attendees);
         return this;
     }
 
@@ -101,13 +106,14 @@ public class SchedulePage extends BasePageObject {
         return new CredentialsPage();
     }
 
-    public CredentialsPage createNewMeeting(String organizer, String subject, String from, String to, String attendees, String body){
-        setOrganizerInput(organizer);
-        setSubjectInput(subject);
-        setFromInput(from);
-        setToInput(to);
-        setAttendesInput(attendees);
-        setBodyTextArea(body);
+    public CredentialsPage createNewMeeting(MeetingEntity meetingEntity){
+        this.meetingEntity = meetingEntity;
+        setOrganizerInput(meetingEntity.getOrganizer());
+        setSubjectInput(meetingEntity.getSubject());
+        setFromInput(meetingEntity.getFrom());
+        setToInput(meetingEntity.getTo());
+        setAttendeesInput(meetingEntity.getAttendees());
+        setBodyTextArea(meetingEntity.getBody());
         return clickCreateButton();
     }
 
@@ -117,10 +123,27 @@ public class SchedulePage extends BasePageObject {
 
     public boolean isMeetingDisplayed(String nameMeeting){
         meetingLabel = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
+        System.out.println(buildMeetingDisplay(nameMeeting) + "***************************");
         return meetingLabel.isDisplayed();
     }
 
     public boolean isSuccessfullyMessageDisplayed(){
-        return succesfullyMessage.isDisplayed();
+        return successfullyMessage.isDisplayed();
+    }
+
+    public SchedulePage selectMeetingForDelete(String nameMeeting){
+        meetingForDelete = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
+        meetingForDelete.click();
+        return this;
+    }
+
+    public CredentialsPage clickRemoveButton(){
+        removeButton.click();
+        return new CredentialsPage();
+    }
+
+    public CredentialsPage deleteMeeting(String nameMeeting){
+        selectMeetingForDelete(nameMeeting);
+        return clickRemoveButton();
     }
 }

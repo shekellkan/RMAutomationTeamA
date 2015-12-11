@@ -12,6 +12,7 @@ public class ExternalVariablesManager {
     private String adminUserPassword;
 
     private String tabletURL;
+    private String loginTabletURL;
     private String tabletUserName;
     private String tabletUserPassword;
 
@@ -65,6 +66,7 @@ public class ExternalVariablesManager {
         adminURL = jsonReader.getKeyValue("Environments", "id", envId, "admin URL");
         mainAdminURL = jsonReader.getKeyValue("Environments", "id", envId, "admin main url");
         tabletURL = jsonReader.getKeyValue("Environments", "id", envId, "tablet URL");
+        loginTabletURL = jsonReader.getKeyValue("Environments", "id", envId, "tablet login URL");
         roomManagerService = jsonReader.getKeyValue("Environments", "id", envId, "room manager service");
 
         //count admin
@@ -87,7 +89,7 @@ public class ExternalVariablesManager {
     }
 
     /**
-     * obtains the URL of admin page
+     * obtains the URL of login page of admin
      * @return adminURL
      */
     public String getAdminURL(){
@@ -100,6 +102,14 @@ public class ExternalVariablesManager {
      */
     public String getTabletURL(){
         return tabletURL;
+    }
+
+    /**
+     * obtains the URL of login page of the tablet
+     * @return loginTabletURL
+     */
+    public String getLoginTabletURL(){
+        return loginTabletURL;
     }
 
     /**
@@ -158,6 +168,10 @@ public class ExternalVariablesManager {
         return exchangeUserPassword;
     }
 
+    /**
+     * obtains the URL of main page admin
+     * @return mainAdminURL
+     */
     public String getMainAdminURL() {
         return mainAdminURL;
     }

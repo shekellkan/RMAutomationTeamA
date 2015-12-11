@@ -1,6 +1,7 @@
 package ui.pages.tablet;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
@@ -12,8 +13,10 @@ public class CredentialsPage extends BasePageObject {
     @FindBy(xpath = "//div[contains(@ui-view,'modal')]/div[contains(@class,'ng-scope')]/h3")
     WebElement credentialsLabel;
     @FindBy(xpath = "//div[contains(@class,'input-control')]/input[contains(@placeholder,'username')]")
+    @CacheLookup
     WebElement userNameInput;
     @FindBy(xpath = "//div[contains(@class,'input-control')]/input[contains(@placeholder,'password')]")
+    @CacheLookup
     WebElement userPasswordInput;
     @FindBy(xpath = "//button[contains(@class,'pull-right')]/span[contains(text(),'OK')]")
     WebElement okButton;

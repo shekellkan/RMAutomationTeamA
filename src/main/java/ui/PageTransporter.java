@@ -41,7 +41,7 @@ public class PageTransporter {
     }
 
     public static LoginTabletPage goToLoginTabletPage(){
-        goToURL(externalVariablesManager.getTabletURL());
+        goToURL(externalVariablesManager.getLoginTabletURL());
         return new LoginTabletPage();
     }
 

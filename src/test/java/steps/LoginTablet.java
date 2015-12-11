@@ -12,7 +12,7 @@ import ui.pages.tablet.MainTabletPage;
  * Created by MiguelTerceros on 12/10/2015.
  */
 public class LoginTablet {
-    LoginTabletPage loginTabletPage;// = new LoginTabletPage();
+    LoginTabletPage loginTabletPage;
     PageTransporter pageTransporter = PageTransporter.getInstance();
     MainTabletPage mainTabletPage;
     String userName;
@@ -20,7 +20,7 @@ public class LoginTablet {
     String serviceURL;
 
     @Given("^I'm logged with the user \"([^\"]*)\" in the tablet main page$")
-    public void iMLoggedInWithTheUserInTheTabletMainPage(String userNameTablet){
+    public void loggedInWithTheUserInTheTabletMainPage(String userNameTablet){
         userName = ExternalVariablesManager.getInstance().getTabletUserName();
         userPasswordTablet = ExternalVariablesManager.getInstance().getTabletUserPassword();
         serviceURL = ExternalVariablesManager.getInstance().getRoomManagerService();
@@ -30,7 +30,7 @@ public class LoginTablet {
     }
 
     @And("^I select the room \"([^\"]*)\"$")
-    public void iSelectTheRoom(String nameRoom){
+    public void selectTheRoom(String nameRoom){
         mainTabletPage = loginTabletPage.selectRoom(nameRoom);
     }
 }

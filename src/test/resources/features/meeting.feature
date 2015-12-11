@@ -2,7 +2,7 @@
 Feature: Meetings
   Background:
     Given I'm logged with the user "" in the tablet main page
-      And I select the room "FloorRoom10"
+      And I select the room "Floor1Room10"
 
 
   Scenario Outline: Create a meeting
@@ -14,7 +14,7 @@ Feature: Meetings
       And the Meeting should be listed in the Meetings of Room using the API
   Examples:
     | Organizer   | Subject | From  | To    | Attendees         | Body      |
-    | Ariel.Rojas | meeting | 21:00 | 22:00 | test@exchange.com | Important |
+    | Ariel.Rojas | meeting | 11:00 | 12:00 | test@exchange.com | Important |
 
 
 #    | Ariel Rojas | meeting | 21:00 | 22:00 |                   |           |

@@ -1,5 +1,6 @@
 package ui.pages.tablet;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,11 +15,13 @@ public class MainTabletPage extends BasePageObject{
     @FindBy(xpath = "//div[contains(@class,'info')]/div[contains(@class,'meeting-title') and contains(text(),'Available')]")
     WebElement availableSection;
     @FindBy(xpath = "//div[contains(@class,'info')]/div[contains(@class,'meeting-title') and contains(text(),'End of day')]")
-    WebElement endOfDatySection;
+    WebElement endOfDaySection;
     @FindBy(xpath = "//rm-panel-option[contains(@class,'tile-column-option-landscape')]/div[contains(@class,'tile-button-schedule')]/div[contains(@class,'tile-icon')]")
     WebElement scheduleSection;
     @FindBy(xpath = "//rm-panel-option[contains(@class,'tile-column-option-landscape')]/div[contains(@class,'tile-button-search')]/div[contains(@class,'tile-icon')]")
     WebElement searchSection;
+
+    WebElement nameMeetingLabel;
 
     /**
      * This method is the constructor
@@ -38,7 +41,7 @@ public class MainTabletPage extends BasePageObject{
     }
 
     public SchedulePage clickEndOfDaySection(){
-        endOfDatySection.click();
+        endOfDaySection.click();
         return new SchedulePage();
     }
 
@@ -54,5 +57,14 @@ public class MainTabletPage extends BasePageObject{
 
     public boolean isMainLabelPresent(){
         return mainLabel.isDisplayed();
+    }
+
+    public boolean isMeetingPresent(String nameMeeting){
+        nameMeetingLabel = driver.findElement(By.xpath(buildNameMeetingTitle(nameMeeting)));
+        return nameMeetingLabel.isDisplayed();
+    }
+
+    public String buildNameMeetingTitle(String nameMeeting){
+        return "//div[contains(@class,'info')]/div[contains(@class,'meeting-title') and contains(text(),'"+nameMeeting+"')]";
     }
 }
