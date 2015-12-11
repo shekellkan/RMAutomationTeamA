@@ -51,7 +51,6 @@ public class DriverManager {
 
                 driver.manage().timeouts().implicitlyWait(implicitWait, TimeUnit.SECONDS);
                 driver.manage().window().maximize();
-                driver.get(externalVariablesManager.getAdminURL());
             }
             if(wait == null)
             {

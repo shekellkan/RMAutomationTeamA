@@ -2,10 +2,10 @@ package ui;
 
 import Framework.DriverManager;
 import Framework.ExternalVariablesManager;
-import Framework.JsonReader;
 import org.openqa.selenium.WebDriver;
+import ui.pages.admin.LoginAdminPage;
+import ui.pages.tablet.LoginTabletPage;
 import ui.pages.admin.MainAdminPage;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Jean Carlo Rodriguez
@@ -30,6 +30,24 @@ public class PageTransporter {
             instance = new PageTransporter();
         }
         return instance;
+    }
+
+    private static void goToURL(String url) {
+        driver.navigate().to(url);
+    }
+
+    public String getCurrentURL() {
+        return driver.getCurrentUrl();
+    }
+
+    public static LoginTabletPage goToLoginTabletPage(){
+        goToURL(externalVariablesManager.getLoginTabletURL());
+        return new LoginTabletPage();
+    }
+
+    public static LoginAdminPage goToLoginAdminPage() {
+        goToURL(externalVariablesManager.getAdminURL());
+        return new LoginAdminPage();
     }
 
     public MainAdminPage goToAdminMainPage() {
