@@ -1,9 +1,9 @@
-package Models;
+package entities;
 
 /**
  * Created by ArielWagner on 09/12/2015.
  */
-public class RoomModel {
+public class RoomEntity {
 
     private String displayName;
     private String code;

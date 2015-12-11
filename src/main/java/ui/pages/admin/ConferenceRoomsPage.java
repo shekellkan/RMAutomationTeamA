@@ -5,15 +5,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.common.CommonMethods;
+
 /**
  * Created by ArielWagner on 07/12/2015.
  */
 public class ConferenceRoomsPage extends MainAdminPage {
     @FindBy(xpath = "//div[@id = 'roomsGrid']")
     WebElement roomsGridContainer;
+
     @FindBy(xpath = "//div[contains(text(), 'Room successfully Modified')]")
     WebElement roomModifiedMessagePopUp;
-    By roomNameLbl;
+
+    @FindBy(xpath = "//input[contains(@ng-model, 'filterOptions')]")
+    WebElement filterByRoomInput;
+
+    By roomDisplayNameLabel;
+
     /**
      * This method is the constructor
      */
@@ -30,8 +37,8 @@ public class ConferenceRoomsPage extends MainAdminPage {
      * @return the RoomInfo page
      */
     public RoomInfoPage selectRoom(String room){
-        roomNameLbl = By.xpath("//span[2][contains(text(), '"+ room +"')]");
-        CommonMethods.doubleClick(driver.findElement(roomNameLbl));
+        roomDisplayNameLabel = By.xpath("//span[2][contains(text(), '"+ room +"')]");
+        CommonMethods.doubleClick(driver.findElement(roomDisplayNameLabel));
         return new RoomInfoPage();
     }
     /**
@@ -45,5 +52,14 @@ public class ConferenceRoomsPage extends MainAdminPage {
     public boolean isResourceButtonPresent(ResourceEntity resource)
     {
         return isPresent(By.xpath("//div[@class='row']//span[text()='" + resource.getDisplayName() + "']"));
+    }
+
+    /**
+     * This method allows set the value for the filter by room
+     * @param criteria
+     */
+    public void setFilterByRoom(String criteria) {
+        filterByRoomInput.clear();
+        filterByRoomInput.sendKeys(criteria);
     }
 }
