@@ -85,7 +85,7 @@ public abstract class BasePageObject {
     {
         boolean isDisplayed;
         try {
-            driverManager.setImplicitWait(2);
+            driverManager.setImplicitWait(3);
             driver.findElement(by);
             isDisplayed = true;
         }catch (Exception e)
