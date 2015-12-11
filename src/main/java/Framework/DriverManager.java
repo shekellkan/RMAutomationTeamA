@@ -47,7 +47,6 @@ public class DriverManager {
 
                 driver.manage().timeouts().implicitlyWait(Integer.parseInt(jsonReader.getKeyFromSingleJson("implicitWait")), TimeUnit.SECONDS);
                 driver.manage().window().maximize();
-                driver.get(externalVariablesManager.getAdminURL());
             }
             if(wait == null)
             {
