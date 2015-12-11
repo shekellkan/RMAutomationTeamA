@@ -20,6 +20,8 @@ public class DriverManager {
     private static ExternalVariablesManager externalVariablesManager = ExternalVariablesManager.getInstance();
     final static Logger logger = Logger.getLogger(DriverManager.class);
     private static JsonReader jsonReader;
+    private static int implicitWait;
+    private static int explicitWait;
 
     protected DriverManager(){
     }
@@ -33,6 +35,8 @@ public class DriverManager {
             if(driver == null)
             {
                 String browserName = externalVariablesManager.getBrowserName();
+                implicitWait = Integer.parseInt(jsonReader.getKeyFromSingleJson("implicitWait"));
+                explicitWait = Integer.parseInt(jsonReader.getKeyFromSingleJson("explicitWait"));
                 if(browserName.equalsIgnoreCase("Firefox"))
                 {
                     driver = new FirefoxDriver();
@@ -45,13 +49,13 @@ public class DriverManager {
                 }
                 logger.info("initializing the web driver: "+ browserName);
 
-                driver.manage().timeouts().implicitlyWait(Integer.parseInt(jsonReader.getKeyFromSingleJson("implicitWait")), TimeUnit.SECONDS);
+                driver.manage().timeouts().implicitlyWait(implicitWait, TimeUnit.SECONDS);
                 driver.manage().window().maximize();
                 driver.get(externalVariablesManager.getAdminURL());
             }
             if(wait == null)
             {
-                wait = new WebDriverWait(driver,Integer.parseInt(jsonReader.getKeyFromSingleJson("explicitWait")));
+                wait = new WebDriverWait(driver,explicitWait);
             }
 
         }
@@ -71,4 +75,6 @@ public class DriverManager {
         driver.quit();
         driver = null;
     }
+    public int getImplicitWait(){return implicitWait;}
+    public void setImplicitWait(int implicitSecondTime) {driver.manage().timeouts().implicitlyWait(implicitSecondTime,TimeUnit.SECONDS);}
 }

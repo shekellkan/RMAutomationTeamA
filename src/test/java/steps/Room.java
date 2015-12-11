@@ -1,6 +1,7 @@
 package steps;
 
 import db.DBMethods;
+import db.DBRoomsMethods;
 import entities.RoomEntity;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
@@ -23,7 +24,7 @@ public class Room {
     RoomInfoPage roomInfoPage;
     RoomEntity roomEntity;
     String displayNameRoom;
-    DBMethods dbMethods;
+    DBRoomsMethods dbRoomsMethods;
     String displayNameRoomDB;
 
     public Room(MainAdminPage mainAdminPage, RoomEntity roomEntity) {
@@ -69,10 +70,11 @@ public class Room {
 
     @When("^I search a Room by \"([^\"]*)\"$")
     public void searchARoomBy(String criteria) {
+
         conferenceRoomsPage = roomInfoPage.clickSaveRoom();
         conferenceRoomsPage.setFilterByRoom(criteria);
-        dbMethods = new DBMethods();
-        ArrayList<String> roomNames = dbMethods.filterRoomsByCriteria(criteria);
+        dbRoomsMethods = new DBRoomsMethods();
+        ArrayList<String> roomNames = dbRoomsMethods.likeFilterByCriteria("displayName",criteria);
         for(String name: roomNames) {
             System.out.println("name...." + name);
             if(!(name.equals(null))) {

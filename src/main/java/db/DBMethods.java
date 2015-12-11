@@ -24,18 +24,13 @@ public class DBMethods {
      * @param criteria
      * @return an ArrayList of String
      */
-    public ArrayList<String> filterRoomsByCriteria(String criteria) {
-        ArrayList<String> roomsList = new ArrayList<String>();
-        MongoCollection<Document> roomsCollation = MongoDBManager.getInstance().getCollection("rooms");
-        FindIterable<Document> rooms = roomsCollation
-                .find(new Document(
-                        "displayName", new BasicDBObject("$regex", criteria)));
-        rooms.forEach(new Block<Document>() {
-            @Override
-            public void apply(final Document document) {
-                roomsList.add(document.get("displayName").toString());
-            }
-        });
-        return roomsList;
+
+    /***
+    public static void main(String arg[])
+    {
+        DBMethods db = new DBMethods();
+        int x = db.filterRoomsByCriteria("Pro").size();
+        System.out.println("$$$$$$"+x);
     }
+     */
 }
