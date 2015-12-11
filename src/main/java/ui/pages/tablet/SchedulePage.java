@@ -123,7 +123,6 @@ public class SchedulePage extends BasePageObject {
 
     public boolean isMeetingDisplayed(String nameMeeting){
         meetingLabel = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
-        System.out.println(buildMeetingDisplay(nameMeeting) + "***************************");
         return meetingLabel.isDisplayed();
     }
 
