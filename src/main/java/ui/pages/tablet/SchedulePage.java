@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
-
+import ui.common.CommonMethods;
 
 
 /**
@@ -36,10 +36,13 @@ public class SchedulePage extends BasePageObject {
 
     WebElement meetingLabel;
     WebElement meetingForDelete;
-    @FindBy(xpath = "//div[contains(text(),'Meeting successfully created')]")
-    WebElement successfullyMessage;
     @FindBy(xpath = "//div[contains(@class,'form-bar')]/button/span[contains(text(),'Remove')]")
     WebElement removeButton;
+    WebElement messageElement;
+    @FindBy(xpath = "//div[contains(@class,'form-bar')]/button/span[contains(text(),'Update')]")
+    WebElement updateButton;
+    /************** REQUIRED MESSAGES **************/
+    WebElement fieldRequiredMessage;
 
     /**
      * This method is the constructor
@@ -127,19 +130,13 @@ public class SchedulePage extends BasePageObject {
     public boolean isMeetingDisplayed(String nameMeeting){
         try{
             meetingLabel = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
-            System.out.println("antes del return ********************");
             return meetingLabel.isDisplayed();
         }catch (NoSuchElementException e){
-            System.out.println("entre al catch ++++++++++++++++++++");
             return false;
         }
     }
 
-    public boolean isSuccessfullyMessageDisplayed(){
-        return successfullyMessage.isDisplayed();
-    }
-
-    public SchedulePage selectMeetingForDelete(String nameMeeting){
+    public SchedulePage selectMeeting(String nameMeeting){
         meetingForDelete = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
         meetingForDelete.click();
         return this;
@@ -151,7 +148,48 @@ public class SchedulePage extends BasePageObject {
     }
 
     public CredentialsPage deleteMeeting(String nameMeeting){
-        selectMeetingForDelete(nameMeeting);
+        selectMeeting(nameMeeting);
         return clickRemoveButton();
+    }
+
+    public boolean isMessageDisplayed(String nameMessage){
+        messageElement = driver.findElement(By.xpath(CommonMethods.buildMessageElement(nameMessage)));
+        return messageElement.isDisplayed();
+    }
+
+    public CredentialsPage clickUpdateButton(){
+        updateButton.click();
+        return new CredentialsPage();
+    }
+
+    public CredentialsPage updateNewMeeting(MeetingEntity meetingEntity){
+        this.meetingEntity = meetingEntity;
+        setSubjectInput(meetingEntity.getSubject());
+        setFromInput(meetingEntity.getFrom());
+        setToInput(meetingEntity.getTo());
+        setAttendeesInput(meetingEntity.getAttendees());
+        setBodyTextArea(meetingEntity.getBody());
+        return clickUpdateButton();
+    }
+
+    public String buildMessageRequired(String fieldRequired){
+        return "//small[contains(@class,'text-warnings') and contains(text(),'"+fieldRequired+"')]";
+    }
+
+    public boolean isRequiredMessageDisplayed(String fieldRequired){
+        fieldRequiredMessage = driver.findElement(By.xpath(buildMessageRequired(fieldRequired)));
+        return fieldRequiredMessage.isDisplayed();
+    }
+
+    public SchedulePage missingInformationMeeting(MeetingEntity meetingEntity){
+        this.meetingEntity = meetingEntity;
+        setOrganizerInput(meetingEntity.getOrganizer());
+        setSubjectInput(meetingEntity.getSubject());
+        setFromInput(meetingEntity.getFrom());
+        setToInput(meetingEntity.getTo());
+        setAttendeesInput(meetingEntity.getAttendees());
+        setBodyTextArea(meetingEntity.getBody());
+        createButton.click();
+        return this;
     }
 }

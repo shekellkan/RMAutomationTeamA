@@ -39,9 +39,9 @@ public class Meetings {
         schedulePage = credentialsPage.confirmCredentials(externalVariablesManager.getExchangeUserName(), externalVariablesManager.getExchangeUserPassword());
     }
 
-    @Then("^an information message should be displayed$")
-    public void anInformationMessageShouldBeDisplayed(){
-        assertTrue(schedulePage.isSuccessfullyMessageDisplayed());
+    @Then("^an information message should be displayed \"([^\"]*)\"$")
+    public void anInformationMessageShouldBeDisplayed(String nameMessage){
+        assertTrue(schedulePage.isMessageDisplayed(nameMessage));
     }
 
     @And("^the Meeting should be displayed in the Schedule bar$")
@@ -49,7 +49,7 @@ public class Meetings {
         assertTrue(schedulePage.isMeetingDisplayed(meetingEntity.getSubject()));
     }
 
-    @And("^the Meeting information should be displayed in the Next section$")
+    @And("^the Meeting information should be displayed in the Next section of Main page$")
     public void theMeetingInformationShouldBeDisplayedInTheNextSection(){
         mainTabletPage = schedulePage.goMainPage();
         assertTrue(mainTabletPage.isMeetingPresent(meetingEntity.getSubject()));
@@ -90,20 +90,45 @@ public class Meetings {
     }
 
     @When("^I remove the Meeting$")
-    public void iRemoveTheMeeting(){
+    public void removeTheMeeting(){
         credentialsPage = schedulePage.deleteMeeting(meetingEntity.getSubject());
-        schedulePage = credentialsPage.confirmCredentials(externalVariablesManager.getExchangeUserName(), externalVariablesManager.getExchangeUserPassword());
+        schedulePage = credentialsPage.confirmDelete(externalVariablesManager.getExchangeUserPassword());
     }
 
-    @And("^the Meeting should be removed from the the Schedule bar$")
+    @And("^the meeting should not be displayed in the Schedule bar$")
     public void theMeetingShouldBeRemovedFromTheTheScheduleBar(){
         assertFalse(schedulePage.isMeetingDisplayed(meetingEntity.getSubject()));
     }
 
-    @And("^the Meeting information should be removed from the Next section$")
+    @And("^the meeting information should not be displayed in the Next section of Main page$")
     public void theMeetingInformationShouldBeRemovedFromTheNextSection(){
         mainTabletPage = schedulePage.goMainPage();
         assertFalse(mainTabletPage.isMeetingPresent(meetingEntity.getSubject()));
+    }
+
+    @When("^I update the meeting information: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
+    public void updateTheMeetingInformation(String organizer, String subject, String from, String to, String attendees, String body){
+        String nameMeetingToUpdate = meetingEntity.getSubject();
+        meetingEntity.setAllFields(organizer, subject, from, to, attendees, body);
+        schedulePage.selectMeeting(nameMeetingToUpdate);
+        credentialsPage = schedulePage.updateNewMeeting(meetingEntity);
+        schedulePage = credentialsPage.confirmUpdate(externalVariablesManager.getExchangeUserPassword());
+    }
+
+    @When("^I create unsuccessfully a meeting with the following information: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
+    public void createUnsuccessfullyAMeetingWithTheFollowingInformation(String organizer, String subject, String from, String to, String attendees, String body){
+        meetingEntity.setAllFields(organizer, subject, from, to, attendees, body);
+        schedulePage.missingInformationMeeting(meetingEntity);
+    }
+
+    @Then("^an error \"([^\"]*)\" message should be displayed$")
+    public void anErrorMessageShouldBeDisplayed(String nameError){
+        assertTrue(schedulePage.isRequiredMessageDisplayed(nameError));
+    }
+
+    @And("^the Meeting should not be listed in the meetings of Room using the API$")
+    public void theMeetingShouldNotBeListedInTheMeetingsOfRoomUsingTheAPI(){
+        assertTrue(true);
     }
 
 

@@ -64,4 +64,8 @@ public class CommonMethods {
             return false;
         }
     }
+
+    public static String buildMessageElement(String nameMessage){
+        return "//div[contains(text(),'"+nameMessage+"')]";
+    }
 }

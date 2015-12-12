@@ -75,4 +75,14 @@ public class CredentialsPage extends BasePageObject {
     public boolean isConflictMessageDisplayed(){
         return conflictMessage.isDisplayed();
     }
+
+    public SchedulePage confirmDelete(String userPassword){
+        setUserPasswordInput(userPassword);
+        return clickOkButton();
+    }
+
+    public SchedulePage confirmUpdate(String userPassword){
+        setUserPasswordInput(userPassword);
+        return clickOkButton();
+    }
 }
