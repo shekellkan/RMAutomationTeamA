@@ -4,10 +4,10 @@ Feature: resource
 
   Background:
     Given I'm logged in with the user "admin" in the admin page
+      And I go to Resources page
 
 
   Scenario Outline: create a Resource
-    Given I go to Resources page
     When I create a Resource with values: "<Name>","<Display_Name>","<Description>" and "<Icon>"
     Then the Resource is displayed in the list of Resources
       When I go to Conference Rooms page
@@ -19,13 +19,20 @@ Feature: resource
   |Board_Display|Board display|the display name have spaces                  | fa-eye-slash  |
   |Board1       |Board        |the name contains a number                    | fa-edit       |
 
+  Scenario Outline: : Filter a Resource
+    When I filter the Resources with the criteria "<Criteria>"
+    Then the result of filter should be the same Resources for the UI and the DB
+  Examples:
+  |Criteria |
+  |Mac      |
+  |ac       |
+  |Pro      |
+  |Pc       |
+
   Scenario: remove a Resource
-    Given I go to Resources page
-    And I create a Resource with values: "Mac","Mac computer","My mac computer" and "fa-desktop"
+    Given I create a Resource with values: "Mac1","Mac computer1","My mac computer1" and "fa-desktop"
     When I remove the Resource
     Then the Resource is not longer displayed in the Resource list
       When I go to Conference Rooms page
     And the Resource should be not displayed as a button in the Conference Room page header
 #    And the resource should not be obtained using the API
-
-

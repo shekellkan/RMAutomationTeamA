@@ -15,6 +15,11 @@ public class LoginAdmin {
 
     @Given("^I'm logged in with the user \"([^\\\"]*)\" in the admin page$")
     public void imLoggedInWithTheUSer(String userName){
+
+        PageTransporter pageTransporter = PageTransporter.getInstance();
+        if(!pageTransporter.imInTheRMAdminPage())
+            pageTransporter.goToLoginAdminPage();
+
         if(!CommonMethods.isUserLoginInAdminPage())
         {
             LoginAdminPage loginAdminPage = new LoginAdminPage();
@@ -25,7 +30,7 @@ public class LoginAdmin {
                 loginAdminPage.loginSuccessful(user, password);
             }
         }else{
-            PageTransporter.getInstance().goToAdminMainPage();
+            pageTransporter.goToAdminMainPage();
         }
     }
 }

@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 /**
  * Created by ArielWagner on 09/12/2015.
  */
-public class OutOfOrderPlanningPage extends RoomPage {
+public class OutOfOrderPlanningPage extends RoomMenuPage {
 
     @FindBy(xpath = "//span[contains(@class, 'calendar')]")
     WebElement calendarButton;

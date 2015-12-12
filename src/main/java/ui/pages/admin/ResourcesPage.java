@@ -6,6 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * User: Jean Carlo Rodriguez
  * Date: 12/7/15
@@ -21,6 +24,9 @@ public class ResourcesPage extends MainAdminPage {
 
     @FindBy(id = "btnRemove")
     WebElement removeButton;
+
+    @FindBy(xpath = "//input[@ng-model='resourceNameFilter']")
+    WebElement resourceFilterInput;
 
     public ResourcesPage()
     {
@@ -67,6 +73,20 @@ public class ResourcesPage extends MainAdminPage {
 
     public boolean isResourceInTheResourceList(ResourceEntity resourceEntity) {
         String resourceName = resourceEntity.getName();
-        return isDeleted(10,By.xpath("//div[contains(@class,'col2')]//span[text()='"+resourceEntity+"']/ancestor::div[contains(@class,'ng-scope ngRow')]"));
+        return isDeleted(10, By.xpath("//div[contains(@class,'col2')]//span[text()='" + resourceEntity + "']/ancestor::div[contains(@class,'ng-scope ngRow')]"));
+    }
+
+    public void setCriteria(String criteria) {
+        resourceFilterInput.sendKeys(criteria);
+    }
+
+    public ArrayList<String> getActualTheListOfResources() {
+        List<WebElement> WebElementsNameList = driver.findElements(By.xpath("//div[@class='ngCanvas']//div[@class='ngCell centeredColumn col2 colt2']//span"));
+        ArrayList<String> resourcesNames = new ArrayList<String>();
+        for (WebElement item: WebElementsNameList)
+        {
+            resourcesNames.add(item.getText());
+        }
+        return resourcesNames;
     }
 }

@@ -6,7 +6,7 @@ Feature: Rooms
 
   @EditRoom
   Scenario Outline: Edit a Room
-    When I open to "Floor1Room11" Room for edit
+    When I open "Floor1Room11" Room for edit
       And I edit the displayName "<displayName>" ,code "<code>" and capacity "<capacity>"
     Then a information message should be displayed
       And the Room data should be the edited
@@ -19,7 +19,7 @@ Feature: Rooms
 
   @FilterRoom
   Scenario Outline: Filter the Rooms for display name, code and capacity
-    Given I open to "Floor1Room12" Room for edit
+    Given I open "Floor1Room12" Room for edit
     And I edit the displayName "Custom" ,code "om11" and capacity "400"
     When I search a Room by "<Criteria>"
     Then the Room or Rooms "" should be listed
@@ -32,7 +32,7 @@ Feature: Rooms
 
 
   Scenario Outline: Place a room to out of order
-    Given I open to "Floor1Room12" Room
+    Given I open "Floor1Room12" Room
     When I go to the Out of Order Planning Tab
     And I configure the Room with the option out of order "<Out Of Order>" at the time "8:00" to "10:00"
     Then a information message should be displayed

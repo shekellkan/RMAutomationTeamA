@@ -1,6 +1,7 @@
 package steps;
 
-import db.DBMethods;
+import db.DBRoomsMethods;
+import entities.ResourceEntity;
 import entities.RoomEntity;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
@@ -8,6 +9,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import ui.pages.admin.ConferenceRoomsPage;
 import ui.pages.admin.MainAdminPage;
+import ui.pages.admin.RoomAssociationResourcePage;
 import ui.pages.admin.RoomInfoPage;
 import org.testng.Assert;
 
@@ -21,17 +23,20 @@ public class Room {
     MainAdminPage mainAdminPage;
     ConferenceRoomsPage conferenceRoomsPage;
     RoomInfoPage roomInfoPage;
+    RoomAssociationResourcePage roomAssociationResourcePage;
     RoomEntity roomEntity;
+    ResourceEntity resourceEntity;
     String displayNameRoom;
-    DBMethods dbMethods;
+    DBRoomsMethods dbRoomsMethods;
     String displayNameRoomDB;
 
-    public Room(MainAdminPage mainAdminPage, RoomEntity roomEntity) {
+    public Room(MainAdminPage mainAdminPage, RoomEntity roomEntity, ResourceEntity resourceEntity) {
         this.mainAdminPage = mainAdminPage;
         this.roomEntity = roomEntity;
+        this.resourceEntity = resourceEntity;
     }
 
-    @When("^I open to \"([^\"]*)\" Room for edit$")
+    @When("^I open \"([^\"]*)\" Room for edit$")
     public void openRoomForEdit(String displayName) {
         conferenceRoomsPage = new ConferenceRoomsPage();
         displayNameRoom = displayName;
@@ -43,7 +48,6 @@ public class Room {
         roomInfoPage.editRoom(displayName, code, capacity);
         roomEntity.setAllFields(displayName, code, capacity);
         conferenceRoomsPage = roomInfoPage.clickSaveRoom();
-        roomInfoPage = conferenceRoomsPage.selectRoom(displayName);
     }
 
     @Then("^a information message should be displayed$")
@@ -53,12 +57,14 @@ public class Room {
 
     @And("^the Room data should be the edited$")
     public void roomDataShouldBeTheEdited() {
+        roomInfoPage = conferenceRoomsPage.selectRoom(roomEntity.getDisplayName());
         String actualDisplayName = roomInfoPage.getDisplayName();
         String actualCode = roomInfoPage.getCode();
         String actualCapacity = roomInfoPage.getCapacity();
         Assert.assertEquals(actualDisplayName, roomEntity.getDisplayName());
         Assert.assertEquals(actualCode, roomEntity.getCode());
         Assert.assertEquals(actualCapacity, roomEntity.getCapacity());
+        conferenceRoomsPage = roomInfoPage.clickSaveRoom();
     }
 
     @And("^the Room edited should be obtained using the API$")
@@ -69,16 +75,7 @@ public class Room {
 
     @When("^I search a Room by \"([^\"]*)\"$")
     public void searchARoomBy(String criteria) {
-        conferenceRoomsPage = roomInfoPage.clickSaveRoom();
         conferenceRoomsPage.setFilterByRoom(criteria);
-        dbMethods = new DBMethods();
-        ArrayList<String> roomNames = dbMethods.filterRoomsByCriteria(criteria);
-        for(String name: roomNames) {
-            System.out.println("name...." + name);
-            if(!(name.equals(null))) {
-                displayNameRoomDB = name;
-            }
-        }
     }
 
     @Then("^the Room or Rooms \"([^\"]*)\" should be listed$")
@@ -109,5 +106,30 @@ public class Room {
         mainAdminPage = new MainAdminPage();
         mainAdminPage.getLeftMenuPage().goToResources();
 
+    }
+
+    @And("^I select the Resource in the Conference Room page header$")
+    public void iSelectTheResourceInTheConferenceRoomPageHeader()
+    {
+        conferenceRoomsPage = new ConferenceRoomsPage();
+        conferenceRoomsPage.clickOnResourceButton(resourceEntity);
+    }
+
+    @And("^I go to Resource Association tab$")
+    public void IGoToResourceAssociationTab()
+    {
+        roomAssociationResourcePage = roomInfoPage.goToResourceAssociations();
+    }
+
+    @And("^I associate the Resource with quantity \"([^\"]*)\"$")
+    public void iAssociateTheResourceWithQuantity(String quantity)
+    {
+        roomAssociationResourcePage.associateResource(resourceEntity,quantity);
+        roomAssociationResourcePage.clickSaveRoom();
+    }
+    // Todo
+    @Then("^the Resource should be displayed with the assigned quantity in the list$")
+    public void theResourceShouldBeDisplayedWithTheAssignedQuantityInTheList()
+    {
     }
 }

@@ -11,7 +11,10 @@ import ui.BasePageObject;
 public class RoomMenuPage extends BasePageObject {
 
     @FindBy(xpath = "//span[@ng-click = 'cancel()']")
-    WebElement closeButton;
+    WebElement cancelButton;
+
+    @FindBy(xpath = "//button[contains(@ng-click, 'save')]")
+    WebElement saveButton;
 
     @FindBy(xpath = "//a[@class='current']")
     WebElement roomInfoTab;
@@ -31,7 +34,16 @@ public class RoomMenuPage extends BasePageObject {
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(closeButton));
+        wait.until(ExpectedConditions.visibilityOf(cancelButton));
+    }
+
+    /**
+     * This method allows press the save button
+     * @return the ConferenceRooms page
+     */
+    public ConferenceRoomsPage clickSaveRoom(){
+        saveButton.click();
+        return new ConferenceRoomsPage();
     }
 
     /**
@@ -47,9 +59,9 @@ public class RoomMenuPage extends BasePageObject {
      * This method allows go to ResourceAssociations page
      * @return the ResourceAssociations page
      */
-    public ResourceAssociationsPage goToResourceAssociations() {
+    public RoomAssociationResourcePage goToResourceAssociations() {
         resourceAssociationsTab.click();
-        return new ResourceAssociationsPage();
+        return new RoomAssociationResourcePage();
     }
 
     /**

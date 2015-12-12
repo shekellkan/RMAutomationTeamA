@@ -45,18 +45,25 @@ public class PageTransporter {
         return new LoginTabletPage();
     }
 
-    public static LoginAdminPage goToLoginAdminPage() {
+    public LoginAdminPage goToLoginAdminPage() {
         goToURL(externalVariablesManager.getAdminURL());
         return new LoginAdminPage();
     }
 
     public MainAdminPage goToAdminMainPage() {
-        driver.get(externalVariablesManager.getMainAdminURL());
+        goToURL(externalVariablesManager.getMainAdminURL());
         return new MainAdminPage();
     }
 
     public boolean imInTheLoginAdminPage() {
-        if(driver.getCurrentUrl().contains("admin/#/login"))
+        if(getCurrentURL().contains("admin/#/login"))
+            return true;
+        else
+            return false;
+    }
+    public boolean imInTheRMAdminPage()
+    {
+        if(getCurrentURL().contains("admin"))
             return true;
         else
             return false;

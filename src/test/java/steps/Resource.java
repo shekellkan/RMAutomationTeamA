@@ -1,5 +1,6 @@
 package steps;
 
+import db.DBResourcesMethods;
 import entities.ResourceEntity;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -7,6 +8,9 @@ import cucumber.api.java.en.When;
 import org.testng.Assert;
 import ui.pages.admin.MainAdminPage;
 import ui.pages.admin.ResourcesPage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: Jean Carlo Rodriguez
@@ -17,6 +21,7 @@ public class Resource {
     MainAdminPage mainAdminPage;
     ResourceEntity resourceEntity;
     ResourcesPage resourcesPage;
+    static String criteria;
     public Resource(MainAdminPage mainAdminPage, ResourceEntity resourceEntity)
     {
         this.mainAdminPage = mainAdminPage;
@@ -62,4 +67,26 @@ public class Resource {
         mainAdminPage.getLeftMenuPage().goToLocations();
         mainAdminPage.getLeftMenuPage().goToResources();
     }
+
+    @When("^I filter the Resources with the criteria \"([^\\\"]*)\"$")
+    public void iFilterTheResourcesWithTheCriteria(String byCriteria)
+    {
+        resourcesPage = new ResourcesPage();
+        resourcesPage.setCriteria(byCriteria);
+        criteria = byCriteria;
+
+    }
+
+    @Then("^the result of filter should be the same Resources for the UI and the DB$")
+    public void theResultOfFilterShouldBeTheSameResourcesFotTheUIAndTheDB()
+    {
+        DBResourcesMethods dbResourcesMethods = new DBResourcesMethods();
+        ArrayList<String> actualResult = resourcesPage.getActualTheListOfResources();
+        ArrayList<String> expectedResult = dbResourcesMethods.likeFilterByCriteria("name",criteria);
+
+        Assert.assertEqualsNoOrder(actualResult.toArray(),expectedResult.toArray());
+
+        mainAdminPage.getLeftMenuPage().goToLocations();
+    }
+
 }

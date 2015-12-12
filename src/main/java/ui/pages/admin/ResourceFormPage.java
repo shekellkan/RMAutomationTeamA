@@ -100,7 +100,7 @@ public class ResourceFormPage extends BasePageObject {
         setDescription(resource.getDescription());
         setIcon(resource.getIconName());
         saveButton.click();
-        isDeleted(10,By.xpath("//div[@class='modal-content']"));
+        isDisplayed(By.xpath("//div[@class='modal-content']"));
         return new ResourcesPage();
     }
 }

@@ -28,7 +28,7 @@ public class RemoveResourcesConfirmationPage extends BasePageObject {
     public ResourcesPage ClickOnRemoveButton()
     {
         removeButton.click();
-        isDeleted(10, By.xpath("//div[@class='modal-footer ng-scope']//button//span[text()='Remove']"));
+        isDisplayed(By.xpath("//div[@class='modal-footer ng-scope']//button//span[text()='Remove']"));
         return new ResourcesPage();
     }
 }

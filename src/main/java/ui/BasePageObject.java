@@ -18,11 +18,13 @@ import org.openqa.selenium.NoSuchElementException;
 public abstract class BasePageObject {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    protected DriverManager driverManager;
     final static Logger logger = Logger.getLogger(BasePageObject.class);
     /**
      * Initializes the web driver, wait and web elements
      */
     public BasePageObject() {
+        driverManager = DriverManager.getInstance();
         this.driver = DriverManager.getInstance().getWebDriver();
         this.wait = DriverManager.getInstance().getWait();
         PageFactory.initElements(driver, this);
@@ -45,8 +47,15 @@ public abstract class BasePageObject {
         }
     }
 
+    /**
+     * return true if the element is deleted after a number of tries
+     * @param numberOfTries
+     * @param by
+     * @return
+     */
     public boolean isDeleted(int numberOfTries, By by)
     {
+
         boolean isDeleted = false;
         int count = 0;
         while(count!=numberOfTries)
@@ -65,5 +74,26 @@ public abstract class BasePageObject {
             }
         }
         return isDeleted;
+    }
+
+    /**
+     * return true if the element is displayed after 2 seconds of searching it
+     * @param by
+     * @return
+     */
+    public boolean isDisplayed(By by)
+    {
+        boolean isDisplayed;
+        try {
+            driverManager.setImplicitWait(3);
+            driver.findElement(by);
+            isDisplayed = true;
+        }catch (Exception e)
+        {
+            isDisplayed = false;
+        }finally{
+            driverManager.setImplicitWait(driverManager.getImplicitWait());
+        }
+        return isDisplayed;
     }
 }
