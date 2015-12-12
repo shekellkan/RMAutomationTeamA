@@ -8,8 +8,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -38,6 +36,7 @@ public class MongoDBManager {
     public MongoCollection getCollection(String collectionName){
         return database.getCollection(collectionName);
     }
+
     public void close(){
         mongoClient.close();
         instance = null;
@@ -45,16 +44,38 @@ public class MongoDBManager {
 
     public ArrayList<String> likeFilterByCriteria(String collection, String field,String criteria) {
         final String fieldName = field;
-        final ArrayList<String> roomsList = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<String>();
         MongoCollection<Document> roomsCollation = MongoDBManager.getInstance().getCollection(collection);
         FindIterable<Document> rooms = roomsCollation
                 .find(new Document(fieldName, new BasicDBObject("$regex", criteria)));
         rooms.forEach(new Block<Document>() {
             @Override
             public void apply(final Document document) {
-                roomsList.add(document.get(fieldName).toString());
+                list.add(document.get(fieldName).toString());
             }
         });
-        return roomsList;
+        return list;
+    }
+
+    /**
+     * This method allows get Id
+     * @param collation
+     * @param findBy
+     * @param value
+     * @return a String
+     */
+    public String getId(String collation, String findBy, String value) {
+        final Document[] idObject = new Document[1];
+        String id;
+        MongoCollection<Document> roomsCollation = MongoDBManager.getInstance().getCollection(collation);
+        FindIterable<Document> idList = roomsCollation.find(eq(findBy, value));
+        idList.forEach(new Block<Document>() {
+            @Override
+            public void apply(Document document) {
+                idObject[0] = document;
+            }
+        });
+        id = idObject[0].get("_id").toString();
+        return id;
     }
 }

@@ -16,7 +16,7 @@ public class APIManager {
 
     public APIManager() {
         logger.info("API Manager initialized");
-        RestAssured.baseURI = "https://172.20.208.195:4040";
+        RestAssured.baseURI = "https://172.20.208.194:4040";
         RestAssured.useRelaxedHTTPSValidation();
     }
 
