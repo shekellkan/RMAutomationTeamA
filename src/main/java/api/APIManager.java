@@ -54,10 +54,4 @@ public class APIManager {
                 then().log().all().
                 statusCode(200);
     }
-
-    public static void main(String arg[])
-    {
-        APIManager apiManager = new APIManager();
-        System.out.println("****************"+apiManager.getToken());
-    }
 }
