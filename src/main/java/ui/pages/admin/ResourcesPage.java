@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import ui.common.CommonMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,5 +89,11 @@ public class ResourcesPage extends MainAdminPage {
             resourcesNames.add(item.getText());
         }
         return resourcesNames;
+    }
+
+    public ResourceInfoPage openResource(ResourceEntity resourceEntity) {
+        WebElement resourceNameButton = driver.findElement(By.xpath("//div[@class='ngCell centeredColumn col2 colt2']//span[text()='" + resourceEntity.getName() + "']"));
+        CommonMethods.doubleClick(resourceNameButton);
+        return new ResourceInfoPage();
     }
 }

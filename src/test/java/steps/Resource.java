@@ -1,16 +1,20 @@
 package steps;
 
+import api.APIResourcesMethods;
+import cucumber.api.java.After;
+import cucumber.api.java.en.And;
 import db.DBResourcesMethods;
 import entities.ResourceEntity;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import entities.RoomEntity;
 import org.testng.Assert;
 import ui.pages.admin.MainAdminPage;
+import ui.pages.admin.ResourceAssociationPage;
+import ui.pages.admin.ResourceInfoPage;
 import ui.pages.admin.ResourcesPage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Jean Carlo Rodriguez
@@ -21,11 +25,13 @@ public class Resource {
     MainAdminPage mainAdminPage;
     ResourceEntity resourceEntity;
     ResourcesPage resourcesPage;
+    RoomEntity roomEntity;
     static String criteria;
-    public Resource(MainAdminPage mainAdminPage, ResourceEntity resourceEntity)
+    public Resource(MainAdminPage mainAdminPage, ResourceEntity resourceEntity, RoomEntity roomEntity)
     {
         this.mainAdminPage = mainAdminPage;
         this.resourceEntity = resourceEntity;
+        this.roomEntity = roomEntity;
     }
 
     @When("^I create a Resource with values: \"([^\\\"]*)\",\"([^\\\"]*)\",\"([^\\\"]*)\" and \"([^\\\"]*)\"$")
@@ -89,4 +95,40 @@ public class Resource {
         mainAdminPage.getLeftMenuPage().goToLocations();
     }
 
+    @Then("^the Resource should be displayed with the Room Associated in Resources page$")
+    public void theResourceShouldBeDisplayedWithTheRoomAssociatedInResourcesPage()
+    {
+        ResourceAssociationPage resourceAssociationPage = resourcesPage.openResource(resourceEntity)
+                .goToAssociationTab();
+        boolean actualResult =resourceAssociationPage.isResourceAssociatedWithTheRoom(roomEntity);
+
+        Assert.assertEquals(actualResult,true);
+        resourceAssociationPage.clickOnCloseButton();
+
+    }
+
+    @And("^the Resource should be obtained using the API$")
+    public void TheResourceShouldBeObtainedUsingTheAPI()
+    {
+        APIResourcesMethods apiResourcesMethods = new APIResourcesMethods();
+        boolean actualResult = apiResourcesMethods.isResourcePresent(resourceEntity);
+
+        Assert.assertEquals(actualResult, true);
+    }
+
+    @And("^the resource should not be obtained using the API$")
+    public void theResourceShouldNotBeObtainedUsingTheAPI()
+    {
+        APIResourcesMethods apiResourcesMethods = new APIResourcesMethods();
+        boolean actualResult = apiResourcesMethods.isResourcePresent(resourceEntity);
+
+        Assert.assertEquals(actualResult, false);
+    }
+
+    @After("@createResource")
+    public void removeResourceFromAPI()
+    {
+        APIResourcesMethods apiResourcesMethods = new APIResourcesMethods();
+        apiResourcesMethods.removeResource(resourceEntity);
+    }
 }

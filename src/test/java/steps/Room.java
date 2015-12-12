@@ -161,15 +161,13 @@ public class Room {
     @Then("^the Resource should be displayed with the assigned quantity in the list$")
     public void theResourceShouldBeDisplayedWithTheAssignedQuantityInTheList()
     {
-        String IconAndName[] = conferenceRoomsPage.getIconFromResourceAssociated(roomEntity,resourceEntity);
+        String IconAndName[] = conferenceRoomsPage.getIconAndQuantityFromResourceAssociated(roomEntity, resourceEntity);
         String actualIcon = IconAndName[0];
         String actualQuantity = IconAndName[1];
-        System.out.println("=========="+actualIcon+"==============="+actualQuantity);
-
         String expectedIcon = "fa "+resourceEntity.getIconName();
         String expectedQuantity = "x "+quantity;
+
         Assert.assertEquals(actualIcon,expectedIcon);
         Assert.assertEquals(actualQuantity,expectedQuantity);
-
     }
 }

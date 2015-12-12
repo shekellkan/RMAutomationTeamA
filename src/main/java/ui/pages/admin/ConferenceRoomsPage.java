@@ -72,7 +72,7 @@ public class ConferenceRoomsPage extends MainAdminPage {
         filterByRoomInput.sendKeys(criteria);
     }
 
-    public String[] getIconFromResourceAssociated(RoomEntity roomEntity,ResourceEntity resourceEntity) {
+    public String[] getIconAndQuantityFromResourceAssociated(RoomEntity roomEntity, ResourceEntity resourceEntity) {
         String resp[] = new String[2];
         String resourceDisplayName = resourceEntity.getDisplayName();
         String roomDisplayName = roomEntity.getDisplayName();

@@ -6,13 +6,13 @@ Feature: resource
     Given I'm logged in with the user "admin" in the admin page
       And I go to Resources page
 
-
+  @createResource
   Scenario Outline: create a Resource
     When I create a Resource with values: "<Name>","<Display_Name>","<Description>" and "<Icon>"
     Then the Resource is displayed in the list of Resources
       When I go to Conference Rooms page
       Then the Resource should be displayed as a button in the Conference Room page header
-    #And the Resource should be obtained using the API
+    And the Resource should be obtained using the API
   Examples:
   | Name        |Display_Name |Description                                   | Icon          |
   |Data_display |Data_display |the name and display name do not have spaces  | fa-eye        |
@@ -35,4 +35,4 @@ Feature: resource
     Then the Resource is not longer displayed in the Resource list
       When I go to Conference Rooms page
     And the Resource should be not displayed as a button in the Conference Room page header
-#    And the resource should not be obtained using the API
+    And the resource should not be obtained using the API

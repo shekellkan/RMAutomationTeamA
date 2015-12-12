@@ -65,7 +65,10 @@ public class MongoDBManager {
                 idObject[0] = document;
             }
         });
-        id = idObject[0].get("_id").toString();
+        if(idObject[0]!=null)
+            id = idObject[0].get("_id").toString();
+        else
+            id= "";
         return id;
     }
 }

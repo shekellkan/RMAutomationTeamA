@@ -10,8 +10,8 @@ import ui.BasePageObject;
  */
 public class TopHeaderPage extends BasePageObject {
 
-    @FindBy(xpath = "//a[contains(text(),'Room Manager')]")
-    WebElement applicationNameLabel;
+    @FindBy(xpath = "//ul[@class='nav navbar-nav navbar-right']//span[text()='sign out']")
+    WebElement signOutButton;
 
     /**
      * This method is the constructor
@@ -22,6 +22,6 @@ public class TopHeaderPage extends BasePageObject {
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(applicationNameLabel));
+        wait.until(ExpectedConditions.visibilityOf(signOutButton));
     }
 }

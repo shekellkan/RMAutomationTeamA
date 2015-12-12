@@ -1,5 +1,6 @@
 package api;
 
+import Framework.ExternalVariablesManager;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import org.apache.log4j.Logger;
@@ -30,5 +31,33 @@ public class APIManager {
         Response response = given().when().get(endPoint + "/" + id);
         JSONObject jsonObject = new JSONObject(response.asString());
         return jsonObject;
+    }
+
+    //Todo
+    public String getToken()
+    {
+        String user = ExternalVariablesManager.getInstance().getAdminUserName();
+        String password = ExternalVariablesManager.getInstance().getAdminUserPassword();
+        String response = given().log().all().contentType("application/json").
+                body("{\"username\":\""+user+"\",\"password\":\""+password+"\",\"authentication\": \"local\"}").
+                when().
+                post("/login").asString();
+        JSONObject tokenJson = new JSONObject(response);
+        return tokenJson.getString("token");
+    }
+
+    public void delete(String endPoint,String id)
+    {
+        given().log().all().
+                headers("Authorization", "jwt "+getToken()).
+                when().delete(endPoint+id).
+                then().log().all().
+                statusCode(200);
+    }
+
+    public static void main(String arg[])
+    {
+        APIManager apiManager = new APIManager();
+        System.out.println("****************"+apiManager.getToken());
     }
 }
