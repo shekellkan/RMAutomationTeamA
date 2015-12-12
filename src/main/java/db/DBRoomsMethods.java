@@ -6,6 +6,7 @@ import com.mongodb.client.MongoCollection;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 import java.util.ArrayList;
+import static com.mongodb.client.model.Filters.eq;
 import static java.util.Arrays.asList;
 /**
  * User: Jean Carlo Rodriguez

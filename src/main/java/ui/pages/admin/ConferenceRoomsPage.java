@@ -7,6 +7,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.common.CommonMethods;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ArielWagner on 07/12/2015.
  */
@@ -96,5 +99,17 @@ public class ConferenceRoomsPage extends MainAdminPage {
             }
         }
         return Integer.parseInt(resNumber);
+    }
+    /**
+     * This method allows get the rooms displayed in ConferenceRooms UI
+     * @return an ArrayList of strings
+     */
+    public ArrayList<String> getRoomsContainer() {
+        ArrayList<String> roomsList = new ArrayList<String>();
+        List<WebElement> roomsCollation = driver.findElements(By.xpath("//div[@class='ngCanvas']//div[@class='ngCell  col2 colt2']//span[2]"));
+        for(WebElement element : roomsCollation) {
+            roomsList.add(element.getText());
+        }
+        return roomsList;
     }
 }
