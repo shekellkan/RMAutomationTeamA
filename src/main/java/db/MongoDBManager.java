@@ -57,4 +57,25 @@ public class MongoDBManager {
         });
         return roomsList;
     }
+    /**
+     * This method allows get Id
+     * @param collation
+     * @param findBy
+     * @param value
+     * @return a String
+     */
+    public String getId(String collation, String findBy, String value) {
+        final Document[] idObject = new Document[1];
+        String id;
+        MongoCollection<Document> roomsCollation = MongoDBManager.getInstance().getCollection(collation);
+        FindIterable<Document> idList = roomsCollation.find(eq(findBy, value));
+        idList.forEach(new Block<Document>() {
+            @Override
+            public void apply(Document document) {
+                idObject[0] = document;
+            }
+        });
+        id = idObject[0].get("_id").toString();
+        return id;
+    }
 }
