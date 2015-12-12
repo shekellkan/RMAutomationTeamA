@@ -22,6 +22,8 @@ public class CredentialsPage extends BasePageObject {
     WebElement okButton;
     @FindBy(xpath = "//button[contains(@class,'pull-right')]/span[contains(text(),'Cancel')]")
     WebElement cancelButton;
+    @FindBy(xpath = "//div[contains(text(),'There is a conflict with another meeting, please choose another time interval')]")
+    WebElement conflictMessage;
 
     /**
      * This method is the constructor
@@ -63,9 +65,14 @@ public class CredentialsPage extends BasePageObject {
         return clickOkButton();
     }
 
-    public SchedulePage cancelCredentials(String userName, String userPassword){
+    public CredentialsPage cancelCredentials(String userName, String userPassword){
         setUserNameInput(userName);
         setUserPasswordInput(userPassword);
-        return clickCancelButton();
+        okButton.click();
+        return this;
+    }
+
+    public boolean isConflictMessageDisplayed(){
+        return conflictMessage.isDisplayed();
     }
 }

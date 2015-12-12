@@ -3,10 +3,13 @@ package ui.pages.tablet;
 import entities.MeetingEntity;
 import org.apache.log4j.chainsaw.Main;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
+
+
 
 /**
  * Created by MiguelTerceros on 12/10/2015.
@@ -122,8 +125,14 @@ public class SchedulePage extends BasePageObject {
     }
 
     public boolean isMeetingDisplayed(String nameMeeting){
-        meetingLabel = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
-        return meetingLabel.isDisplayed();
+        try{
+            meetingLabel = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
+            System.out.println("antes del return ********************");
+            return meetingLabel.isDisplayed();
+        }catch (NoSuchElementException e){
+            System.out.println("entre al catch ++++++++++++++++++++");
+            return false;
+        }
     }
 
     public boolean isSuccessfullyMessageDisplayed(){

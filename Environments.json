@@ -39,8 +39,8 @@
         "password": "Client123"
       },
       "exchange user": {
-        "name": "miguel.terceros",
-        "password": "Client123"
+        "name": "admin.miguel",
+        "password": "Control123"
       },
       "API ": {
         "server": ""

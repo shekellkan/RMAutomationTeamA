@@ -1,6 +1,7 @@
 package ui.pages.tablet;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -60,11 +61,16 @@ public class MainTabletPage extends BasePageObject{
     }
 
     public boolean isMeetingPresent(String nameMeeting){
-        nameMeetingLabel = driver.findElement(By.xpath(buildNameMeetingTitle(nameMeeting)));
-        return nameMeetingLabel.isDisplayed();
+        try{
+            nameMeetingLabel = driver.findElement(By.xpath(buildNameMeetingTitle(nameMeeting)));
+            return nameMeetingLabel.isDisplayed();
+        }catch (NoSuchElementException e){
+            return false;
+        }
+
     }
 
     public String buildNameMeetingTitle(String nameMeeting){
-        return "//div[contains(@class,'info')]/div[contains(@class,'meeting-title') and contains(text(),'"+nameMeeting+"')]";
+        return "//div[contains(@class,'vis-item-content')]/span[contains(text(),'"+nameMeeting+"')]";
     }
 }

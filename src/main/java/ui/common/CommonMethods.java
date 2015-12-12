@@ -40,4 +40,28 @@ public class CommonMethods {
             return true;
         }
     }
+
+    public static boolean isUserLoginInTabletPage(){
+        if(PageTransporter.getInstance().imInTheLoginTabletPage()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static boolean isUserLoginStatusURL(){
+        if(PageTransporter.getInstance().imInTheLoginTabletPageStatus()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static boolean isURLPresent(){
+        if (PageTransporter.getInstance().getCurrentURL().isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
