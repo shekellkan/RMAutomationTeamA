@@ -31,6 +31,7 @@ public class RoomAssociationResourcePage extends RoomMenuPage {
         WebElement plusButton = driver.findElement(By.xpath("//div[@class='col-xs-12 col-sm-5 col-lg-5']//span[text()='"+displayName+"']//ancestor::div[contains(@class,'list-group-item')]//button"));
         plusButton.click();
         WebElement quantityInput = driver.findElement(By.xpath("//div[@class='col-xs-12 col-sm-6 col-sm-offset-1 col-lg-6']//span[text()='"+displayName+"']//ancestor::div[contains(@class,'list-group-item')]//input"));
+        quantityInput.clear();
         quantityInput.sendKeys(quantity);
     }
 }
