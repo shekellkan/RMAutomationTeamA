@@ -18,4 +18,4 @@ Feature: allocate resource
     Then the Resource should be displayed with the assigned quantity in the list
     When I go to Resources page
     Then the Resource should be displayed with the Room Associated in Resources page
-#    And the Resource assigned to the Room should be obtained using the API
+    And the Resource assigned to the Room should be obtained using the API

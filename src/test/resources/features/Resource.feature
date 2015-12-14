@@ -30,7 +30,7 @@ Feature: resource
   |Pc       |
 
   Scenario: remove a Resource
-    Given I create a Resource with values: "Mac1","Mac computer1","My mac computer1" and "fa-desktop"
+    Given I create a Resource for API with values: "Mac1","Mac computer1","My mac computer1" and "fa-desktop"
     When I remove the Resource
     Then the Resource is not longer displayed in the Resource list
       When I go to Conference Rooms page

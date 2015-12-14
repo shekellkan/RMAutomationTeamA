@@ -14,6 +14,10 @@ import ui.PageTransporter;
  * To change this template use File | Settings | File Templates.
  */
 public class CommonMethods {
+    /**
+     * this methods execute a javascript to high light a web element
+     * @param element
+     */
     public static void elementHighlight(WebElement element) {
         WebDriver driver = DriverManager.getInstance().getWebDriver();
         for (int i = 0; i < 2; i++) {
@@ -32,6 +36,10 @@ public class CommonMethods {
         action.perform();
     }
 
+    /**
+     * this methods return true if the user is login in the admin page
+     * @return
+     */
     public static boolean isUserLoginInAdminPage()
     {
         if(PageTransporter.getInstance().imInTheLoginAdminPage()){
@@ -40,6 +48,7 @@ public class CommonMethods {
             return true;
         }
     }
+
 
     public static boolean isUserLoginInTabletPage(){
         if(PageTransporter.getInstance().imInTheLoginTabletPage()){
@@ -67,5 +76,14 @@ public class CommonMethods {
 
     public static String buildMessageElement(String nameMessage){
         return "//div[contains(text(),'"+nameMessage+"')]";
+    }
+
+    /**
+     * this method refresh the page
+     * usually used after make changes with the API
+     */
+    public static void refresh() {
+        WebDriver driver = DriverManager.getInstance().getWebDriver();
+        driver.navigate().refresh();
     }
 }

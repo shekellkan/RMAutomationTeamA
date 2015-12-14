@@ -1,6 +1,7 @@
 package steps;
 
 import api.APIRoomsMethods;
+import cucumber.api.java.en.Given;
 import db.DBRoomsMethods;
 import entities.ResourceEntity;
 import entities.RoomEntity;
@@ -44,7 +45,7 @@ public class Room {
     }
 
     @When("^I open \"([^\"]*)\" Room for edit$")
-    public void openRoomForEdit(String displayName) {
+    public void iOpenRoomForEdit(String displayName) {
         conferenceRoomsPage = new ConferenceRoomsPage();
         displayNameRoom = displayName;
         roomInfoPage = conferenceRoomsPage.selectRoom(displayName);
@@ -90,7 +91,7 @@ public class Room {
 
 
     @When("^I search a Room by \"([^\"]*)\"$")
-    public void searchARoomBy(String criteria) {
+    public void iSearchARoomBy(String criteria) {
         conferenceRoomsPage.setFilterByRoom(criteria);
     }
 
@@ -145,7 +146,7 @@ public class Room {
     }
 
     @And("^I go to Resource Association tab$")
-    public void IGoToResourceAssociationTab()
+    public void iGoToResourceAssociationTab()
     {
         roomAssociationResourcePage = roomInfoPage.goToResourceAssociations();
     }
@@ -159,8 +160,7 @@ public class Room {
     }
     // Todo
     @Then("^the Resource should be displayed with the assigned quantity in the list$")
-    public void theResourceShouldBeDisplayedWithTheAssignedQuantityInTheList()
-    {
+    public void theResourceShouldBeDisplayedWithTheAssignedQuantityInTheList(){
         String IconAndName[] = conferenceRoomsPage.getIconAndQuantityFromResourceAssociated(roomEntity, resourceEntity);
         String actualIcon = IconAndName[0];
         String actualQuantity = IconAndName[1];
@@ -170,4 +170,27 @@ public class Room {
         Assert.assertEquals(actualIcon,expectedIcon);
         Assert.assertEquals(actualQuantity,expectedQuantity);
     }
+
+    @Then("^the Resource should not be displayed in the list$")
+    public void theResourceShouldNotBeDisplayedInTheList(){
+        boolean actualResult = conferenceRoomsPage.isResourceAssignedToTheRoom(roomEntity,resourceEntity);
+        Assert.assertEquals(actualResult,false);
+    }
+
+    @Given("^I associate the Resource to the Room \"([^\"]*)\" with quantity \"([^\"]*)\"$")
+    public void iAssociateTheResourceToTheRoomWithQuantity(String roomName,String quantity){
+        roomEntity.setDisplayName(roomName);
+        iSelectTheResourceInTheConferenceRoomPageHeader();
+        iSearchARoomBy(roomName);
+        iOpenRoomForEdit(roomName);
+        iGoToResourceAssociationTab();
+        iAssociateTheResourceWithQuantity(quantity);
+    }
+
+    @When("^I remove the association with the Resource$")
+    public void iRemoveTheAssociationWithTheResource(){
+        roomAssociationResourcePage.removeTheAssociatedResource(resourceEntity);
+        roomAssociationResourcePage.clickSaveRoom();
+    }
+
 }

@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
 
 /**
- * User: jeancarlorodriguez
+ * User: Jean Carlo Rodriguez
  * Date: 12/8/15
  * Time: 2:17 PM
  */

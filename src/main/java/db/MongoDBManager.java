@@ -26,13 +26,31 @@ public class MongoDBManager {
         }
         return instance;
     }
+
+    /**
+     * gets a collection from the Data Base
+     * @param collectionName
+     * @return
+     */
     public MongoCollection getCollection(String collectionName){
         return database.getCollection(collectionName);
     }
+
+    /**
+     * close the data base connection
+     */
     public void close(){
         mongoClient.close();
         instance = null;
     }
+
+    /**
+     * search in the data base with some criteria
+     * @param collection
+     * @param field
+     * @param criteria
+     * @return
+     */
     public ArrayList<String> likeFilterByCriteria(String collection, String field,String criteria) {
         final String fieldName = field;
         final ArrayList<String> list = new ArrayList<String>();

@@ -3,8 +3,10 @@ package api;
 import Framework.ExternalVariablesManager;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
+import entities.ResourceEntity;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import static com.jayway.restassured.RestAssured.given;
 
@@ -17,18 +19,18 @@ public class APIManager {
 
     public APIManager() {
         logger.info("API Manager initialized");
-        RestAssured.baseURI = "https://172.20.208.194:4040";
+        String baseURI = ExternalVariablesManager.getInstance().getRoomManagerService();
+        RestAssured.baseURI = baseURI;
         RestAssured.useRelaxedHTTPSValidation();
     }
 
     /**
      * This method allows get a JSONObject
      * @param endPoint
-     * @param id
      * @return a JSONObject
      */
-    public JSONObject getJson(String endPoint, String id) {
-        Response response = given().when().get(endPoint + "/" + id);
+    public JSONObject getJson(String endPoint) {
+        Response response = given().when().get(endPoint);
         JSONObject jsonObject = new JSONObject(response.asString());
         return jsonObject;
     }
@@ -46,12 +48,54 @@ public class APIManager {
         return tokenJson.getString("token");
     }
 
-    public void delete(String endPoint,String id)
-    {
+    /**
+     * send a delete method to the API
+     * @param endPoint
+     */
+    public void delete(String endPoint){
         given().log().all().
                 headers("Authorization", "jwt "+getToken()).
-                when().delete(endPoint+id).
+                when().delete(endPoint).
                 then().log().all().
                 statusCode(200);
     }
+
+    /**
+     * Create a resource using token
+     * @param resource
+     */
+    public void postResource(ResourceEntity resource){
+        given()
+                .header("Authorization", "jwt " + getToken())
+                .parameters("name", resource.getName(), "description", resource.getDisplayName(),
+                        "customName", resource.getDisplayName(), "from", "",
+                        "fontIcon", "fa " + resource.getIconName())
+                .post("/resources");
+    }
+
+    /**
+     * return a JSon array from a request
+     * @param endPoint
+     * @return
+     */
+    public JSONArray getArrayJson(String endPoint) {
+        Response response = given().when().get(endPoint);
+        JSONArray array = new JSONArray(response.asString());
+        return array;
+    }
+
+    /**
+     * method delete with basic authentication
+     * @param endPoint
+     * @param userName
+     * @param userPassword
+     */
+    public void deleteBasic(String endPoint, String userName, String userPassword){
+        given().log().all().
+                auth().basic(userName, userPassword).
+                when().delete(endPoint).
+                then().log().all().
+                statusCode(200);
+    }
+
 }
