@@ -53,6 +53,15 @@ public class MeetingEntity {
         return body;
     }
 
+    /**
+     * fill all the fields in a method
+     * @param organizer
+     * @param subject
+     * @param from
+     * @param to
+     * @param attendees
+     * @param body
+     */
     public void setAllFields(String organizer, String subject, String from, String to, String attendees, String body){
         this.organizer = organizer;
         this.subject = subject;
