@@ -53,7 +53,7 @@ public class DBRoomsMethods {
         return roomsList;
     }
     /**
-     * This method allows get room id
+     * This method allows get room id using the displayName
      * @param value
      * @return a String
      */
