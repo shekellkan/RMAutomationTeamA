@@ -55,7 +55,7 @@ public class APIResourcesMethods {
      * @param resourceEntity
      */
     public void removeResource(ResourceEntity resourceEntity){
-        apiManager.delete("/resources/",dbResourcesMethods.getResourceId(resourceEntity.getName()));
+        apiManager.delete("/resources/"+dbResourcesMethods.getResourceId(resourceEntity.getName()));
     }
 
     /**
@@ -66,6 +66,12 @@ public class APIResourcesMethods {
         apiManager.postResource(resourceEntity);
     }
 
+    /**
+     * this method look for association between resource and room, and return true if exit the association
+     * @param roomEntity
+     * @param resourceEntity
+     * @return
+     */
     public boolean isResourceAssociatedToTheRoom(RoomEntity roomEntity, ResourceEntity resourceEntity) {
         String roomID = dbRoomsMethods.getRoomId(roomEntity.getDisplayName());
         String resourceID = dbResourcesMethods.getResourceId(resourceEntity.getName());

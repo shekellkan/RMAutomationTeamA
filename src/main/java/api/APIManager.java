@@ -19,7 +19,8 @@ public class APIManager {
 
     public APIManager() {
         logger.info("API Manager initialized");
-        RestAssured.baseURI = "https://172.20.208.194:4040";
+        String baseURI = ExternalVariablesManager.getInstance().getRoomManagerService();
+        RestAssured.baseURI = baseURI;
         RestAssured.useRelaxedHTTPSValidation();
     }
 
@@ -47,10 +48,14 @@ public class APIManager {
         return tokenJson.getString("token");
     }
 
-    public void delete(String endPoint,String id){
+    /**
+     * send a delete method to the API
+     * @param endPoint
+     */
+    public void delete(String endPoint){
         given().log().all().
                 headers("Authorization", "jwt "+getToken()).
-                when().delete(endPoint+id).
+                when().delete(endPoint).
                 then().log().all().
                 statusCode(200);
     }

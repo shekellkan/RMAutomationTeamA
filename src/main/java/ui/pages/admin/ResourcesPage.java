@@ -72,6 +72,11 @@ public class ResourcesPage extends MainAdminPage {
         return new RemoveResourcesConfirmationPage();
     }
 
+    /**
+     * this method look for a Resource in the Resource list
+     * @param resourceEntity
+     * @return
+     */
     public boolean isResourceInTheResourceList(ResourceEntity resourceEntity) {
         String resourceName = resourceEntity.getName();
         return isDeleted(10, By.xpath("//div[contains(@class,'col2')]//span[text()='" + resourceName + "']/ancestor::div[contains(@class,'ng-scope ngRow')]"));
@@ -99,6 +104,11 @@ public class ResourcesPage extends MainAdminPage {
         return resourcesNames;
     }
 
+    /**
+     * this method open a resource
+     * @param resourceEntity
+     * @return
+     */
     public ResourceInfoPage openResource(ResourceEntity resourceEntity) {
         WebElement resourceNameButton = driver.findElement(By.xpath("//div[@class='ngCell centeredColumn col2 colt2']//span[text()='" + resourceEntity.getName() + "']"));
         CommonMethods.doubleClick(resourceNameButton);
