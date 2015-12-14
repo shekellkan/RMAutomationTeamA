@@ -41,6 +41,22 @@ public class CommonMethods {
         }
     }
 
+    public static boolean isUserLoginInTabletPage(){
+        if(PageTransporter.getInstance().imInTheLoginTabletPage()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static boolean isUserLoginStatusURL(){
+        if(PageTransporter.getInstance().imInTheLoginTabletPageStatus()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     /**
      * This method allows verify if an element is displayed
      * @param locator
@@ -59,5 +75,17 @@ public class CommonMethods {
             DriverManager.getInstance().getWebDriver().manage().timeouts()
                     .implicitlyWait(10, TimeUnit.SECONDS);
         }
+    }
+
+    public static boolean isURLPresent(){
+        if (PageTransporter.getInstance().getCurrentURL().isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public static String buildMessageElement(String nameMessage){
+        return "//div[contains(text(),'"+nameMessage+"')]";
     }
 }
