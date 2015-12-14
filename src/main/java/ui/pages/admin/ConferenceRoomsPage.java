@@ -72,11 +72,18 @@ public class ConferenceRoomsPage extends MainAdminPage {
         filterByRoomInput.sendKeys(criteria);
     }
 
+    /**
+     * this method return a String array that contains the values for icon and quantity of a resource association
+     * @param roomEntity
+     * @param resourceEntity
+     * @return
+     */
     public String[] getIconAndQuantityFromResourceAssociated(RoomEntity roomEntity, ResourceEntity resourceEntity) {
         String resp[] = new String[2];
         String resourceDisplayName = resourceEntity.getDisplayName();
         String roomDisplayName = roomEntity.getDisplayName();
-        String classOfResourceColumn = driver.findElement (By.xpath("//div[@class='ngHeaderContainer']//div[text()='"+resourceDisplayName+"']")).getAttribute("class");
+        //find the class of a resource column
+        String classOfResourceColumn = getClassOfResourceColumn(resourceDisplayName);
         int columnNumber = findColumnNumber(classOfResourceColumn);
         //iconName
         resp[0] = driver.findElement(By.xpath("//div[@class='ngCell  col2 colt2']//span[2][text()='"+roomDisplayName+"']//ancestor::div[contains(@class,'ng-scope ngRow')]//div[@class='ngCell centeredColumn col"+columnNumber+" colt"+columnNumber+"']//div[@class='animate-if ng-scope']//span[1]")).getAttribute("class");
@@ -85,6 +92,20 @@ public class ConferenceRoomsPage extends MainAdminPage {
         return resp;
     }
 
+    /**
+     * this method return the class of a resource Column
+     * @param resourceDisplayName
+     * @return
+     */
+    private String getClassOfResourceColumn(String resourceDisplayName){
+        return driver.findElement (By.xpath("//div[@class='ngHeaderContainer']//div[text()='"+resourceDisplayName+"']")).getAttribute("class");
+    }
+
+    /**
+     * this method find the number of a column in string (class of Resource column)
+     * @param classOfResourceColumn
+     * @return
+     */
     private int findColumnNumber(String classOfResourceColumn) {
         char array[] = classOfResourceColumn.toCharArray();
         String resNumber = "";
@@ -111,5 +132,18 @@ public class ConferenceRoomsPage extends MainAdminPage {
             roomsList.add(element.getText());
         }
         return roomsList;
+    }
+
+    /**
+     * this method look for a component to say true if the resource is associated to a room
+     * @param roomEntity
+     * @param resourceEntity
+     * @return
+     */
+    public boolean isResourceAssignedToTheRoom(RoomEntity roomEntity, ResourceEntity resourceEntity) {
+        String roomDisplayName = roomEntity.getDisplayName();
+        String resourceDisplayName = resourceEntity.getDisplayName();
+        int columnNumber = findColumnNumber(getClassOfResourceColumn(resourceDisplayName));
+        return isPresent(By.xpath("//div[@class='ngCell  col2 colt2']//span[2][text()='"+roomDisplayName+"']//ancestor::div[contains(@class,'ng-scope ngRow')]//div[@class='ngCell centeredColumn col"+columnNumber+" colt"+columnNumber+"']//div[@class='animate-if ng-scope']//span[2]"));
     }
 }

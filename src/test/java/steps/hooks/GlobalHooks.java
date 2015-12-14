@@ -3,6 +3,8 @@ package steps.hooks;
 import Framework.DriverManager;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import gherkin.formatter.model.Feature;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -19,7 +21,7 @@ public class GlobalHooks {
     @After
     public void ScreenShot(Scenario scenario) {
         if (scenario.isFailed()) {
-            // Take a screenshot...
+            // Take a screenShot...
             final byte[] screenShot = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
             scenario.embed(screenShot, "image/png"); // ... and embed it in the report.
         }

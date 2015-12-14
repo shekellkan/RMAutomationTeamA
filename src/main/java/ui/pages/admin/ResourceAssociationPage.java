@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
 
 /**
- * User: jeancarlorodriguez
+ * User: Jean Carlo Rodriguez
  * Date: 12/12/15
  * Time: 2:45 PM
  */
@@ -30,6 +30,11 @@ public class ResourceAssociationPage extends BasePageObject{
 
     }
 
+    /**
+     * this method return true if the room is associated to the actual resource
+     * @param roomEntity
+     * @return
+     */
     public boolean isResourceAssociatedWithTheRoom(RoomEntity roomEntity) {
         return isPresent(By.xpath("//div[@class='ngCellText ng-scope col0 colt0']//span[text()='"+roomEntity.getDisplayName()+"']"));
     }
