@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import ui.pages.admin.LoginAdminPage;
 import ui.pages.tablet.LoginTabletPage;
 import ui.pages.admin.MainAdminPage;
+import ui.pages.tablet.MainTabletPage;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Jean Carlo Rodriguez
@@ -64,6 +66,25 @@ public class PageTransporter {
     public boolean imInTheRMAdminPage()
     {
         if(getCurrentURL().contains("admin"))
+            return true;
+        else
+            return false;
+    }
+
+    public static MainTabletPage goToTabletMainPage(){
+        goToURL(externalVariablesManager.getTabletURL());
+        return new MainTabletPage();
+    }
+
+    public boolean imInTheLoginTabletPage() {
+        if(driver.getCurrentUrl().contains("tablet/#/register"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean imInTheLoginTabletPageStatus() {
+        if(driver.getCurrentUrl().contains("tablet/#/status"))
             return true;
         else
             return false;
