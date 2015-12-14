@@ -26,6 +26,7 @@ public class MainTabletPage extends BasePageObject{
     WebElement searchSection;
 
     WebElement nameMeetingLabel;
+    WebElement nameMeetingInNextSection;
 
     /**
      * This method is the constructor
@@ -98,11 +99,44 @@ public class MainTabletPage extends BasePageObject{
     }
 
     /**
-     * this method build the path for found a meeting
+     * this method build the path for found a meeting in the schedule bar
      * @param nameMeeting
      * @return path
      */
     public String buildNameMeetingTitle(String nameMeeting){
         return "//div[contains(@class,'vis-item-content')]/span[contains(text(),'"+nameMeeting+"')]";
+    }
+
+    /**
+     * this method build the path for found a meeting in the nex section
+     * @param nameMeeting
+     * @return path
+     */
+    public String buildNameMeetingInNextSection(String nameMeeting){
+        return "//div[contains(@class,'info')]/div[contains(text(),'"+nameMeeting+"')]";
+    }
+
+    /**
+     * this method verify that a meeting is present in the next section
+     * @param nameMeeting
+     * @return true or false
+     */
+    public boolean isMeetingPresentInNextSection(String nameMeeting){
+        try{
+            nameMeetingInNextSection = driver.findElement(By.xpath(buildNameMeetingInNextSection(nameMeeting)));
+            return nameMeetingInNextSection.isDisplayed();
+        }catch (NoSuchElementException e){
+            return false;
+        }
+    }
+
+    /**
+     * this method get the name of a meeting that is present in next section
+     * @param nameMeeting
+     * @return name meeting
+     */
+    public String getNameMeetingInNextSection(String nameMeeting){
+        nameMeetingInNextSection = driver.findElement(By.xpath(buildNameMeetingInNextSection(nameMeeting)));
+        return nameMeetingInNextSection.getText();
     }
 }

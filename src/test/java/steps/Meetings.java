@@ -15,6 +15,7 @@ import ui.pages.tablet.SearchPage;
 
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by MiguelTerceros on 12/10/2015.
@@ -46,13 +47,18 @@ public class Meetings {
 
     @And("^the Meeting should be displayed in the Schedule bar$")
     public void theMeetingShouldBeDisplayedInTheScheduleBar(){
-        assertTrue(schedulePage.isMeetingDisplayed(meetingEntity.getSubject()));
+        String nameMeeting = meetingEntity.getSubject();
+        assertTrue(schedulePage.isMeetingDisplayed(nameMeeting));
+        assertEquals(meetingEntity.getSubject(), schedulePage.getNameMeetingInScheduleBar(nameMeeting));
     }
 
     @And("^the Meeting information should be displayed in the Next section of Main page$")
     public void theMeetingInformationShouldBeDisplayedInTheNextSection(){
         mainTabletPage = schedulePage.goMainPage();
-        assertTrue(mainTabletPage.isMeetingPresent(meetingEntity.getSubject()));
+        String nameMeeting = meetingEntity.getSubject();
+        assertTrue(mainTabletPage.isMeetingPresent(nameMeeting));
+        assertTrue(mainTabletPage.isMeetingPresentInNextSection(nameMeeting));
+        assertEquals(nameMeeting, mainTabletPage.getNameMeetingInNextSection(nameMeeting));
     }
 
     @And("^the Meeting should be listed in the Meetings of Room using the API$")

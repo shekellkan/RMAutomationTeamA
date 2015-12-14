@@ -302,4 +302,9 @@ public class SchedulePage extends BasePageObject {
         createButton.click();
         return this;
     }
+
+    public String getNameMeetingInScheduleBar(String nameMeeting){
+        meetingLabel = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
+        return meetingLabel.getText();
+    }
 }
