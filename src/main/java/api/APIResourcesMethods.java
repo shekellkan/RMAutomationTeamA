@@ -15,7 +15,7 @@ public class APIResourcesMethods {
     DBResourcesMethods dbResourcesMethods;
 
     public APIResourcesMethods() {
-        apiManager = new APIManager();
+        apiManager = APIManager.getInstance();
         dbResourcesMethods = new DBResourcesMethods();
     }
 

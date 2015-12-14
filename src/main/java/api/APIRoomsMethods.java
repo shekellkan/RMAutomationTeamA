@@ -12,7 +12,7 @@ public class APIRoomsMethods {
     DBRoomsMethods dbRoomsMethods;
 
     public APIRoomsMethods() {
-        apiManager = new APIManager();
+        apiManager = APIManager.getInstance();
         dbRoomsMethods = new DBRoomsMethods();
     }
 

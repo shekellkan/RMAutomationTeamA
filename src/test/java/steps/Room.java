@@ -113,9 +113,20 @@ public class Room {
         outOfOrderPlanningPage = roomInfoPage.goToOutOfOrderPlanning();
     }
 
-    @And("^I configure the Room with the option out of order \"([^\"]*)\" at the time \"([^\"]*)\" to \"([^\"]*)\"$")
-    public void configureTheRoomWithTheOptionOutOfOrderAtTheTimeTo(String outOfOrder, String arg1, String arg2) {
-        outOfOrderPlanningPage.selectOutOfOrder(outOfOrder);
+    @And("^I configure the Room with the option out of order \"([^\"]*)\" at time \"([^\"]*)\" to \"([^\"]*)\" - \"([^\"]*)\"$")
+    public void configureTheRoomWithTheOptionOutOfOrderAtTimeTo(String outOfOrder, String hourStart, String hourEnd, String meridian) {
+        conferenceRoomsPage = outOfOrderPlanningPage.configureOutOfOrder(outOfOrder, hourStart, hourEnd, meridian);
+    }
+
+    @And("^should display an icon on the Out Of Order column$")
+    public void displayIconOnTheOutOfOrderColumn() {
+        Assert.assertTrue(conferenceRoomsPage.isPresentOutOfOrderIcon());
+        mainAdminPage.getLeftMenuPage().goToResources();
+    }
+
+    @And("^the Out Of Order state should be obtained using the API$")
+    public void theOutOfOrderStateShouldBeObtainedUsingTheAPI() {
+
     }
 
     @After("@EditRoom")

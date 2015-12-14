@@ -1,10 +1,10 @@
 package ui.common;
 import Framework.DriverManager;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import ui.PageTransporter;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,6 +38,26 @@ public class CommonMethods {
             return false;
         }else{
             return true;
+        }
+    }
+
+    /**
+     * This method allows verify if an element is displayed
+     * @param locator
+     * @return false or true
+     */
+    public static boolean isElementDisplayed(By locator) {
+        try {
+            DriverManager.getInstance().getWebDriver().manage().timeouts()
+                    .implicitlyWait(10, TimeUnit.SECONDS);
+            DriverManager.getInstance().getWebDriver().findElement(locator);
+            return true;
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DriverManager.getInstance().getWebDriver().manage().timeouts()
+                    .implicitlyWait(10, TimeUnit.SECONDS);
         }
     }
 }
