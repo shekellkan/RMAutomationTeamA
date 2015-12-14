@@ -20,7 +20,7 @@ public class APIResourcesMethods {
     }
 
     /**
-     * This method allows get a JSONObject room
+     * This method return a resource json associated to the name
      * @param name
      * @return a JSONObject
      */
@@ -30,8 +30,12 @@ public class APIResourcesMethods {
         return jsonObject;
     }
 
-    public boolean isResourcePresent(ResourceEntity resourceEntity)
-    {
+    /**
+     * this method return true if the resources is present in the API
+     * @param resourceEntity
+     * @return
+     */
+    public boolean isResourcePresent(ResourceEntity resourceEntity){
         String resourceName = resourceEntity.getName();
         try{
             getResourceJson(resourceName).get("name");
@@ -40,10 +44,21 @@ public class APIResourcesMethods {
         {
             return false;
         }
-
     }
-    public void removeResource(ResourceEntity resourceEntity)
-    {
+
+    /**
+     * this method removes a resource from Room Manager
+     * @param resourceEntity
+     */
+    public void removeResource(ResourceEntity resourceEntity){
         apiManager.delete("/resources/",dbResourcesMethods.getResourceId(resourceEntity.getName()));
+    }
+
+    /**
+     * this method crates a resources in Room Manager
+     * @param resourceEntity
+     */
+    public void createResource(ResourceEntity resourceEntity) {
+        apiManager.postResource(resourceEntity);
     }
 }

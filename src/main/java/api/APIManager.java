@@ -3,6 +3,7 @@ package api;
 import Framework.ExternalVariablesManager;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
+import entities.ResourceEntity;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
@@ -46,12 +47,20 @@ public class APIManager {
         return tokenJson.getString("token");
     }
 
-    public void delete(String endPoint,String id)
-    {
+    public void delete(String endPoint,String id){
         given().log().all().
                 headers("Authorization", "jwt "+getToken()).
                 when().delete(endPoint+id).
                 then().log().all().
                 statusCode(200);
+    }
+
+    public void postResource(ResourceEntity resource){
+        given()
+                .header("Authorization", "jwt " + getToken())
+                .parameters("name", resource.getName(), "description", resource.getDisplayName(),
+                        "customName", resource.getDisplayName(), "from", "",
+                        "fontIcon", "fa "+resource.getIconName())
+                .post("/resources");
     }
 }

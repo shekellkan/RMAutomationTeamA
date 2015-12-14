@@ -40,4 +40,9 @@ public class CommonMethods {
             return true;
         }
     }
+
+    public static void refresh() {
+        WebDriver driver = DriverManager.getInstance().getWebDriver();
+        driver.navigate().refresh();
+    }
 }
