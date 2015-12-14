@@ -31,7 +31,7 @@ public class DBResourcesMethods {
     }
 
     /**
-     * get the resource id
+     * get the resource id using the resource name
      * @param name
      * @return
      */

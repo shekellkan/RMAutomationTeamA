@@ -6,6 +6,7 @@ import com.jayway.restassured.response.Response;
 import entities.ResourceEntity;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import static com.jayway.restassured.RestAssured.given;
 
@@ -54,12 +55,42 @@ public class APIManager {
                 statusCode(200);
     }
 
+    /**
+     * Create a resource using token
+     * @param resource
+     */
     public void postResource(ResourceEntity resource){
         given()
                 .header("Authorization", "jwt " + getToken())
                 .parameters("name", resource.getName(), "description", resource.getDisplayName(),
                         "customName", resource.getDisplayName(), "from", "",
-                        "fontIcon", "fa "+resource.getIconName())
+                        "fontIcon", "fa " + resource.getIconName())
                 .post("/resources");
     }
+
+    /**
+     * return a JSon array from a request
+     * @param endPoint
+     * @return
+     */
+    public JSONArray getArrayJson(String endPoint) {
+        Response response = given().when().get(endPoint);
+        JSONArray array = new JSONArray(response.asString());
+        return array;
+    }
+
+    /**
+     * method delete with basic authentication
+     * @param endPoint
+     * @param userName
+     * @param userPassword
+     */
+    public void deleteBasic(String endPoint, String userName, String userPassword){
+        given().log().all().
+                auth().basic(userName, userPassword).
+                when().delete(endPoint).
+                then().log().all().
+                statusCode(200);
+    }
+
 }

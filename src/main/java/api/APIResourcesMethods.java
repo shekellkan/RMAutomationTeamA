@@ -4,6 +4,7 @@ import db.DBResourcesMethods;
 import db.DBRoomsMethods;
 import entities.ResourceEntity;
 import entities.RoomEntity;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -14,10 +15,12 @@ import org.json.JSONObject;
 public class APIResourcesMethods {
     APIManager apiManager;
     DBResourcesMethods dbResourcesMethods;
+    DBRoomsMethods dbRoomsMethods;
 
     public APIResourcesMethods() {
         apiManager = new APIManager();
         dbResourcesMethods = new DBResourcesMethods();
+        dbRoomsMethods = new DBRoomsMethods();
     }
 
     /**
@@ -63,15 +66,16 @@ public class APIResourcesMethods {
         apiManager.postResource(resourceEntity);
     }
 
-    public boolean isResourceAssociatedToTheRoom() {
-        String roomID="5665a9f92858c3dc0cb37136";
-        System.out.println(apiManager.getJson("/rooms/" + roomID + "/resources").toString());
+    public boolean isResourceAssociatedToTheRoom(RoomEntity roomEntity, ResourceEntity resourceEntity) {
+        String roomID = dbRoomsMethods.getRoomId(roomEntity.getDisplayName());
+        String resourceID = dbResourcesMethods.getResourceId(resourceEntity.getName());
+        JSONArray array = apiManager.getArrayJson("/rooms/" + roomID + "/resources");
+        //search the resource id in the array
+        for(int i = 0;i<array.length();i++){
+            if(array.getJSONObject(i).getString("resourceId").equals(resourceID)){
+                return true;
+            }
+        }
         return false;
-    }
-
-    public static void main(String arg[])
-    {
-        APIResourcesMethods api = new APIResourcesMethods();
-        api.isResourceAssociatedToTheRoom();
     }
 }

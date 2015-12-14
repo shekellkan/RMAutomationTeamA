@@ -34,4 +34,9 @@ public class RoomAssociationResourcePage extends RoomMenuPage {
         quantityInput.clear();
         quantityInput.sendKeys(quantity);
     }
+    public void removeTheAssociatedResource(ResourceEntity resourceEntity){
+        String displayName = resourceEntity.getDisplayName();
+        WebElement restButton = driver.findElement(By.xpath("//div[@class='col-xs-12 col-sm-6 col-sm-offset-1 col-lg-6']//span[text()='"+displayName+"']//ancestor::div[contains(@class,'list-group-item')]//button"));
+        restButton.click();
+    }
 }

@@ -46,7 +46,7 @@ public class Resource {
         mainAdminPage.getLeftMenuPage().goToResources();
     }
 
-    @Given("^I create a Resource for API with values: \"([^\\\"]*)\",\"Mac ([^\\\"]*)\",\"My mac ([^\\\"]*)\" and \"([^\\\"]*)\"$")
+    @Given("^I create a Resource for API with values: \"([^\\\"]*)\",\"([^\\\"]*)\",\"([^\\\"]*)\" and \"([^\\\"]*)\"$")
     public void iCreateAResourceForAPIWithValues(String name, String displayName, String description, String icon){
         resourceEntity.setName(name);
         resourceEntity.setDisplayName(displayName);
@@ -144,7 +144,8 @@ public class Resource {
     public void theResourceAssignedToTheRoomShouldBeObtainedUsingTheAPI()
     {
         APIResourcesMethods apiResourcesMethods = new APIResourcesMethods();
-        boolean actualResult = apiResourcesMethods.isResourceAssociatedToTheRoom();
+        boolean actualResult = apiResourcesMethods.isResourceAssociatedToTheRoom(roomEntity,resourceEntity);
+        Assert.assertEquals(actualResult,true);
 
     }
 }
