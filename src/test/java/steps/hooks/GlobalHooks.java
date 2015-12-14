@@ -28,7 +28,6 @@ public class GlobalHooks {
 
     @After
     public void createResourcesBeforeFilterScenario(Scenario scenario){
-        System.out.println("///*/*/*/*/*/*/*/*/*/*/ "+scenario);
 
     }
 }

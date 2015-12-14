@@ -25,11 +25,10 @@ public class APIManager {
     /**
      * This method allows get a JSONObject
      * @param endPoint
-     * @param id
      * @return a JSONObject
      */
-    public JSONObject getJson(String endPoint, String id) {
-        Response response = given().when().get(endPoint + "/" + id);
+    public JSONObject getJson(String endPoint) {
+        Response response = given().when().get(endPoint);
         JSONObject jsonObject = new JSONObject(response.asString());
         return jsonObject;
     }

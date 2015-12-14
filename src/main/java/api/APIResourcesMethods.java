@@ -3,6 +3,7 @@ package api;
 import db.DBResourcesMethods;
 import db.DBRoomsMethods;
 import entities.ResourceEntity;
+import entities.RoomEntity;
 import org.json.JSONObject;
 
 /**
@@ -26,7 +27,7 @@ public class APIResourcesMethods {
      */
     public JSONObject getResourceJson(String name) {
         String resourceId = dbResourcesMethods.getResourceId(name);
-        JSONObject jsonObject = apiManager.getJson("/resources", resourceId);
+        JSONObject jsonObject = apiManager.getJson("/resources/"+resourceId);
         return jsonObject;
     }
 
@@ -60,5 +61,17 @@ public class APIResourcesMethods {
      */
     public void createResource(ResourceEntity resourceEntity) {
         apiManager.postResource(resourceEntity);
+    }
+
+    public boolean isResourceAssociatedToTheRoom() {
+        String roomID="5665a9f92858c3dc0cb37136";
+        System.out.println(apiManager.getJson("/rooms/" + roomID + "/resources").toString());
+        return false;
+    }
+
+    public static void main(String arg[])
+    {
+        APIResourcesMethods api = new APIResourcesMethods();
+        api.isResourceAssociatedToTheRoom();
     }
 }

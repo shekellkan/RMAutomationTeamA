@@ -139,4 +139,12 @@ public class Resource {
         APIResourcesMethods apiResourcesMethods = new APIResourcesMethods();
         apiResourcesMethods.removeResource(resourceEntity);
     }
+
+    @And("^the Resource assigned to the Room should be obtained using the API$")
+    public void theResourceAssignedToTheRoomShouldBeObtainedUsingTheAPI()
+    {
+        APIResourcesMethods apiResourcesMethods = new APIResourcesMethods();
+        boolean actualResult = apiResourcesMethods.isResourceAssociatedToTheRoom();
+
+    }
 }
