@@ -26,8 +26,13 @@ public class ResourceFormPage extends BasePageObject {
     @FindBy(xpath = "//button[@id='convert']")
     WebElement iconMenuButton;
 
+    @FindBy(xpath = "//span[text()='Cancel']//ancestor::button")
+    WebElement cancelButton;
+
     @FindBy(xpath = "//span[text()='Save']//ancestor::button")
     WebElement saveButton;
+
+
 
     public ResourceFormPage()
     {

@@ -23,4 +23,9 @@ public class DBResourcesMethods {
         mongoDBManager.close();
         return resourceList;
     }
+
+    public String getResourceId(String name) {
+        String resourceId = MongoDBManager.getInstance().getId("resourcemodels", "name", name);
+        return resourceId;
+    }
 }

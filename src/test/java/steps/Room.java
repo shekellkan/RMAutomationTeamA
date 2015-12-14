@@ -34,6 +34,7 @@ public class Room {
     String displayNameRoom;
     DBRoomsMethods dbRoomsMethods;
     String displayNameRoomDB;
+    private static String quantity;
     APIRoomsMethods apiRoomsMethods;
 
     public Room(MainAdminPage mainAdminPage, RoomEntity roomEntity, ResourceEntity resourceEntity) {
@@ -47,6 +48,7 @@ public class Room {
         conferenceRoomsPage = new ConferenceRoomsPage();
         displayNameRoom = displayName;
         roomInfoPage = conferenceRoomsPage.selectRoom(displayName);
+        roomEntity.setDisplayName(displayName);
     }
 
     @And("^I edit the displayName \"([^\"]*)\" ,code \"([^\"]*)\" and capacity \"([^\"]*)\"$")
@@ -151,6 +153,7 @@ public class Room {
     @And("^I associate the Resource with quantity \"([^\"]*)\"$")
     public void iAssociateTheResourceWithQuantity(String quantity)
     {
+        this.quantity = quantity;
         roomAssociationResourcePage.associateResource(resourceEntity,quantity);
         roomAssociationResourcePage.clickSaveRoom();
     }
@@ -158,5 +161,13 @@ public class Room {
     @Then("^the Resource should be displayed with the assigned quantity in the list$")
     public void theResourceShouldBeDisplayedWithTheAssignedQuantityInTheList()
     {
+        String IconAndName[] = conferenceRoomsPage.getIconAndQuantityFromResourceAssociated(roomEntity, resourceEntity);
+        String actualIcon = IconAndName[0];
+        String actualQuantity = IconAndName[1];
+        String expectedIcon = "fa "+resourceEntity.getIconName();
+        String expectedQuantity = "x "+quantity;
+
+        Assert.assertEquals(actualIcon,expectedIcon);
+        Assert.assertEquals(actualQuantity,expectedQuantity);
     }
 }
