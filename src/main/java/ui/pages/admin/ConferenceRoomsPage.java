@@ -23,6 +23,8 @@ public class ConferenceRoomsPage extends MainAdminPage {
     @FindBy(xpath = "//input[contains(@ng-model, 'filterOptions')]")
     WebElement filterByRoomInput;
 
+    By outOfOrderIcon = By.xpath("//out-of-order-icon//span");
+
     By roomDisplayNameLabel;
 
     /**
@@ -127,11 +129,19 @@ public class ConferenceRoomsPage extends MainAdminPage {
      */
     public ArrayList<String> getRoomsContainer() {
         ArrayList<String> roomsList = new ArrayList<String>();
-        List<WebElement> roomsCollation = driver.findElements(By.xpath("//div[@class='ngCanvas']//div[@class='ngCell  col2 colt2']//span[2]"));
-        for(WebElement element : roomsCollation) {
+        List<WebElement> roomsCollection = driver.findElements(By.xpath("//div[@class='ngCanvas']//div[@class='ngCell  col2 colt2']//span[2]"));
+        for(WebElement element : roomsCollection) {
             roomsList.add(element.getText());
         }
         return roomsList;
+    }
+
+    /**
+     * This method allows verify if a outOfOrder icon is displayed
+     * @return a false or true
+     */
+    public boolean isPresentOutOfOrderIcon() {
+        return isDisplayed(outOfOrderIcon);
     }
 
     /**

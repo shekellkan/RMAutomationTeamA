@@ -18,7 +18,7 @@ public class APIResourcesMethods {
     DBRoomsMethods dbRoomsMethods;
 
     public APIResourcesMethods() {
-        apiManager = new APIManager();
+        apiManager = APIManager.getInstance();
         dbResourcesMethods = new DBResourcesMethods();
         dbRoomsMethods = new DBRoomsMethods();
     }

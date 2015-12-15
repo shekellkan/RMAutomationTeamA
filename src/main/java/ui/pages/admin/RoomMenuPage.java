@@ -72,4 +72,13 @@ public class RoomMenuPage extends BasePageObject {
         outOfOrderPlanningTab.click();
         return new OutOfOrderPlanningPage();
     }
+
+    /**
+     * This method allows press the cancel button
+     * @return the ConferenceRooms page
+     */
+    public ConferenceRoomsPage clickCancelButton() {
+        cancelButton.click();
+        return new ConferenceRoomsPage();
+    }
 }

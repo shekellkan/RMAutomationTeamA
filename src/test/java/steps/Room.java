@@ -1,5 +1,6 @@
 package steps;
 
+import api.APIOutOfOrdersMethods;
 import api.APIRoomsMethods;
 import cucumber.api.java.en.Given;
 import db.DBRoomsMethods;
@@ -37,6 +38,8 @@ public class Room {
     String displayNameRoomDB;
     private static String quantity;
     APIRoomsMethods apiRoomsMethods;
+    APIOutOfOrdersMethods apiOutOfOrdersMethods;
+    String titleOutOfOrder;
 
     public Room(MainAdminPage mainAdminPage, RoomEntity roomEntity, ResourceEntity resourceEntity) {
         this.mainAdminPage = mainAdminPage;
@@ -114,9 +117,39 @@ public class Room {
         outOfOrderPlanningPage = roomInfoPage.goToOutOfOrderPlanning();
     }
 
-    @And("^I configure the Room with the option out of order \"([^\"]*)\" at the time \"([^\"]*)\" to \"([^\"]*)\"$")
-    public void configureTheRoomWithTheOptionOutOfOrderAtTheTimeTo(String outOfOrder, String arg1, String arg2) {
-        outOfOrderPlanningPage.selectOutOfOrder(outOfOrder);
+    @And("^I configure the Room with the option out of order \"([^\"]*)\" at time \"([^\"]*)\" to \"([^\"]*)\" - \"([^\"]*)\"$")
+    public void configureTheRoomWithTheOptionOutOfOrderAtTimeTo(String outOfOrder, String hourStart, String hourEnd, String meridian) {
+        titleOutOfOrder = outOfOrder;
+        conferenceRoomsPage = outOfOrderPlanningPage.configureOutOfOrder(outOfOrder, hourStart, hourEnd, meridian);
+    }
+
+    @And("^should display an icon on the Out Of Order column$")
+    public void displayIconOnTheOutOfOrderColumn() {
+        Assert.assertTrue(conferenceRoomsPage.isPresentOutOfOrderIcon());
+        mainAdminPage.getLeftMenuPage().goToResources();
+    }
+
+    @And("^the Out Of Order state should be obtained using the API$")
+    public void theOutOfOrderStateShouldBeObtainedUsingTheAPI() {
+        apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
+        JSONObject jsonObject = apiOutOfOrdersMethods.getJson(titleOutOfOrder);
+        String actualTitle = jsonObject.getString("title");
+        Assert.assertEquals(actualTitle, titleOutOfOrder);
+    }
+
+    @Then("^a error message should be displayed$")
+    public void aErrorMessageShouldBeDisplayed() {
+        Assert.assertTrue(outOfOrderPlanningPage.errorOutOfOrderIsDisplayed());
+        conferenceRoomsPage = outOfOrderPlanningPage.clickCancelButton();
+        mainAdminPage.getLeftMenuPage().goToResources();
+    }
+
+    @And("^the Out Of Order state should not be obtained using the API$")
+    public void theOutOfOrderStateShouldNotBeObtainedUsingTheAPI() {
+        apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
+        JSONObject jsonObject = apiOutOfOrdersMethods.getJson(titleOutOfOrder);
+        String actualTitle = jsonObject.getString("title");
+        Assert.assertNull(actualTitle);
     }
 
     @After("@EditRoom")

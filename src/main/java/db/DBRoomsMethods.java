@@ -6,7 +6,6 @@ import com.mongodb.client.MongoCollection;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 import java.util.ArrayList;
-import static com.mongodb.client.model.Filters.eq;
 import static java.util.Arrays.asList;
 /**
  * User: Jean Carlo Rodriguez
@@ -38,8 +37,8 @@ public class DBRoomsMethods {
      */
     public ArrayList<String> filterRoomsByCriteria(String criteria) {
         final ArrayList<String> roomsList = new ArrayList<String>();
-        MongoCollection<Document> roomsCollation = MongoDBManager.getInstance().getCollection("rooms");
-        FindIterable<Document> rooms = roomsCollation
+        MongoCollection<Document> roomsCollection = MongoDBManager.getInstance().getCollection("rooms");
+        FindIterable<Document> rooms = roomsCollection
                 .find(new Document("$or", asList( new Document(
                         "customDisplayName", new BasicDBObject("$regex", criteria)),
                         new Document("code", new BasicDBObject("$regex", criteria)),
@@ -50,6 +49,7 @@ public class DBRoomsMethods {
                 roomsList.add(document.get("customDisplayName").toString());
             }
         });
+        mongoDBManager.close();
         return roomsList;
     }
     /**
@@ -58,7 +58,9 @@ public class DBRoomsMethods {
      * @return a String
      */
     public String getRoomId(String value) {
-        String roomId = MongoDBManager.getInstance().getId("rooms", "customDisplayName", value);
+        mongoDBManager = MongoDBManager.getInstance();
+        String roomId = mongoDBManager.getId("rooms", "customDisplayName", value);
+        mongoDBManager.close();
         return roomId;
     }
 }
