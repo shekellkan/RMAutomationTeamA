@@ -148,8 +148,8 @@ public class Room {
     public void theOutOfOrderStateShouldNotBeObtainedUsingTheAPI() {
         apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
         JSONObject jsonObject = apiOutOfOrdersMethods.getJson(titleOutOfOrder);
-        String actualTitle = jsonObject.getString("title");
-        Assert.assertNull(actualTitle);
+        String code = jsonObject.getString("code");
+        Assert.assertEquals(code, "NotFoundError");
     }
 
     @After("@EditRoom")
