@@ -1,4 +1,4 @@
-@AllocateResource
+@allocateResource
 Feature: allocate resource
   allocate resource to room, remove resources of room
 
