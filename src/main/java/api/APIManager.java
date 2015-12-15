@@ -15,13 +15,19 @@ import static com.jayway.restassured.RestAssured.given;
  */
 public class APIManager {
 
+    public static APIManager instance;
     final static Logger logger = Logger.getLogger(APIManager.class);
 
-    public APIManager() {
-        logger.info("API Manager initialized");
-        String baseURI = ExternalVariablesManager.getInstance().getRoomManagerService();
-        RestAssured.baseURI = baseURI;
-        RestAssured.useRelaxedHTTPSValidation();
+    public static APIManager getInstance() {
+        if(instance==null)
+        {
+            logger.info("API Manager initialized");
+            instance = new APIManager();
+            String baseURI = ExternalVariablesManager.getInstance().getRoomManagerService();
+            RestAssured.baseURI = baseURI;
+            RestAssured.useRelaxedHTTPSValidation();
+        }
+        return instance;
     }
 
     /**
@@ -87,15 +93,11 @@ public class APIManager {
     /**
      * method delete with basic authentication
      * @param endPoint
-     * @param userName
-     * @param userPassword
+     * @param userAuthentication
      */
-    public void deleteBasic(String endPoint, String userName, String userPassword){
-        given().log().all().
-                auth().basic(userName, userPassword).
-                when().delete(endPoint).
-                then().log().all().
-                statusCode(200);
+    public void deleteBasic(String endPoint, String userAuthentication){
+        given().
+                header("Authentication", "Basic "+userAuthentication)
+                .when().delete(endPoint);
     }
-
 }

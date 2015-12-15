@@ -1,6 +1,7 @@
 package steps;
 
 import Framework.ExternalVariablesManager;
+import api.APIMeetingMethods;
 import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
@@ -27,6 +28,7 @@ public class Meetings {
     private CredentialsPage credentialsPage;
     private MeetingEntity meetingEntity = new MeetingEntity();
     private MeetingEntity meetingEntity2 = new MeetingEntity();
+    private APIMeetingMethods apiMeetingMethods = new APIMeetingMethods();
 
     @Given("^I navigate to Available section$")
     public void navigate_available_sections(){
@@ -63,7 +65,10 @@ public class Meetings {
 
     @And("^the Meeting should be listed in the Meetings of Room using the API$")
     public void theMeetingShouldBeListedInTheMeetingsOfRoomUsingTheAPI(){
-        assertTrue(true);
+        String nameRoom = mainTabletPage.getMainTitle();
+        String nameMeeting = meetingEntity.getSubject();
+        assertEquals(nameRoom, apiMeetingMethods.getMeetingValues(nameMeeting, "location", nameRoom));
+        assertEquals(nameMeeting, apiMeetingMethods.getMeetingValues(nameMeeting, "title", nameRoom));
     }
 
     @When("^I create other Meeting with the following information: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
@@ -138,10 +143,8 @@ public class Meetings {
     }
 
 
-//    @After(value = "@Meetings", order = 999)
-//    public void afterMeetingScenario(){
-////        schedulePage = mainTabletPage.clickAvailableSection();
-////        credentialsPage = schedulePage.deleteMeeting(meetingEntity.getSubject());
-////        schedulePage = credentialsPage.confirmCredentials(externalVariablesManager.getExchangeUserName(), externalVariablesManager.getExchangeUserPassword());
-//    }
+    @After(value = "@Meetings", order = 999)
+    public void afterMeetingScenario(){
+        apiMeetingMethods.deleteMeeting(mainTabletPage.getMainTitle(), meetingEntity.getSubject());
+    }
 }
