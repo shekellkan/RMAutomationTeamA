@@ -14,8 +14,6 @@ public class ResourcesSetup {
     static ArrayList<ResourceEntity> listOfResources = new ArrayList<ResourceEntity>();
     static APIResourcesMethods apiResourcesMethods = new APIResourcesMethods();
     public static void beforeResourceFeature() {
-        System.out.println("LOOK MOM IM IN THE BEFORE FEATURE");
-
 
         ResourceEntity resource1 = new ResourceEntity();
         resource1.setAllFields("Mac_Pro","Mac pro computer","My mac pro computer","fa-desktop");
@@ -35,7 +33,6 @@ public class ResourcesSetup {
     }
 
     public static void afterResourceFeature() {
-        System.out.println("LOOK MOM IM IN THE AFTER FEATURE");
 
         for(ResourceEntity item : listOfResources){
             apiResourcesMethods.removeResource(item);
