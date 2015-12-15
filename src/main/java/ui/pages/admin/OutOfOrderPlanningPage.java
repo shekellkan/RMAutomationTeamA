@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ui.common.CommonMethods;
 
 /**
  * Created by ArielWagner on 09/12/2015.
@@ -163,6 +162,6 @@ public class OutOfOrderPlanningPage extends RoomMenuPage {
      * @return false or true
      */
     public boolean errorOutOfOrderIsDisplayed() {
-        return CommonMethods.isElementDisplayed(errorDisplayedLabel);
+        return isDisplayed(errorDisplayedLabel);
     }
 }

@@ -22,6 +22,7 @@ public class APIManager {
         if(instance==null)
         {
             logger.info("API Manager initialized");
+            instance = new APIManager();
             String baseURI = ExternalVariablesManager.getInstance().getRoomManagerService();
             RestAssured.baseURI = baseURI;
             RestAssured.useRelaxedHTTPSValidation();
@@ -36,6 +37,7 @@ public class APIManager {
      */
     public JSONObject getJson(String endPoint) {
         Response response = given().when().get(endPoint);
+        System.out.println("response "+response.asString());
         JSONObject jsonObject = new JSONObject(response.asString());
         return jsonObject;
     }

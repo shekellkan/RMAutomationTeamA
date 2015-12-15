@@ -66,26 +66,6 @@ public class CommonMethods {
         }
     }
 
-    /**
-     * This method allows verify if an element is displayed
-     * @param locator
-     * @return false or true
-     */
-    public static boolean isElementDisplayed(By locator) {
-        try {
-            DriverManager.getInstance().getWebDriver().manage().timeouts()
-                    .implicitlyWait(10, TimeUnit.SECONDS);
-            DriverManager.getInstance().getWebDriver().findElement(locator);
-            return true;
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            DriverManager.getInstance().getWebDriver().manage().timeouts()
-                    .implicitlyWait(10, TimeUnit.SECONDS);
-        }
-    }
-
     public static boolean isURLPresent(){
         if (PageTransporter.getInstance().getCurrentURL().isEmpty()){
             return true;

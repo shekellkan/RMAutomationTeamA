@@ -26,7 +26,7 @@ public class APIRoomsMethods {
      */
     public JSONObject getJson(String value) {
         String roomId = dbRoomsMethods.getRoomId(value);
-        JSONObject jsonObject = apiManager.getJson("/rooms/"+roomId);
+        JSONObject jsonObject = apiManager.getJson("/rooms/"+ roomId);
         return jsonObject;
     }
 

@@ -58,7 +58,8 @@ public class DBRoomsMethods {
      * @return a String
      */
     public String getRoomId(String value) {
-        String roomId = MongoDBManager.getInstance().getId("rooms", "customDisplayName", value);
+        mongoDBManager = MongoDBManager.getInstance();
+        String roomId = mongoDBManager.getId("rooms", "customDisplayName", value);
         mongoDBManager.close();
         return roomId;
     }

@@ -141,7 +141,7 @@ public class ConferenceRoomsPage extends MainAdminPage {
      * @return a false or true
      */
     public boolean isPresentOutOfOrderIcon() {
-        return CommonMethods.isElementDisplayed(outOfOrderIcon);
+        return isDisplayed(outOfOrderIcon);
     }
 
     /**

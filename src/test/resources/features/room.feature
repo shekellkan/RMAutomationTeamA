@@ -46,7 +46,7 @@ Feature: Rooms
 
 
   Scenario Outline: Place a room to out of order with invalid date
-    Given I open "Floor1Room15" Room for edit
+    Given I open "Floor1Room13" Room for edit
     When I go to Out of Order Planning Tab
     And I configure the Room with the option out of order "<Out Of Order>" at time "<hour1>" to "<hour2>" - "<meridian>"
     Then a error message should be displayed
