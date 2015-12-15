@@ -21,7 +21,8 @@
       },
       "API ": {
         "server": ""
-      }
+      },
+      "Authentication Exchange": "SmVhbkNhcmxvLlJvZHJpZ3VlejpDbGllbnQxMjM="
     },
     {
       "id": "RM2",
@@ -44,7 +45,8 @@
       },
       "API ": {
         "server": ""
-      }
+      },
+      "Authentication Exchange": "YWRtaW4ubWlndWVsOkNvbnRyb2wxMjM="
     },
     {
       "id": "RM3",
@@ -67,7 +69,8 @@
       },
       "API ": {
         "server": ""
-      }
+      },
+      "Authentication Exchange":"QXJpZWwuUm9qYXM6Q2xpZW50MTIz"
     }
   ]
 }
