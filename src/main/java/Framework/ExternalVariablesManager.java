@@ -24,6 +24,7 @@ public class ExternalVariablesManager {
 
     private JsonReader jsonReader;
     private static ExternalVariablesManager instance;
+    private String authenticationExchange;
 
     /**
      * construct of the class ExternalVariablesManager
@@ -78,6 +79,7 @@ public class ExternalVariablesManager {
         //count exchange
         exchangeUserName = jsonReader.getKeyValueFromJSONInternal("Environments", "id", envId, "exchange user", "name");
         exchangeUserPassword = jsonReader.getKeyValueFromJSONInternal("Environments", "id", envId, "exchange user", "password");
+        authenticationExchange = jsonReader.getKeyValue("Environments", "id", envId, "Authentication Exchange");
     }
 
     /**
@@ -174,5 +176,13 @@ public class ExternalVariablesManager {
      */
     public String getMainAdminURL() {
         return mainAdminURL;
+    }
+
+    /**
+     * obtains the authentication in base64 of exchange user
+     * @return authenticationExchange
+     */
+    public String getAuthenticationExchange(){
+        return authenticationExchange;
     }
 }

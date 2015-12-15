@@ -80,8 +80,8 @@ public class MainTabletPage extends BasePageObject{
      * this method verify that the title of the room is present
      * @return true or false
      */
-    public boolean isMainLabelPresent(){
-        return mainLabel.isDisplayed();
+    public String getMainTitle(){
+        return mainLabel.getText();
     }
 
     /**
