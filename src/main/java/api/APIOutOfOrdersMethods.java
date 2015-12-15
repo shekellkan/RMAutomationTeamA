@@ -24,7 +24,7 @@ public class APIOutOfOrdersMethods {
     public JSONObject getJson(String value) {
         DBOutOfOrdersMethods dbOutOfOrdersMethods = new DBOutOfOrdersMethods();
         String outOfOrderId = dbOutOfOrdersMethods.getOutOfOrderId(value);
-        JSONObject jsonObject = apiManager.getJson("/out-of-orders", outOfOrderId);
+        JSONObject jsonObject = apiManager.getJson("/out-of-orders/" + outOfOrderId);
         return jsonObject;
     }
 }

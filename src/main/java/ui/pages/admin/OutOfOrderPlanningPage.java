@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import ui.common.CommonMethods;
 
 /**
  * Created by ArielWagner on 09/12/2015.
@@ -39,6 +40,8 @@ public class OutOfOrderPlanningPage extends RoomMenuPage {
 
     @FindBy(xpath = "//div[2][@class = 'col-md-6']//button[@ng-click = 'toggleMeridian()']")
     WebElement stateMeridianEndButton;
+
+    By errorDisplayedLabel = By.xpath("//small[contains(text(), 'field must be greater than')]");
 
     By outOfOrderOption;
 
@@ -153,5 +156,13 @@ public class OutOfOrderPlanningPage extends RoomMenuPage {
      */
     public String getStateMeridianEnd() {
         return stateMeridianEndButton.getText();
+    }
+
+    /**
+     * This method allows verify if the out of order error
+     * @return false or true
+     */
+    public boolean errorOutOfOrderIsDisplayed() {
+        return CommonMethods.isElementDisplayed(errorDisplayedLabel);
     }
 }
