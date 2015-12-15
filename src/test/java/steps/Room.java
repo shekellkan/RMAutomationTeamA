@@ -2,6 +2,7 @@ package steps;
 
 import api.APIOutOfOrdersMethods;
 import api.APIRoomsMethods;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import db.DBRoomsMethods;
 import entities.ResourceEntity;
@@ -35,7 +36,6 @@ public class Room {
     ResourceEntity resourceEntity;
     String displayNameRoom;
     DBRoomsMethods dbRoomsMethods;
-    String displayNameRoomDB;
     private static String quantity;
     APIRoomsMethods apiRoomsMethods;
     APIOutOfOrdersMethods apiOutOfOrdersMethods;
@@ -126,7 +126,6 @@ public class Room {
     @And("^should display an icon on the Out Of Order column$")
     public void displayIconOnTheOutOfOrderColumn() {
         Assert.assertTrue(conferenceRoomsPage.isPresentOutOfOrderIcon());
-        mainAdminPage.getLeftMenuPage().goToResources();
     }
 
     @And("^the Out Of Order state should be obtained using the API$")
@@ -141,34 +140,14 @@ public class Room {
     public void aErrorMessageShouldBeDisplayed() {
         Assert.assertTrue(outOfOrderPlanningPage.errorOutOfOrderIsDisplayed());
         conferenceRoomsPage = outOfOrderPlanningPage.clickCancelButton();
-        mainAdminPage.getLeftMenuPage().goToResources();
     }
 
     @And("^the Out Of Order state should not be obtained using the API$")
     public void theOutOfOrderStateShouldNotBeObtainedUsingTheAPI() {
         apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
         JSONObject jsonObject = apiOutOfOrdersMethods.getJson(titleOutOfOrder);
-        String actualTitle = jsonObject.getString("title");
-        Assert.assertNull(actualTitle);
-    }
-
-    @After("@EditRoom")
-    public void goBeforeDataRoom(){
-        roomInfoPage = conferenceRoomsPage.selectRoom(roomEntity.getDisplayName());
-        roomInfoPage.clearDataEntered(displayNameRoom);
-        conferenceRoomsPage = roomInfoPage.clickSaveRoom();
-        mainAdminPage = new MainAdminPage();
-        mainAdminPage.getLeftMenuPage().goToResources();
-    }
-
-    @After("@FilterRoom")
-    public void goBeforeDataRoomAfterOfFilter(){
-        roomInfoPage = conferenceRoomsPage.selectRoom(roomEntity.getDisplayName());
-        roomInfoPage.clearDataEntered(displayNameRoom);
-        conferenceRoomsPage = roomInfoPage.clickSaveRoom();
-        mainAdminPage = new MainAdminPage();
-        mainAdminPage.getLeftMenuPage().goToResources();
-
+        String code = jsonObject.getString("code");
+        Assert.assertEquals(code, "NotFoundError");
     }
 
     @And("^I select the Resource in the Conference Room page header$")
@@ -226,4 +205,18 @@ public class Room {
         roomAssociationResourcePage.clickSaveRoom();
     }
 
+    @After("@Room")
+    public void goBeforeDataRoom(){
+        roomInfoPage = conferenceRoomsPage.selectRoom(roomEntity.getDisplayName());
+        roomInfoPage.clearDataEntered(displayNameRoom);
+        conferenceRoomsPage = roomInfoPage.clickSaveRoom();
+        mainAdminPage = new MainAdminPage();
+        mainAdminPage.getLeftMenuPage().goToResources();
+    }
+
+    @Before("@OutOfOrder")
+    public void goToOtherPage(){
+        mainAdminPage = new MainAdminPage();
+        mainAdminPage.getLeftMenuPage().goToResources();
+    }
 }
