@@ -91,7 +91,7 @@ public class APIManager {
      */
     public void deleteBasic(String endPoint, String userAuthentication){
         given().
-                header("Authentication", "Basic "+userAuthentication)
+                header("Authorization", "Basic "+userAuthentication)
                 .when().delete(endPoint);
     }
 }

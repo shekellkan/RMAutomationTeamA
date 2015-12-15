@@ -110,7 +110,7 @@ public class APIMeetingMethods {
         String currentDate = current.format(date);
 
         String deleteMeetingEndPoint = buildEndPoint(roomName, meetingEntity.getSubject());
-        given().header("Authentication", "Basic "+userAuthentication).
+        given().header("Authorization", "Basic "+userAuthentication).
                 parameters("organizer", meetingEntity.getOrganizer(),
                             "title", meetingEntity.getSubject(),
                             "start", currentDate+"T"+meetingEntity.getFrom()+":00.000Z",
