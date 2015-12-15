@@ -37,7 +37,6 @@ public class APIManager {
      */
     public JSONObject getJson(String endPoint) {
         Response response = given().when().get(endPoint);
-        System.out.println("response "+response.asString());
         JSONObject jsonObject = new JSONObject(response.asString());
         return jsonObject;
     }
