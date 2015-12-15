@@ -148,8 +148,8 @@ public class Room {
     public void theOutOfOrderStateShouldNotBeObtainedUsingTheAPI() {
         apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
         JSONObject jsonObject = apiOutOfOrdersMethods.getJson(titleOutOfOrder);
-        String actualTitle = jsonObject.getString("title");
-        Assert.assertNull(actualTitle);
+        String code = jsonObject.getString("code");
+        Assert.assertEquals(code, "NotFoundError");
     }
 
     @After("@EditRoom")
@@ -204,8 +204,8 @@ public class Room {
         Assert.assertEquals(actualQuantity,expectedQuantity);
     }
 
-    @Then("^the Resource should not be displayed in the list$")
-    public void theResourceShouldNotBeDisplayedInTheList(){
+    @Then("^the Resource should be not associated to the Room in the list$")
+    public void theResourceShouldBeNotAssociatedToTheRoomInTheList(){
         boolean actualResult = conferenceRoomsPage.isResourceAssignedToTheRoom(roomEntity,resourceEntity);
         Assert.assertEquals(actualResult,false);
     }

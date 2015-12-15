@@ -107,14 +107,30 @@ public class Resource {
         mainAdminPage.getLeftMenuPage().goToLocations();
     }
 
-    @Then("^the Resource should be displayed with the Room Associated in Resources page$")
-    public void theResourceShouldBeDisplayedWithTheRoomAssociatedInResourcesPage(){
+    @Then("^the Resource should be displayed with the Room Associated in Resources Association tab$")
+    public void theResourceShouldBeDisplayedWithTheRoomAssociatedInResourcesAssociationTab(){
+        resourcesPage = new ResourcesPage();
         ResourceAssociationPage resourceAssociationPage = resourcesPage.openResource(resourceEntity)
                 .goToAssociationTab();
         boolean actualResult =resourceAssociationPage.isResourceAssociatedWithTheRoom(roomEntity);
 
         Assert.assertEquals(actualResult,true);
         resourceAssociationPage.clickOnCloseButton();
+        //Walk around
+        mainAdminPage.getLeftMenuPage().goToLocations();
+    }
+
+    @Then("^the Resource should not be displayed with the Room Associated in Resources Association tab$")
+    public void theResourceShouldnotBeDisplayedWithTheRoomAssociatedInResourcesAssociationTab(){
+        resourcesPage = new ResourcesPage();
+        ResourceAssociationPage resourceAssociationPage = resourcesPage.openResource(resourceEntity)
+                .goToAssociationTab();
+        boolean actualResult =resourceAssociationPage.isResourceAssociatedWithTheRoom(roomEntity);
+
+        Assert.assertEquals(actualResult,false);
+        resourceAssociationPage.clickOnCloseButton();
+        //Walk around
+        mainAdminPage.getLeftMenuPage().goToLocations();
 
     }
 
@@ -147,5 +163,12 @@ public class Resource {
         boolean actualResult = apiResourcesMethods.isResourceAssociatedToTheRoom(roomEntity,resourceEntity);
         Assert.assertEquals(actualResult,true);
 
+    }
+
+    @And("^no Resource associated to the Room should be obtained using the API$")
+    public void noResourceAssociatedToTheRoomShouldBeObtainedUsingTheAPI(){
+        APIResourcesMethods apiResourcesMethods = new APIResourcesMethods();
+        boolean actualResult = apiResourcesMethods.isResourceAssociatedToTheRoom(roomEntity,resourceEntity);
+        Assert.assertEquals(actualResult,false);
     }
 }
