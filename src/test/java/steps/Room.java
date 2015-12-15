@@ -216,9 +216,15 @@ public class Room {
         mainAdminPage.getLeftMenuPage().goToResources();
     }
 
-    @Before("@OutOfOrder")
+    @Before("@OutOfOrder, @OutOfOrderError")
     public void goToOtherPage(){
         mainAdminPage = new MainAdminPage();
         mainAdminPage.getLeftMenuPage().goToResources();
+    }
+
+    @After("@OutOfOrder")
+    public void deleteOutOfOrder() {
+        apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
+        apiOutOfOrdersMethods.deleteOutOfOrder(displayNameRoom, titleOutOfOrder);
     }
 }

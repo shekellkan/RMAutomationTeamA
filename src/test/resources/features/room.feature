@@ -46,7 +46,7 @@ Feature: Rooms
       | Closed for reparations |   7      | 8     |   PM      |
 
 
-  @OutOfOrder
+  @OutOfOrderError
   Scenario Outline: Place a room to out of order with invalid date
     Given I open "Floor1Room100" Room for edit
     When I go to Out of Order Planning Tab
