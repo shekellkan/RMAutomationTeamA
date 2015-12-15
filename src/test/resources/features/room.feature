@@ -32,29 +32,29 @@ Feature: Rooms
 
 
   Scenario Outline: Place a room to out of order
-    Given I open "Floor1Room11" Room for edit
+    Given I open "Floor1Room15" Room for edit
     When I go to Out of Order Planning Tab
-    And I configure the Room with the option out of order "<Out Of Order>" at the time "8:00" to "10:00"
+      And I configure the Room with the option out of order "<Out Of Order>" at time "<hour1>" to "<hour2>" - "<meridian>"
     Then a information message should be displayed
-    And should display an icon on the Out Of Order column
-    And the Out Of Order state should be obtained using the API
+      And should display an icon on the Out Of Order column
+      And the Out Of Order state should be obtained using the API
 
     Examples:
-      | Out Of Order |
-      | Closed for maintenance |
-      | Closed for reparations |
+      | Out Of Order           |  hour1   | hour2 | meridian  |
+      | Closed for maintenance |  10      | 11    |   PM      |
+      | Closed for reparations |   7      | 8     |   PM      |
 
 
   Scenario Outline: Place a room to out of order with invalid date
-    Given I open to Room "Floor1Room10" for edit
-    When I go to the Out of Order Planning Tab
-    And I configure the Room with the option Out Of Order "<Out Of Order>" at the time "10:00" to "8:00"
+    Given I open "Floor1Room13" Room for edit
+    When I go to Out of Order Planning Tab
+    And I configure the Room with the option out of order "<Out Of Order>" at time "<hour1>" to "<hour2>" - "<meridian>"
     Then a error message should be displayed
     And the Out Of Order state should not be obtained using the API
 
     Examples:
-      | Out Of Order |
-      | Closed for maintenance |
-      | Closed for reparations |
+      | Out Of Order           |  hour1   | hour2 | meridian  |
+      | Closed for maintenance |  11      | 10    |   PM      |
+      | Closed for reparations |   5      | 2     |   PM      |
 
 

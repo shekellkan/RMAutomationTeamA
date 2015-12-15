@@ -15,13 +15,19 @@ import static com.jayway.restassured.RestAssured.given;
  */
 public class APIManager {
 
+    public static APIManager instance;
     final static Logger logger = Logger.getLogger(APIManager.class);
 
-    public APIManager() {
-        logger.info("API Manager initialized");
-        String baseURI = ExternalVariablesManager.getInstance().getRoomManagerService();
-        RestAssured.baseURI = baseURI;
-        RestAssured.useRelaxedHTTPSValidation();
+    public static APIManager getInstance() {
+        if(instance==null)
+        {
+            logger.info("API Manager initialized");
+            instance = new APIManager();
+            String baseURI = ExternalVariablesManager.getInstance().getRoomManagerService();
+            RestAssured.baseURI = baseURI;
+            RestAssured.useRelaxedHTTPSValidation();
+        }
+        return instance;
     }
 
     /**
