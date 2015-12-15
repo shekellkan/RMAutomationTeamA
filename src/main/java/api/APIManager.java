@@ -92,15 +92,11 @@ public class APIManager {
     /**
      * method delete with basic authentication
      * @param endPoint
-     * @param userName
-     * @param userPassword
+     * @param userAuthentication
      */
-    public void deleteBasic(String endPoint, String userName, String userPassword){
-        given().log().all().
-                auth().basic(userName, userPassword).
-                when().delete(endPoint).
-                then().log().all().
-                statusCode(200);
+    public void deleteBasic(String endPoint, String userAuthentication){
+        given().
+                header("Authentication", "Basic "+userAuthentication)
+                .when().delete(endPoint);
     }
-
 }
