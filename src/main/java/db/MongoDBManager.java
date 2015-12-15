@@ -1,4 +1,5 @@
 package db;
+import Framework.ExternalVariablesManager;
 import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
@@ -21,7 +22,7 @@ public class MongoDBManager {
         if(instance==null)
         {
             instance = new MongoDBManager();
-            mongoClient = new MongoClient("172.20.208.194",27017);
+            mongoClient = new MongoClient(ExternalVariablesManager.getInstance().getRoomManagerIP(), 27017);
             database = mongoClient.getDatabase("roommanager");
         }
         return instance;
