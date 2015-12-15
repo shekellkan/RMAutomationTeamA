@@ -4,7 +4,7 @@ Feature: Rooms
     Given I'm logged in with the user "admin" in the admin page
       And I go to Conference Rooms page
 
-  @EditRoom
+  @Room
   Scenario Outline: Edit a Room
     When I open "Floor1Room11" Room for edit
     And I edit the displayName "<displayName>" ,code "<code>" and capacity "<capacity>"
@@ -18,7 +18,7 @@ Feature: Rooms
       | RoomNew     | NR   | 300      |
 
 
-  @FilterRoom
+  @Room
   Scenario Outline: Filter the Rooms for name, displayName and code
     Given I open "Floor1Room10" Room for edit
     And I edit the displayName "Room10" ,code "om11" and capacity "400"
@@ -31,6 +31,7 @@ Feature: Rooms
       | om11         |
 
 
+  @OutOfOrder
   Scenario Outline: Place a room to out of order
     Given I open "Floor1Room15" Room for edit
     When I go to Out of Order Planning Tab
@@ -45,6 +46,7 @@ Feature: Rooms
       | Closed for reparations |   7      | 8     |   PM      |
 
 
+  @OutOfOrder
   Scenario Outline: Place a room to out of order with invalid date
     Given I open "Floor1Room100" Room for edit
     When I go to Out of Order Planning Tab
