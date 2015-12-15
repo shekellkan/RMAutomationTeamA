@@ -1,5 +1,6 @@
 package ui.pages.admin;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,6 +14,8 @@ public class LeftMenuPage extends BasePageObject {
 
     @FindBy(xpath = "//a[contains(text(), 'Email Servers')]")
     WebElement emailServerMenuItem;
+
+    By emailServerMenuItemBy = By.xpath("//a[contains(text(), 'Email Servers')]");
 
     @FindBy(xpath = "//a[contains(text(), 'Conference Rooms')]")
     WebElement conferenceRoomsMenuItem;
@@ -31,7 +34,7 @@ public class LeftMenuPage extends BasePageObject {
 
     @Override
     public void waitUntilPageObjectIsLoaded() {
-        wait.until(ExpectedConditions.visibilityOf(emailServerMenuItem));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(emailServerMenuItemBy));
     }
 
     public ResourcesPage goToResources() {
