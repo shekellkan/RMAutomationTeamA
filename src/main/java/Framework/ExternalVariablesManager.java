@@ -25,6 +25,7 @@ public class ExternalVariablesManager {
     private JsonReader jsonReader;
     private static ExternalVariablesManager instance;
     private String authenticationExchange;
+    private String roomManagerIP;
 
     /**
      * construct of the class ExternalVariablesManager
@@ -80,6 +81,8 @@ public class ExternalVariablesManager {
         exchangeUserName = jsonReader.getKeyValueFromJSONInternal("Environments", "id", envId, "exchange user", "name");
         exchangeUserPassword = jsonReader.getKeyValueFromJSONInternal("Environments", "id", envId, "exchange user", "password");
         authenticationExchange = jsonReader.getKeyValue("Environments", "id", envId, "Authentication Exchange");
+
+        roomManagerIP = jsonReader.getKeyValue("Environments", "id", envId, "room manager ip");
     }
 
     /**
@@ -184,5 +187,13 @@ public class ExternalVariablesManager {
      */
     public String getAuthenticationExchange(){
         return authenticationExchange;
+    }
+
+    /**
+     * obtains the Room Manager IP
+     * @return Room Manager IP
+     */
+    public String getRoomManagerIP() {
+        return roomManagerIP;
     }
 }
