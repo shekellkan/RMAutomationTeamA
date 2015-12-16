@@ -12,6 +12,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.json.JSONObject;
+import ui.common.CommonMethods;
 import ui.pages.admin.ConferenceRoomsPage;
 import ui.pages.admin.MainAdminPage;
 import ui.pages.admin.RoomAssociationResourcePage;
@@ -81,7 +82,6 @@ public class Room {
 
     @And("^the Room edited should be obtained using the API$")
     public void theRoomEditedShouldBeObtainedUsingTheAPI() {
-        dbRoomsMethods = new DBRoomsMethods();
         apiRoomsMethods = new APIRoomsMethods();
         JSONObject jsonObject = apiRoomsMethods.getJson(roomEntity.getDisplayName());
         String actualDisplayName = jsonObject.getString("customDisplayName");
@@ -207,16 +207,24 @@ public class Room {
 
     @After("@Room")
     public void goBeforeDataRoom(){
-        roomInfoPage = conferenceRoomsPage.selectRoom(roomEntity.getDisplayName());
-        roomInfoPage.clearDataEntered(displayNameRoom);
-        conferenceRoomsPage = roomInfoPage.clickSaveRoom();
+        apiRoomsMethods = new APIRoomsMethods();
+        dbRoomsMethods = new DBRoomsMethods();
+        String roomId = dbRoomsMethods.getRoomId(roomEntity.getDisplayName());
+        apiRoomsMethods.putRoom(roomId, displayNameRoom, 0);
+        CommonMethods.refresh();
         mainAdminPage = new MainAdminPage();
         mainAdminPage.getLeftMenuPage().goToResources();
     }
 
-    @Before("@OutOfOrder")
+    @Before("@OutOfOrder, @OutOfOrderError")
     public void goToOtherPage(){
         mainAdminPage = new MainAdminPage();
         mainAdminPage.getLeftMenuPage().goToResources();
+    }
+
+    @After("@OutOfOrder")
+    public void deleteOutOfOrder() {
+        apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
+        apiOutOfOrdersMethods.deleteOutOfOrder(displayNameRoom, titleOutOfOrder);
     }
 }

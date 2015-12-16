@@ -43,10 +43,10 @@ Feature: Rooms
     Examples:
       | Out Of Order           |  hour1   | hour2 | meridian  |
       | Closed for maintenance |  10      | 11    |   PM      |
-      | Closed for reparations |   7      | 8     |   PM      |
+      | Closed for reparations |  9       | 10    |   PM      |
 
 
-  @OutOfOrder
+  @OutOfOrderError
   Scenario Outline: Place a room to out of order with invalid date
     Given I open "Floor1Room100" Room for edit
     When I go to Out of Order Planning Tab
