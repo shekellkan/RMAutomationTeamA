@@ -51,7 +51,8 @@ public class CommonMethods {
 
 
     public static boolean isUserLoginInTabletPage(){
-        if(PageTransporter.getInstance().imInTheLoginTabletPage()){
+        PageTransporter pageTransporter = PageTransporter.getInstance();
+        if(pageTransporter.imInTheLoginTabletPage() || pageTransporter.imInTheLoginTabletPageStatus()){
             return false;
         }else{
             return true;

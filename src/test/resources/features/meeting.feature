@@ -1,7 +1,7 @@
 @Meetings
 Feature: Meetings
   Background:
-    Given I'm logged with the user "" in the tablet main page
+    Given I'm logged in the tablet page
       And I select the room "Floor1Room33"
 
   Scenario Outline: Create a meeting
