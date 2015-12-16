@@ -41,6 +41,7 @@ public class Room {
     APIRoomsMethods apiRoomsMethods;
     APIOutOfOrdersMethods apiOutOfOrdersMethods;
     String titleOutOfOrder;
+    RoomEntity originalRoomEntity = new RoomEntity();
 
     public Room(MainAdminPage mainAdminPage, RoomEntity roomEntity, ResourceEntity resourceEntity) {
         this.mainAdminPage = mainAdminPage;
@@ -54,6 +55,9 @@ public class Room {
         displayNameRoom = displayName;
         roomInfoPage = conferenceRoomsPage.selectRoom(displayName);
         roomEntity.setDisplayName(displayName);
+        originalRoomEntity.setDisplayName(displayName);
+        originalRoomEntity.setCode(roomInfoPage.getCode());
+        originalRoomEntity.setCapacity(roomInfoPage.getCapacity());
     }
 
     @And("^I edit the displayName \"([^\"]*)\" ,code \"([^\"]*)\" and capacity \"([^\"]*)\"$")
@@ -208,9 +212,7 @@ public class Room {
     @After("@Room")
     public void goBeforeDataRoom(){
         apiRoomsMethods = new APIRoomsMethods();
-        dbRoomsMethods = new DBRoomsMethods();
-        String roomId = dbRoomsMethods.getRoomId(roomEntity.getDisplayName());
-        apiRoomsMethods.putRoom(roomId, displayNameRoom, 0);
+        apiRoomsMethods.putRoom(roomEntity, originalRoomEntity);
         CommonMethods.refresh();
         mainAdminPage = new MainAdminPage();
         mainAdminPage.getLeftMenuPage().goToResources();
