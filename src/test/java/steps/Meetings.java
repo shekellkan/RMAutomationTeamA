@@ -29,6 +29,7 @@ public class Meetings {
     private MeetingEntity meetingEntity = new MeetingEntity();
     private MeetingEntity meetingEntity2 = new MeetingEntity();
     private APIMeetingMethods apiMeetingMethods = new APIMeetingMethods();
+    private String nameRoomInMainTablet = mainTabletPage.getMainTitle();
 
     @Given("^I navigate to Available section$")
     public void navigate_available_sections(){
@@ -59,8 +60,8 @@ public class Meetings {
         mainTabletPage = schedulePage.goMainPage();
         String nameMeeting = meetingEntity.getSubject();
         assertTrue(mainTabletPage.isMeetingPresent(nameMeeting));
-//        assertTrue(mainTabletPage.isMeetingPresentInNextSection(nameMeeting));
-//        assertEquals(nameMeeting, mainTabletPage.getNameMeetingInNextSection(nameMeeting));
+        assertTrue(mainTabletPage.isMeetingPresentInNextSection(nameMeeting));
+        assertEquals(nameMeeting, mainTabletPage.getNameMeetingInNextSection(nameMeeting));
     }
 
     @And("^the Meeting should be listed in the Meetings of Room using the API$")
@@ -142,6 +143,11 @@ public class Meetings {
         assertFalse(apiMeetingMethods.isMeetingPresent(meetingEntity.getSubject(),"title", mainTabletPage.getMainTitle()));
     }
 
+    @And("^I have a Meeting with the following information: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
+    public void iHaveAMeetingWithTheFollowingInformation(String organizer, String subject, String from, String to, String attendees, String body){
+        meetingEntity.setAllFields(organizer, subject, from, to, attendees, body);
+        apiMeetingMethods.postMeeting(meetingEntity, nameRoomInMainTablet);
+    }
 
     @After(value = "@Meetings", order = 999)
     public void afterMeetingScenario(){

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import sun.util.calendar.BaseCalendar;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -114,8 +115,8 @@ public class APIMeetingMethods {
         JSONObject test = new JSONObject();
         test.put("organizer", meeting.getOrganizer());
         test.put("title", meeting.getSubject());
-        test.put("start", currentDate+"T"+meeting.getFrom()+":00.000Z");
-        test.put("end", currentDate+"T"+meeting.getTo()+":00.000Z");
+        test.put("start", currentDate+"T"+changeHour(meeting.getFrom())+":00.000Z");
+        test.put("end", currentDate+"T"+changeHour(meeting.getTo())+":00.000Z");
         test.put("location", roomName);
         test.put("roomEmail", roomName+"@forest1.local");
         test.put("resources", new JSONArray().put(roomName+"@forest1.local"));
@@ -152,5 +153,31 @@ public class APIMeetingMethods {
         roomId = getRoomId(nameRoom);
 
         return "/services/"+serviceId+"/rooms/"+roomId+"/meetings";
+    }
+
+    /**
+     * this method add +4h to currentHour for the time zone
+     * @param currentHour
+     * @return newHour
+     */
+    public String changeHour(String currentHour){
+        String newHour;
+        int hour = Integer.parseInt(currentHour.split(":")[0]);
+        String minute = currentHour.split(":")[1];
+        int otherHour;
+        int anotherHour;
+
+        if(hour < 10){
+            otherHour = hour + 4;
+            if(otherHour < 10){
+                newHour = "0"+otherHour+":"+minute;
+            }else{
+                newHour = otherHour+":"+minute;
+            }
+        }else{
+            anotherHour = hour + 4;
+            newHour = anotherHour+":"+minute;
+        }
+        return newHour;
     }
 }

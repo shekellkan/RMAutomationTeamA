@@ -103,9 +103,9 @@ public class APIManager {
      * @param userAuthentication
      */
     public void deleteBasic(String endPoint, String userAuthentication){
-        given().
-                header("Authorization", "Basic "+userAuthentication)
-                .when().delete(endPoint);
+        given()
+            .header("Authorization", "Basic "+userAuthentication)
+            .when().delete(endPoint);
     }
 
     /**
@@ -115,12 +115,11 @@ public class APIManager {
      */
     public void createMeeting(JSONObject meeting, String endPoint){
         String userAuthentication = ExternalVariablesManager.getInstance().getAuthenticationExchange();
-
         given()
-                .contentType("application/json")
-                .header("Authorization", "Basic " + userAuthentication)
-                .content(meeting.toString())
-                .when()
-                .post(endPoint);
+            .contentType("application/json")
+            .header("Authorization", "Basic " + userAuthentication)
+            .content(meeting.toString())
+            .when()
+            .post(endPoint);
     }
 }
