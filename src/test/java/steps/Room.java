@@ -5,6 +5,7 @@ import api.APIRoomsMethods;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import db.DBRoomsMethods;
+import entities.OutOfOrderEntity;
 import entities.ResourceEntity;
 import entities.RoomEntity;
 import cucumber.api.java.After;
@@ -35,12 +36,12 @@ public class Room {
     OutOfOrderPlanningPage outOfOrderPlanningPage;
     RoomEntity roomEntity;
     ResourceEntity resourceEntity;
-    String displayNameRoom;
     DBRoomsMethods dbRoomsMethods;
     private static String quantity;
     APIRoomsMethods apiRoomsMethods;
     APIOutOfOrdersMethods apiOutOfOrdersMethods;
-    String titleOutOfOrder;
+    RoomEntity originalRoomEntity = new RoomEntity();
+    OutOfOrderEntity outOfOrderEntity = new OutOfOrderEntity();
 
     public Room(MainAdminPage mainAdminPage, RoomEntity roomEntity, ResourceEntity resourceEntity) {
         this.mainAdminPage = mainAdminPage;
@@ -51,9 +52,11 @@ public class Room {
     @When("^I open \"([^\"]*)\" Room for edit$")
     public void iOpenRoomForEdit(String displayName) {
         conferenceRoomsPage = new ConferenceRoomsPage();
-        displayNameRoom = displayName;
         roomInfoPage = conferenceRoomsPage.selectRoom(displayName);
         roomEntity.setDisplayName(displayName);
+        originalRoomEntity.setDisplayName(displayName);
+        originalRoomEntity.setCode(roomInfoPage.getCode());
+        originalRoomEntity.setCapacity(roomInfoPage.getCapacity());
     }
 
     @And("^I edit the displayName \"([^\"]*)\" ,code \"([^\"]*)\" and capacity \"([^\"]*)\"$")
@@ -119,7 +122,7 @@ public class Room {
 
     @And("^I configure the Room with the option out of order \"([^\"]*)\" at time \"([^\"]*)\" to \"([^\"]*)\" - \"([^\"]*)\"$")
     public void configureTheRoomWithTheOptionOutOfOrderAtTimeTo(String outOfOrder, String hourStart, String hourEnd, String meridian) {
-        titleOutOfOrder = outOfOrder;
+        outOfOrderEntity.setTitle(outOfOrder);
         conferenceRoomsPage = outOfOrderPlanningPage.configureOutOfOrder(outOfOrder, hourStart, hourEnd, meridian);
     }
 
@@ -131,9 +134,9 @@ public class Room {
     @And("^the Out Of Order state should be obtained using the API$")
     public void theOutOfOrderStateShouldBeObtainedUsingTheAPI() {
         apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
-        JSONObject jsonObject = apiOutOfOrdersMethods.getJson(titleOutOfOrder);
+        JSONObject jsonObject = apiOutOfOrdersMethods.getJson(outOfOrderEntity.getTitle());
         String actualTitle = jsonObject.getString("title");
-        Assert.assertEquals(actualTitle, titleOutOfOrder);
+        Assert.assertEquals(actualTitle, outOfOrderEntity.getTitle());
     }
 
     @Then("^a error message should be displayed$")
@@ -145,7 +148,7 @@ public class Room {
     @And("^the Out Of Order state should not be obtained using the API$")
     public void theOutOfOrderStateShouldNotBeObtainedUsingTheAPI() {
         apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
-        JSONObject jsonObject = apiOutOfOrdersMethods.getJson(titleOutOfOrder);
+        JSONObject jsonObject = apiOutOfOrdersMethods.getJson(outOfOrderEntity.getTitle());
         String code = jsonObject.getString("code");
         Assert.assertEquals(code, "NotFoundError");
     }
@@ -208,9 +211,7 @@ public class Room {
     @After("@Room")
     public void goBeforeDataRoom(){
         apiRoomsMethods = new APIRoomsMethods();
-        dbRoomsMethods = new DBRoomsMethods();
-        String roomId = dbRoomsMethods.getRoomId(roomEntity.getDisplayName());
-        apiRoomsMethods.putRoom(roomId, displayNameRoom, 0);
+        apiRoomsMethods.putRoom(roomEntity, originalRoomEntity);
         CommonMethods.refresh();
         mainAdminPage = new MainAdminPage();
         mainAdminPage.getLeftMenuPage().goToResources();
@@ -225,6 +226,6 @@ public class Room {
     @After("@OutOfOrder")
     public void deleteOutOfOrder() {
         apiOutOfOrdersMethods = new APIOutOfOrdersMethods();
-        apiOutOfOrdersMethods.deleteOutOfOrder(displayNameRoom, titleOutOfOrder);
+        apiOutOfOrdersMethods.deleteOutOfOrder(originalRoomEntity, outOfOrderEntity);
     }
 }

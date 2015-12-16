@@ -27,4 +27,8 @@ public class TopHeaderPage extends BasePageObject {
     public void waitUntilPageObjectIsLoaded() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(signOutButtonBy));
     }
+
+    public void logout() {
+        signOutButton.click();
+    }
 }

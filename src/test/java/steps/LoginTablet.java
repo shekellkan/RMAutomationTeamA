@@ -30,6 +30,10 @@ public class LoginTablet {
     public void loggedInWithTheUserInTheTabletMainPage(){
 
         PageTransporter pageTransporter = PageTransporter.getInstance();
+        if(CommonMethods.isUserLoginInAdminPage()){
+            CommonMethods.logoutFromAdminPage();
+        }
+
         if(!pageTransporter.imInTheRMATabletPage())
             pageTransporter.goToLoginTabletPage();
 

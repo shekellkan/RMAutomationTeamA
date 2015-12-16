@@ -1,6 +1,7 @@
 package api;
 
 import db.DBRoomsMethods;
+import entities.RoomEntity;
 import org.json.JSONObject;
 
 import static com.jayway.restassured.RestAssured.given;
@@ -31,17 +32,22 @@ public class APIRoomsMethods {
 
     /**
      * This method allows put a Room
-     * @param roomId
-     * @param displayName
-     * @param capacity
+     * @param actualRoomEntity
+     * @param newRoomEntity
      */
-    public void putRoom(String roomId, String displayName, int capacity)
+    public void putRoom(RoomEntity actualRoomEntity, RoomEntity newRoomEntity)
     {
+        String capacityString = newRoomEntity.getCapacity();
+        int capacity = 0;
+        if(!(capacityString.equals(""))) {
+            capacity = Integer.parseInt(capacityString);
+        }
+        String roomId = dbRoomsMethods.getRoomId(actualRoomEntity.getDisplayName());
         apiManager = APIManager.getInstance();
         given().
                 contentType("application/json").
                 header("Authorization", "jwt " + apiManager.getToken()).
-                body("{\"customDisplayName\":" +"\"" +displayName+ "\",\"code\":\"\",\"capacity\":"+capacity+"}").
+                body("{\"customDisplayName\":" +"\"" +newRoomEntity.getDisplayName()+ "\",\"code\":\""+newRoomEntity.getCode()+"\",\"capacity\":"+capacity+"}").
                 put("/rooms/" + roomId);
     }
 }

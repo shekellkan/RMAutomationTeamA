@@ -38,6 +38,7 @@ public class FeatureHooks {
 
         //Run the after hook method if the (feature, after hook method) was added to the map
         if (featuresHooksMap.get(lastFeature) != null) {
+            logger.info("*************************************************** executing after for"+lastFeature);
             featuresHooksMap.get(lastFeature).executeMethod();
         }
     }

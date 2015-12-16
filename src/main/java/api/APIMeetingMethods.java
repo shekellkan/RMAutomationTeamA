@@ -31,7 +31,7 @@ public class APIMeetingMethods {
     }
 
     /**
-     * this method delete a meeting
+     * this method deleteWithToken a meeting
      * @param nameRoom
      * @param nameMeeting
      */
