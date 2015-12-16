@@ -3,10 +3,17 @@ package api;
 import Framework.ExternalVariablesManager;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
+import com.mongodb.util.JSON;
+import entities.MeetingEntity;
 import entities.ResourceEntity;
+import org.apache.http.ParseException;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.json.JSONArray;
+
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.jayway.restassured.RestAssured.given;
 
@@ -99,5 +106,21 @@ public class APIManager {
         given().
                 header("Authorization", "Basic "+userAuthentication)
                 .when().delete(endPoint);
+    }
+
+    /**
+     * method for create a meeting with basic authentication
+     * @param meeting
+     * @param endPoint
+     */
+    public void createMeeting(JSONObject meeting, String endPoint){
+        String userAuthentication = ExternalVariablesManager.getInstance().getAuthenticationExchange();
+
+        given()
+                .contentType("application/json")
+                .header("Authorization", "Basic " + userAuthentication)
+                .content(meeting.toString())
+                .when()
+                .post(endPoint);
     }
 }

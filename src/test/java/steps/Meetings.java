@@ -97,7 +97,7 @@ public class Meetings {
 
     @And("^the second Meeting should not be listed in the Meetings of Room using the API$")
     public void theSecondMeetingShouldNotBeListedInTheMeetingsOfRoomUsingTheAPI(){
-        assertTrue(true);
+        assertFalse(apiMeetingMethods.isMeetingPresent(meetingEntity2.getSubject(),"title", mainTabletPage.getMainTitle()));
     }
 
     @When("^I remove the Meeting$")
@@ -139,7 +139,7 @@ public class Meetings {
 
     @And("^the Meeting should not be listed in the meetings of Room using the API$")
     public void theMeetingShouldNotBeListedInTheMeetingsOfRoomUsingTheAPI(){
-        assertTrue(true);
+        assertFalse(apiMeetingMethods.isMeetingPresent(meetingEntity.getSubject(),"title", mainTabletPage.getMainTitle()));
     }
 
 

@@ -1,11 +1,15 @@
 package api;
 
 import Framework.ExternalVariablesManager;
+import com.jayway.restassured.RestAssured;
 import db.MongoDBManager;
 import entities.MeetingEntity;
+import org.apache.http.ParseException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import sun.util.calendar.BaseCalendar;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,7 +32,7 @@ public class APIMeetingMethods {
      * construct of APIMeetingMethods
      */
     public APIMeetingMethods(){
-        apiManager = new APIManager();
+        apiManager = APIManager.getInstance();
         mongoDBManager = new MongoDBManager();
     }
 
@@ -99,26 +103,54 @@ public class APIMeetingMethods {
 
     /**
      * this method create a meeting
-     * @param meetingEntity
+     * @param meeting
      * @param roomName
      */
-    public void postMeeting(MeetingEntity meetingEntity, String roomName){
-        String userAuthentication = ExternalVariablesManager.getInstance().getAuthenticationExchange();
-
+    public void postMeeting(MeetingEntity meeting, String roomName){
         SimpleDateFormat current= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String currentDate = current.format(date);
 
-        String deleteMeetingEndPoint = buildEndPoint(roomName, meetingEntity.getSubject());
-        given().header("Authorization", "Basic "+userAuthentication).
-                parameters("organizer", meetingEntity.getOrganizer(),
-                            "title", meetingEntity.getSubject(),
-                            "start", currentDate+"T"+meetingEntity.getFrom()+":00.000Z",
-                            "end", currentDate+"T"+meetingEntity.getTo()+":00.000Z",
-                            "location", roomName,
-                            "roomEmail", roomName+"@forest1.local",
-                            "resources","["+roomName+"@forest1.local]",
-                            "attendees","["+meetingEntity.getAttendees()+"]").
-                post(deleteMeetingEndPoint);
+        JSONObject test = new JSONObject();
+        test.put("organizer", meeting.getOrganizer());
+        test.put("title", meeting.getSubject());
+        test.put("start", currentDate+"T"+meeting.getFrom()+":00.000Z");
+        test.put("end", currentDate+"T"+meeting.getTo()+":00.000Z");
+        test.put("location", roomName);
+        test.put("roomEmail", roomName+"@forest1.local");
+        test.put("resources", new JSONArray().put(roomName+"@forest1.local"));
+        test.put("attendees", new JSONArray().put(meeting.getAttendees()));
+
+        String createEndPoint = buildEndPointForCreate(roomName);
+        apiManager.createMeeting(test, createEndPoint);
+    }
+
+    /**
+     * this method verify that a meeting is present in a conference room
+     * @param nameMeeting
+     * @param value
+     * @param nameRoom
+     * @return true or false
+     */
+    public boolean isMeetingPresent(String nameMeeting,String value, String nameRoom) {
+        meetingEndPoint = buildEndPoint(nameRoom, nameMeeting);
+        JSONObject jsonObject = apiManager.getJson(meetingEndPoint);
+        if(jsonObject.has(value)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * this method construct the path for to create a meeting in a room specific
+     * @param nameRoom
+     * @return
+     */
+    public String buildEndPointForCreate(String nameRoom){
+        serviceId = getServiceId();
+        roomId = getRoomId(nameRoom);
+
+        return "/services/"+serviceId+"/rooms/"+roomId+"/meetings";
     }
 }
