@@ -55,7 +55,7 @@ public class APIResourcesMethods {
      * @param resourceEntity
      */
     public void removeResource(ResourceEntity resourceEntity){
-        apiManager.delete("/resources/"+dbResourcesMethods.getResourceId(resourceEntity.getName()));
+        apiManager.deleteWithToken("/resources/" + dbResourcesMethods.getResourceId(resourceEntity.getName()));
     }
 
     /**

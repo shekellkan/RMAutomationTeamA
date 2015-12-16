@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import steps.hooks.FeatureHooks;
 import steps.hooks.GlobalHooks;
+import ui.common.CommonMethods;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -38,17 +39,14 @@ public class RunCukesTest  extends AbstractTestNGCucumberTests {
 
     @AfterTest
     public void afterExecution() {
-
+        FeatureHooks.executeAfterHookMethod();
+        if (CommonMethods.isUserLoginInAdminPage())
+            CommonMethods.logoutFromAdminPage();
         try {
             DriverManager.getInstance().quit();
         } catch (Exception e) {
             logger.error("Unable to quit the driver", e);
         }
         logger.info("End test!!!!!");
-    }
-
-    @AfterMethod
-    public void afterFeatureMethod(){
-        FeatureHooks.executeAfterHookMethod();
     }
 }

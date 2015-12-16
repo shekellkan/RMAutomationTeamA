@@ -55,10 +55,10 @@ public class APIManager {
     }
 
     /**
-     * send a delete method to the API
+     * send a deleteWithToken method to the API
      * @param endPoint
      */
-    public void delete(String endPoint){
+    public void deleteWithToken(String endPoint){
         given().
                 headers("Authorization", "jwt "+getToken()).
                 when().delete(endPoint).
@@ -91,7 +91,7 @@ public class APIManager {
     }
 
     /**
-     * method delete with basic authentication
+     * method deleteWithToken with basic authentication
      * @param endPoint
      * @param userAuthentication
      */

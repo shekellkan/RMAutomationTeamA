@@ -87,7 +87,7 @@ public class APIOutOfOrdersMethods {
         String serviceId = getServiceId();
         String roomId = dbRoomsMethods.getRoomId(roomEntity.getDisplayName());
         String outOfOrderId = getJsonOfOutOfOrder(roomEntity.getDisplayName(), outOfOrderEntity.getTitle());
-        apiManager.delete("/services/" + serviceId
+        apiManager.deleteWithToken("/services/" + serviceId
                 + "/rooms/" + roomId + "/out-of-orders/" + outOfOrderId);
     }
 }
