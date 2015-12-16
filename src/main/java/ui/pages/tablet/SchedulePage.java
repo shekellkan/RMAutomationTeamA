@@ -1,7 +1,6 @@
 package ui.pages.tablet;
 
 import entities.MeetingEntity;
-import org.apache.log4j.chainsaw.Main;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -197,7 +196,8 @@ public class SchedulePage extends BasePageObject {
     public boolean isMeetingDisplayed(String nameMeeting){
         try{
             meetingLabel = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
-            return meetingLabel.isDisplayed();
+            meetingLabel.isDisplayed();
+            return true;
         }catch (NoSuchElementException e){
             return false;
         }

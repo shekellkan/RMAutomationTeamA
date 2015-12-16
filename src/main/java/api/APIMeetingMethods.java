@@ -3,13 +3,11 @@ package api;
 import Framework.ExternalVariablesManager;
 import db.MongoDBManager;
 import entities.MeetingEntity;
+import org.json.JSONArray;
 import org.json.JSONObject;
-import sun.util.calendar.BaseCalendar;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.jayway.restassured.RestAssured.given;
 
 /**
  * Created by MiguelTerceros on 12/14/2015.
@@ -28,7 +26,7 @@ public class APIMeetingMethods {
      * construct of APIMeetingMethods
      */
     public APIMeetingMethods(){
-        apiManager = new APIManager();
+        apiManager = APIManager.getInstance();
         mongoDBManager = new MongoDBManager();
     }
 
@@ -99,26 +97,81 @@ public class APIMeetingMethods {
 
     /**
      * this method create a meeting
-     * @param meetingEntity
+     * @param meeting
      * @param roomName
      */
-    public void postMeeting(MeetingEntity meetingEntity, String roomName){
-        String userAuthentication = ExternalVariablesManager.getInstance().getAuthenticationExchange();
-
+    public void createMeeting(MeetingEntity meeting, String roomName){
         SimpleDateFormat current= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String currentDate = current.format(date);
+        String userAuthentication = ExternalVariablesManager.getInstance().getAuthenticationExchange();
 
-        String deleteMeetingEndPoint = buildEndPoint(roomName, meetingEntity.getSubject());
-        given().header("Authentication", "Basic "+userAuthentication).
-                parameters("organizer", meetingEntity.getOrganizer(),
-                            "title", meetingEntity.getSubject(),
-                            "start", currentDate+"T"+meetingEntity.getFrom()+":00.000Z",
-                            "end", currentDate+"T"+meetingEntity.getTo()+":00.000Z",
-                            "location", roomName,
-                            "roomEmail", roomName+"@forest1.local",
-                            "resources","["+roomName+"@forest1.local]",
-                            "attendees","["+meetingEntity.getAttendees()+"]").
-                post(deleteMeetingEndPoint);
+        JSONObject test = new JSONObject();
+        test.put("organizer", meeting.getOrganizer());
+        test.put("title", meeting.getSubject());
+        test.put("start", currentDate+"T"+changeHour(meeting.getFrom())+":00.000Z");
+        test.put("end", currentDate+"T"+changeHour(meeting.getTo())+":00.000Z");
+        test.put("location", roomName);
+        test.put("roomEmail", roomName+"@forest1.local");
+        test.put("resources", new JSONArray().put(roomName+"@forest1.local"));
+        test.put("attendees", new JSONArray().put(meeting.getAttendees()));
+
+        String createEndPoint = buildEndPointForCreate(roomName);
+        apiManager.postMeeting(test, createEndPoint, userAuthentication);
+    }
+
+    /**
+     * this method verify that a meeting is present in a conference room
+     * @param nameMeeting
+     * @param value
+     * @param nameRoom
+     * @return true or false
+     */
+    public boolean isMeetingPresent(String nameMeeting,String value, String nameRoom) {
+        meetingEndPoint = buildEndPoint(nameRoom, nameMeeting);
+        JSONObject jsonObject = apiManager.getJson(meetingEndPoint);
+        if(jsonObject.has(value)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * this method construct the path for to create a meeting in a room specific
+     * @param nameRoom
+     * @return
+     */
+    private String buildEndPointForCreate(String nameRoom){
+        serviceId = getServiceId();
+        roomId = getRoomId(nameRoom);
+
+        return "/services/"+serviceId+"/rooms/"+roomId+"/meetings";
+    }
+
+    /**
+     * this method add +4h to currentHour for the time zone
+     * @param currentHour
+     * @return newHour
+     */
+    private String changeHour(String currentHour){
+        String newHour;
+        int hour = Integer.parseInt(currentHour.split(":")[0]);
+        String minute = currentHour.split(":")[1];
+        int otherHour;
+        int anotherHour;
+
+        if(hour < 10){
+            otherHour = hour + 4;
+            if(otherHour < 10){
+                newHour = "0"+otherHour+":"+minute;
+            }else{
+                newHour = otherHour+":"+minute;
+            }
+        }else{
+            anotherHour = hour + 4;
+            newHour = anotherHour+":"+minute;
+        }
+        return newHour;
     }
 }

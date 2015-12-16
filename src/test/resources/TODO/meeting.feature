@@ -2,7 +2,7 @@
 Feature: Meetings
   Background:
     Given I'm logged in the tablet page
-      And I select the room "Floor1Room33"
+      And I select the room "Floor1Room28"
 
   Scenario Outline: Create a meeting
     Given I navigate to Available section
@@ -13,32 +13,33 @@ Feature: Meetings
     And the Meeting should be listed in the Meetings of Room using the API
     Examples:
       | Organizer   | Subject | From  | To    | Attendees         | Body      |
-      | Ariel.Rojas | meeting | 17:00 | 17:10 | test@exchange.com | Important |
-      | Ariel.Rojas |meeting 2| 17:15 | 17:25 |                   |           |
-      | Ariel.Rojas | .-.-./  | 17:30 | 17:40 | test@exchange.com |           |
+      | Ariel.Rojas | meeting | 17:00 | 17:30 | test@exchange.com | Important |
+      | miguel      |meeting 2| 17:05 | 17:25 |                   |           |
+      | JeanCarlo   | .-.-./  | 17:10 | 17:40 | test@exchange.com |           |
 
   Scenario: Try to create a meeting at the same time than other meeting
     Given I navigate to Available section
-      And I create a Meeting with the following information: "Ariel Rojas", "meeting", "18:20", "19:00", "test@exchange.com", "Important"
-    When I create other Meeting with the following information: "Carla Flores", "new meeting", "18:20", "19:00", "test@exchange.com", "Important"
+      And I have a Meeting with the following information: "organizer", "meeting API", "08:20", "11:00", "test@exchange.com", "Important for API"
+    When I create other Meeting with the following information: "Carla Flores", "meeting UI", "08:20", "11:00", "test@exchange.com", "Important for UI"
     Then an error message should be displayed
       And the second Meeting should not be displayed in the Schedule bar
       And the second Meeting information should not be displayed in the Next section
       And the second Meeting should not be listed in the Meetings of Room using the API
 
+  @removeMeeting
   Scenario: Remove a meeting
     Given I navigate to Available section
-      And I create a Meeting with the following information: "Ariel Rojas", "meeting", "15:00", "16:00", "test@exchange.com", "Important"
+      And I have a Meeting with the following information: "organizer", "meeting API", "15:00", "16:00", "test@exchange.com", "Important"
     When I remove the Meeting
     Then an information message should be displayed "Meeting successfully removed"
       And the meeting should not be displayed in the Schedule bar
       And the meeting information should not be displayed in the Next section of Main page
-      And the Meeting should be listed in the Meetings of Room using the API
+      And the Meeting should not be listed in the meetings of Room using the API
 
   Scenario: Update a meeting
     Given I navigate to Available section
-      And I create a Meeting with the following information: "JeanCarlo.Rodriguez", "meeting", "16:00", "17:00", "test@exchange.com", "this meeting is update"
-    When I update the meeting information: "Miguel.Terceros", "meeting update", "16:10", "17:30", "test@exchange.com", "meeting updated"
+      And I have a Meeting with the following information: "JeanCarlo.Rodriguez", "meeting API", "16:00", "17:00", "test@exchange.com", "this meeting is update"
+    When I update the meeting information: "Miguel.Terceros", "meeting UI update", "16:10", "17:30", "test@exchange.com", "meeting updated"
     Then an information message should be displayed "Meeting successfully updated"
       And the Meeting should be displayed in the Schedule bar
       And the Meeting information should be displayed in the Next section of Main page

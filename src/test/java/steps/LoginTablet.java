@@ -4,6 +4,7 @@ import Framework.ExternalVariablesManager;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import entities.RoomEntity;
 import ui.PageTransporter;
 import ui.common.CommonMethods;
 import ui.pages.tablet.LoginTabletPage;
@@ -19,6 +20,11 @@ public class LoginTablet {
     String userName;
     String userPasswordTablet;
     String serviceURL;
+    private RoomEntity roomEntity;
+
+    public LoginTablet(RoomEntity roomEntity){
+        this.roomEntity = roomEntity;
+    }
 
     @Given("^I'm logged in the tablet page$")
     public void loggedInWithTheUserInTheTabletMainPage(){
@@ -48,6 +54,7 @@ public class LoginTablet {
     public void selectTheRoom(String nameRoom){
         if(!CommonMethods.isUserLoginInTabletPage()){
             mainTabletPage = loginTabletPage.selectRoom(nameRoom);
+            roomEntity.setDisplayName(nameRoom);
         }
     }
 }
