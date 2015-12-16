@@ -2,18 +2,16 @@ package steps;
 
 import Framework.ExternalVariablesManager;
 import api.APIMeetingMethods;
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import entities.MeetingEntity;
+import entities.RoomEntity;
 import ui.pages.tablet.CredentialsPage;
 import ui.pages.tablet.MainTabletPage;
 import ui.pages.tablet.SchedulePage;
-import ui.pages.tablet.SearchPage;
-
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertEquals;
@@ -29,6 +27,11 @@ public class Meetings {
     private MeetingEntity meetingEntity = new MeetingEntity();
     private MeetingEntity meetingEntity2 = new MeetingEntity();
     private APIMeetingMethods apiMeetingMethods = new APIMeetingMethods();
+    public RoomEntity roomEntity;
+
+    public Meetings(RoomEntity roomEntity) {
+        this.roomEntity = roomEntity;
+    }
 
     @Given("^I navigate to Available section$")
     public void navigate_available_sections(){
@@ -97,7 +100,7 @@ public class Meetings {
 
     @And("^the second Meeting should not be listed in the Meetings of Room using the API$")
     public void theSecondMeetingShouldNotBeListedInTheMeetingsOfRoomUsingTheAPI(){
-        assertTrue(true);
+        assertFalse(apiMeetingMethods.isMeetingPresent(meetingEntity2.getSubject(),"title", mainTabletPage.getMainTitle()));
     }
 
     @When("^I remove the Meeting$")
@@ -139,9 +142,15 @@ public class Meetings {
 
     @And("^the Meeting should not be listed in the meetings of Room using the API$")
     public void theMeetingShouldNotBeListedInTheMeetingsOfRoomUsingTheAPI(){
-        assertTrue(true);
+        assertFalse(apiMeetingMethods.isMeetingPresent(meetingEntity.getSubject(),"title", mainTabletPage.getMainTitle()));
     }
 
+    @And("^I have a Meeting with the following information: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
+    public void iHaveAMeetingWithTheFollowingInformation(String organizer, String subject, String from, String to, String attendees, String body){
+        String administrator = externalVariablesManager.getExchangeUserName();
+        meetingEntity.setAllFields(administrator, subject, from, to, attendees, body);
+        apiMeetingMethods.createMeeting(meetingEntity, roomEntity.getDisplayName());
+    }
 
     @After(value = "@Meetings", order = 999)
     public void afterMeetingScenario(){
