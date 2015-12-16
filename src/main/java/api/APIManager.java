@@ -100,15 +100,4 @@ public class APIManager {
                 header("Authentication", "Basic "+userAuthentication)
                 .when().delete(endPoint);
     }
-
-    /**
-     * This method allows get a JSONArray
-     * @param endPoint
-     * @return a JSONArray
-     */
-    public JSONArray getJsonArray(String endPoint) {
-        Response response = given().when().get(endPoint);
-        JSONArray jsonArray = new JSONArray(response.asString());
-        return jsonArray;
-    }
 }

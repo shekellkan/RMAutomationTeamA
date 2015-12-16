@@ -51,7 +51,7 @@ public class APIOutOfOrdersMethods {
     public JSONArray getJsonOutOfOrdersOfRoom(String displayName) {
         String serviceId = getServiceId();
         String roomId = dbRoomsMethods.getRoomId(displayName);
-        JSONArray jsonObject = apiManager.getJsonArray("/services/" + serviceId
+        JSONArray jsonObject = apiManager.getArrayJson("/services/" + serviceId
         + "/rooms/" + roomId + "/out-of-orders");
         return jsonObject;
     }

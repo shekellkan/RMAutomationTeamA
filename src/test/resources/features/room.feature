@@ -43,7 +43,7 @@ Feature: Rooms
     Examples:
       | Out Of Order           |  hour1   | hour2 | meridian  |
       | Closed for maintenance |  10      | 11    |   PM      |
-      | Closed for reparations |   7      | 8     |   PM      |
+      | Closed for reparations |  9       | 10    |   PM      |
 
 
   @OutOfOrderError
