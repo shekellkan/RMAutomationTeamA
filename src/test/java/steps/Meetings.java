@@ -2,7 +2,6 @@ package steps;
 
 import Framework.ExternalVariablesManager;
 import api.APIMeetingMethods;
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -12,8 +11,6 @@ import entities.MeetingEntity;
 import ui.pages.tablet.CredentialsPage;
 import ui.pages.tablet.MainTabletPage;
 import ui.pages.tablet.SchedulePage;
-import ui.pages.tablet.SearchPage;
-
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertEquals;
@@ -145,8 +142,9 @@ public class Meetings {
 
     @And("^I have a Meeting with the following information: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void iHaveAMeetingWithTheFollowingInformation(String organizer, String subject, String from, String to, String attendees, String body){
-        meetingEntity.setAllFields(organizer, subject, from, to, attendees, body);
-        apiMeetingMethods.postMeeting(meetingEntity, nameRoomInMainTablet);
+        String administrator = externalVariablesManager.getExchangeUserName();
+        meetingEntity.setAllFields(administrator, subject, from, to, attendees, body);
+        apiMeetingMethods.createMeeting(meetingEntity, nameRoomInMainTablet);
     }
 
     @After(value = "@Meetings", order = 999)

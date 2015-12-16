@@ -113,8 +113,7 @@ public class APIManager {
      * @param meeting
      * @param endPoint
      */
-    public void createMeeting(JSONObject meeting, String endPoint){
-        String userAuthentication = ExternalVariablesManager.getInstance().getAuthenticationExchange();
+    public void postMeeting(JSONObject meeting, String endPoint, String userAuthentication){
         given()
             .contentType("application/json")
             .header("Authorization", "Basic " + userAuthentication)

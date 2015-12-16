@@ -1,20 +1,13 @@
 package api;
 
 import Framework.ExternalVariablesManager;
-import com.jayway.restassured.RestAssured;
 import db.MongoDBManager;
 import entities.MeetingEntity;
-import org.apache.http.ParseException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import sun.util.calendar.BaseCalendar;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.jayway.restassured.RestAssured.given;
 
 /**
  * Created by MiguelTerceros on 12/14/2015.
@@ -107,10 +100,11 @@ public class APIMeetingMethods {
      * @param meeting
      * @param roomName
      */
-    public void postMeeting(MeetingEntity meeting, String roomName){
+    public void createMeeting(MeetingEntity meeting, String roomName){
         SimpleDateFormat current= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String currentDate = current.format(date);
+        String userAuthentication = ExternalVariablesManager.getInstance().getAuthenticationExchange();
 
         JSONObject test = new JSONObject();
         test.put("organizer", meeting.getOrganizer());
@@ -123,7 +117,7 @@ public class APIMeetingMethods {
         test.put("attendees", new JSONArray().put(meeting.getAttendees()));
 
         String createEndPoint = buildEndPointForCreate(roomName);
-        apiManager.createMeeting(test, createEndPoint);
+        apiManager.postMeeting(test, createEndPoint, userAuthentication);
     }
 
     /**
@@ -148,7 +142,7 @@ public class APIMeetingMethods {
      * @param nameRoom
      * @return
      */
-    public String buildEndPointForCreate(String nameRoom){
+    private String buildEndPointForCreate(String nameRoom){
         serviceId = getServiceId();
         roomId = getRoomId(nameRoom);
 
@@ -160,7 +154,7 @@ public class APIMeetingMethods {
      * @param currentHour
      * @return newHour
      */
-    public String changeHour(String currentHour){
+    private String changeHour(String currentHour){
         String newHour;
         int hour = Integer.parseInt(currentHour.split(":")[0]);
         String minute = currentHour.split(":")[1];

@@ -1,5 +1,6 @@
 package ui.pages.tablet;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -28,6 +29,8 @@ public class CredentialsPage extends BasePageObject {
     WebElement cancelButton;
     @FindBy(xpath = "//div[contains(text(),'There is a conflict with another meeting, please choose another time interval')]")
     WebElement conflictMessage;
+
+    By condition = By.xpath("//div[contains(@ui-view,'modal')]/div[contains(@class,'ng-scope')]/h3");
 
     /**
      * This method is the constructor
@@ -69,7 +72,11 @@ public class CredentialsPage extends BasePageObject {
      */
     public SchedulePage clickOkButton(){
         okButton.click();
-        return new SchedulePage();
+        if(isDisplayed(condition)){
+            return new SchedulePage();
+        }else{
+            return clickCancelButton();
+        }
     }
 
     /**
