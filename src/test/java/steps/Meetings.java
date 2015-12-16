@@ -8,6 +8,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import entities.MeetingEntity;
+import entities.RoomEntity;
 import ui.pages.tablet.CredentialsPage;
 import ui.pages.tablet.MainTabletPage;
 import ui.pages.tablet.SchedulePage;
@@ -26,7 +27,11 @@ public class Meetings {
     private MeetingEntity meetingEntity = new MeetingEntity();
     private MeetingEntity meetingEntity2 = new MeetingEntity();
     private APIMeetingMethods apiMeetingMethods = new APIMeetingMethods();
-    private String nameRoomInMainTablet = mainTabletPage.getMainTitle();
+    public RoomEntity roomEntity;
+
+    public Meetings(RoomEntity roomEntity) {
+        this.roomEntity = roomEntity;
+    }
 
     @Given("^I navigate to Available section$")
     public void navigate_available_sections(){
@@ -144,7 +149,7 @@ public class Meetings {
     public void iHaveAMeetingWithTheFollowingInformation(String organizer, String subject, String from, String to, String attendees, String body){
         String administrator = externalVariablesManager.getExchangeUserName();
         meetingEntity.setAllFields(administrator, subject, from, to, attendees, body);
-        apiMeetingMethods.createMeeting(meetingEntity, nameRoomInMainTablet);
+        apiMeetingMethods.createMeeting(meetingEntity, roomEntity.getDisplayName());
     }
 
     @After(value = "@Meetings", order = 999)
