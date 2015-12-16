@@ -121,6 +121,12 @@ public class OutOfOrderPlanningPage extends RoomMenuPage {
                 }
             }
         }
+        if(!(getStateMeridianStart().equals(meridian))) {
+            stateMeridianStartButton.click();
+        }
+        if(!(getStateMeridianEnd().equals(meridian))) {
+            stateMeridianEndButton.click();
+        }
         OutOfOrderPlanningPage.super.clickSaveRoom();
         return new ConferenceRoomsPage();
     }

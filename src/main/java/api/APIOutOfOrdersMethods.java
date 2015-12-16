@@ -3,6 +3,8 @@ package api;
 import db.DBOutOfOrdersMethods;
 import db.DBRoomsMethods;
 import db.MongoDBManager;
+import entities.OutOfOrderEntity;
+import entities.RoomEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -77,14 +79,14 @@ public class APIOutOfOrdersMethods {
 
     /**
      * This method allows delete an "out of order"
-     * @param displayName
-     * @param title
+     * @param roomEntity
+     * @param outOfOrderEntity
      */
-    public void deleteOutOfOrder(String displayName, String title) {
+    public void deleteOutOfOrder(RoomEntity roomEntity, OutOfOrderEntity outOfOrderEntity) {
         apiManager = APIManager.getInstance();
         String serviceId = getServiceId();
-        String roomId = dbRoomsMethods.getRoomId(displayName);
-        String outOfOrderId = getJsonOfOutOfOrder(displayName, title);
+        String roomId = dbRoomsMethods.getRoomId(roomEntity.getDisplayName());
+        String outOfOrderId = getJsonOfOutOfOrder(roomEntity.getDisplayName(), outOfOrderEntity.getTitle());
         apiManager.delete("/services/" + serviceId
                 + "/rooms/" + roomId + "/out-of-orders/" + outOfOrderId);
     }
