@@ -224,7 +224,7 @@ public class SchedulePage extends BasePageObject {
     }
 
     /**
-     * delete a meeting
+     * deleteWithToken a meeting
      * @param nameMeeting
      * @return new instance of CredentialsPage
      */

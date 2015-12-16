@@ -115,7 +115,7 @@ public class CredentialsPage extends BasePageObject {
     }
 
     /**
-     * this method confirm for delete a meeting
+     * this method confirm for deleteWithToken a meeting
      * @param userPassword
      * @return new instance of SchedulePage
      */

@@ -3,6 +3,7 @@ import Framework.DriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import ui.PageTransporter;
+import ui.pages.admin.MainAdminPage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -86,5 +87,13 @@ public class CommonMethods {
     public static void refresh() {
         WebDriver driver = DriverManager.getInstance().getWebDriver();
         driver.navigate().refresh();
+    }
+
+    /**
+     * logout from Admin page
+     */
+    public static void logoutFromAdminPage() {
+        MainAdminPage mainAdminPage = new MainAdminPage();
+        mainAdminPage.getTopHeaderPage().logout();
     }
 }

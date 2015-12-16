@@ -76,7 +76,7 @@ public class APIOutOfOrdersMethods {
     }
 
     /**
-     * This method allows delete an "out of order"
+     * This method allows deleteWithToken an "out of order"
      * @param displayName
      * @param title
      */
@@ -85,7 +85,7 @@ public class APIOutOfOrdersMethods {
         String serviceId = getServiceId();
         String roomId = dbRoomsMethods.getRoomId(displayName);
         String outOfOrderId = getJsonOfOutOfOrder(displayName, title);
-        apiManager.delete("/services/" + serviceId
+        apiManager.deleteWithToken("/services/" + serviceId
                 + "/rooms/" + roomId + "/out-of-orders/" + outOfOrderId);
     }
 }
