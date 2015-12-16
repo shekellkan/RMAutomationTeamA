@@ -46,7 +46,7 @@ public class APIManager {
     {
         String user = ExternalVariablesManager.getInstance().getAdminUserName();
         String password = ExternalVariablesManager.getInstance().getAdminUserPassword();
-        String response = given().log().all().contentType("application/json").
+        String response = given().contentType("application/json").
                 body("{\"username\":\""+user+"\",\"password\":\""+password+"\",\"authentication\": \"local\"}").
                 when().
                 post("/login").asString();
@@ -59,10 +59,10 @@ public class APIManager {
      * @param endPoint
      */
     public void delete(String endPoint){
-        given().log().all().
+        given().
                 headers("Authorization", "jwt "+getToken()).
                 when().delete(endPoint).
-                then().log().all().
+                then().
                 statusCode(200);
     }
 

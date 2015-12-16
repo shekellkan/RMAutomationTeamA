@@ -27,7 +27,6 @@ public class MongoDBManager {
         }
         return instance;
     }
-
     /**
      * gets a collection from the Data Base
      * @param collectionName
@@ -36,7 +35,6 @@ public class MongoDBManager {
     public MongoCollection getCollection(String collectionName){
         return database.getCollection(collectionName);
     }
-
     /**
      * close the data base connection
      */
@@ -44,7 +42,6 @@ public class MongoDBManager {
         mongoClient.close();
         instance = null;
     }
-
     /**
      * search in the data base with some criteria
      * @param collection
