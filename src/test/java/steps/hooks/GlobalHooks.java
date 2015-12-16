@@ -17,7 +17,11 @@ import org.openqa.selenium.WebDriver;
  * To change this template use File | Settings | File Templates.
  */
 public class GlobalHooks {
-    WebDriver webDriver = DriverManager.getInstance().getWebDriver();
+    private WebDriver webDriver;
+    public GlobalHooks() {
+        webDriver = DriverManager.getInstance().getWebDriver();
+    }
+
     @After
     public void ScreenShot(Scenario scenario) {
         if (scenario.isFailed()) {

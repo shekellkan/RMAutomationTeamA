@@ -1,6 +1,5 @@
 package api;
 
-import com.jayway.restassured.response.Response;
 import db.DBRoomsMethods;
 import org.json.JSONObject;
 
@@ -31,19 +30,18 @@ public class APIRoomsMethods {
     }
 
     /**
-     * This method allows put a room
-     * @param endPoint
-     * @param id
+     * This method allows put a Room
+     * @param roomId
      * @param displayName
-     * @return a JSONObject
+     * @param capacity
      */
-    public JSONObject put(String endPoint,String id, String displayName)
+    public void putRoom(String roomId, String displayName, int capacity)
     {
-        Response response = given().
+        apiManager = APIManager.getInstance();
+        given().
+                contentType("application/json").
                 header("Authorization", "jwt " + apiManager.getToken()).
-                parameters("customDisplayName", displayName).
-                put(endPoint + id);
-        JSONObject jsonObject = new JSONObject(response.asString());
-        return jsonObject;
+                body("{\"customDisplayName\":" +"\"" +displayName+ "\",\"code\":\"\",\"capacity\":"+capacity+"}").
+                put("/rooms/" + roomId);
     }
 }
