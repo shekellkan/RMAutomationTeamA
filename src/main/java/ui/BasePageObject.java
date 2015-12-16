@@ -77,7 +77,7 @@ public abstract class BasePageObject {
     }
 
     /**
-     * return true if the element is displayed after 2 seconds of searching it
+     * return true if the element is displayed after X seconds of searching it
      * @param by
      * @return
      */

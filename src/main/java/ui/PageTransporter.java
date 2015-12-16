@@ -42,7 +42,7 @@ public class PageTransporter {
         return driver.getCurrentUrl();
     }
 
-    public static LoginTabletPage goToLoginTabletPage(){
+    public LoginTabletPage goToLoginTabletPage(){
         goToURL(externalVariablesManager.getLoginTabletURL());
         return new LoginTabletPage();
     }
@@ -70,8 +70,15 @@ public class PageTransporter {
         else
             return false;
     }
+    public boolean imInTheRMATabletPage()
+    {
+        if(getCurrentURL().contains("tablet"))
+            return true;
+        else
+            return false;
+    }
 
-    public static MainTabletPage goToTabletMainPage(){
+    public MainTabletPage goToTabletMainPage(){
         goToURL(externalVariablesManager.getTabletURL());
         return new MainTabletPage();
     }

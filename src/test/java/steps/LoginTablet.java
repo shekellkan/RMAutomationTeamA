@@ -20,24 +20,30 @@ public class LoginTablet {
     String userPasswordTablet;
     String serviceURL;
 
-    @Given("^I'm logged with the user \"([^\"]*)\" in the tablet main page$")
-    public void loggedInWithTheUserInTheTabletMainPage(String userNameTablet){
-        if(!CommonMethods.isURLPresent()){
+    @Given("^I'm logged in the tablet page$")
+    public void loggedInWithTheUserInTheTabletMainPage(){
+
+        PageTransporter pageTransporter = PageTransporter.getInstance();
+        if(!pageTransporter.imInTheRMATabletPage())
+            pageTransporter.goToLoginTabletPage();
+
+        if(!CommonMethods.isUserLoginInTabletPage()){
                 userName = ExternalVariablesManager.getInstance().getTabletUserName();
                 userPasswordTablet = ExternalVariablesManager.getInstance().getTabletUserPassword();
                 serviceURL = ExternalVariablesManager.getInstance().getRoomManagerService();
 
                 loginTabletPage = pageTransporter.goToLoginTabletPage();
                 loginTabletPage.LoginTablet(serviceURL, userName, userPasswordTablet);
-        }else {
+        }
+        else{
             pageTransporter.goToTabletMainPage();
         }
     }
 
     @And("^I select the room \"([^\"]*)\"$")
     public void selectTheRoom(String nameRoom){
-        //if(!CommonMethods.isUserLoginStatusURL()){
+        if(!CommonMethods.isUserLoginInTabletPage()){
             mainTabletPage = loginTabletPage.selectRoom(nameRoom);
-        //}
+        }
     }
 }
