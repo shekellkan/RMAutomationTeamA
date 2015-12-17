@@ -13,7 +13,6 @@ import ui.pages.admin.ConferenceRoomsPage;
 public class ConferenceRoom {
     ResourceEntity resourceEntity;
     ConferenceRoomsPage conferenceRoomsPage;
-
     public ConferenceRoom(ResourceEntity resource)
     {
         resourceEntity = resource;
@@ -24,7 +23,6 @@ public class ConferenceRoom {
     @Then("^the Resource should be displayed as a button in the Conference Room page header$")
     public void theResourceShouldBeDisplayAsAButtonInTheConferenceRoomPageHeader()
     {
-//        conferenceRoomsPage = new ConferenceRoomsPage();
         boolean expectedResult = true;
         Assert.assertEquals(conferenceRoomsPage.isResourceButtonPresent(resourceEntity),expectedResult);
     }
@@ -32,7 +30,6 @@ public class ConferenceRoom {
     @Then("^the Resource should be not displayed as a button in the Conference Room page header$")
     public void theResourceShouldBeNotDisplayAsAButtonInTheConferenceRoomPageHeader()
     {
-//        conferenceRoomsPage = new ConferenceRoomsPage();
         boolean expectedResult = false;
         Assert.assertEquals(conferenceRoomsPage.isResourceButtonPresent(resourceEntity),expectedResult);
     }

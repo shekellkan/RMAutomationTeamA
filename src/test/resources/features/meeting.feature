@@ -54,7 +54,7 @@ Feature: Meetings
     And the Meeting should not be listed in the meetings of Room using the API
 
     Examples:
-      |Organizer |Subject  |From |To   |Attendees         |Body       |Error                   |
+      |Organizer |Subject  |From |To   |Attendees           |Body       |Error                   |
       |          |meeting  |14:00|14:30|test1@forest1.local |Be on Time |Organizer is required   |
-      |JeanCarlo |         |15:00|15:30|                  |Bring Paper|Subject is required     |
-      |Ariel     |planning |16:00|15:30|                  |Bring Paper|Start time must be smaller than end time|
+      |JeanCarlo |         |15:00|15:30|                    |Bring Paper|Subject is required     |
+      |Ariel     |planning |16:00|15:30|                    |Bring Paper|Start time must be smaller than end time|
