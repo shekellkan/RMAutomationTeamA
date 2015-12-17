@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
 import ui.common.CommonMethods;
 
+import java.io.IOException;
+
 
 /**
  * Created by MiguelTerceros on 12/10/2015.
@@ -48,6 +50,8 @@ public class SchedulePage extends BasePageObject {
     WebElement updateButton;
     /************** REQUIRED MESSAGES **************/
     WebElement fieldRequiredMessage;
+    WebElement autoCompleteAttendees;
+    WebElement optionsAttendeesDropdown;
 
     /**
      * This method is the constructor
@@ -140,6 +144,11 @@ public class SchedulePage extends BasePageObject {
     public SchedulePage setAttendeesInput(String attendees){
         attendeesInput.clear();
         attendeesInput.sendKeys(attendees);
+        if(!optionsAttendeesIsDisplayed()){
+            clickAutoCompleteAttendees(meetingEntity.getAttendees());
+        }else{
+            attendeesInput.clear();
+        }
         return this;
     }
 
@@ -239,7 +248,7 @@ public class SchedulePage extends BasePageObject {
      * @return true or false
      */
     public boolean isMessageDisplayed(String nameMessage){
-        messageElement = driver.findElement(By.xpath(CommonMethods.buildMessageElement(nameMessage)));
+        messageElement = driver.findElement(By.xpath(CommonMethods.buildMessageElementLocator(nameMessage)));
         return messageElement.isDisplayed();
     }
 
@@ -303,8 +312,46 @@ public class SchedulePage extends BasePageObject {
         return this;
     }
 
+    /**
+     * obtains the name of meeting in the schedule bar
+     * @param nameMeeting
+     * @return nameMeeting
+     */
     public String getNameMeetingInScheduleBar(String nameMeeting){
         meetingLabel = driver.findElement(By.xpath(buildMeetingDisplay(nameMeeting)));
         return meetingLabel.getText();
+    }
+
+    /**
+     * build the path for an option of the meeting in the search meetings
+     * @param attendees
+     * @return path
+     */
+    public String buildAutoCompleteAttendees(String attendees){
+        return "//div[contains(@class,'angucomplete-description')]/span[contains(@class,'highlight') and contains(text(),'"+attendees+"')]";
+    }
+
+    /**
+     * click in a option of meeting
+     * @param attendees
+     * @return the same instance of SchedulePage
+     */
+    public SchedulePage clickAutoCompleteAttendees(String attendees){
+        autoCompleteAttendees = driver.findElement(By.xpath(buildAutoCompleteAttendees(attendees)));
+        autoCompleteAttendees.click();
+        return this;
+    }
+
+    /**
+     * this method verify that the options of attendees is displayed
+     * @return true or false
+     */
+    public boolean optionsAttendeesIsDisplayed(){
+        optionsAttendeesDropdown = driver.findElement(By.xpath("//div[@id='_dropdown']/div[contains(@ng-bind, 'textNoResults')]"));
+        if(optionsAttendeesDropdown.isDisplayed()){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

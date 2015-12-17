@@ -12,9 +12,9 @@ Feature: Meetings
     And the Meeting information should be displayed in the Next section of Main page
     And the Meeting should be listed in the Meetings of Room using the API
     Examples:
-      | Organizer   | Subject | From  | To    | Attendees         | Body      |
+      | Organizer   | Subject | From  | To    | Attendees           | Body      |
       | Ariel.Rojas | meeting | 17:00 | 17:30 | test1@forest1.local | Important |
-      | miguel      |meeting 2| 17:05 | 17:25 |                   |           |
+      | miguel      |meeting 2| 17:05 | 17:25 |                     |           |
       | JeanCarlo   | .-.-./  | 17:10 | 17:40 | test1@forest1.local |           |
 
   Scenario: Try to create a meeting at the same time than other meeting
@@ -29,7 +29,7 @@ Feature: Meetings
   @removeMeeting
   Scenario: Remove a meeting
     Given I navigate to Available section
-      And I have a Meeting with the following information: "organizer", "meeting API", "15:00", "16:00", "test1@forest1.local", "Important"
+      And I have a Meeting with the following information: "organizer", "meeting API", "15:00", "16:00", "test1@forest1.local", "Important for API"
     When I remove the Meeting
     Then an information message should be displayed "Meeting successfully removed"
       And the meeting should not be displayed in the Schedule bar

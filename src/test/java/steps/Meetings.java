@@ -47,31 +47,31 @@ public class Meetings {
 
     @Then("^an information message should be displayed \"([^\"]*)\"$")
     public void anInformationMessageShouldBeDisplayed(String nameMessage){
-        assertTrue(schedulePage.isMessageDisplayed(nameMessage));
+        assertTrue(schedulePage.isMessageDisplayed(nameMessage), "confirmation message is displayed");
     }
 
     @And("^the Meeting should be displayed in the Schedule bar$")
     public void theMeetingShouldBeDisplayedInTheScheduleBar(){
         String nameMeeting = meetingEntity.getSubject();
-        assertTrue(schedulePage.isMeetingDisplayed(nameMeeting));
-        assertEquals(meetingEntity.getSubject(), schedulePage.getNameMeetingInScheduleBar(nameMeeting));
+        assertTrue(schedulePage.isMeetingDisplayed(nameMeeting), "meeting is displayed in schedule bar");
+        assertEquals(meetingEntity.getSubject(), schedulePage.getNameMeetingInScheduleBar(nameMeeting), "nameMeeting is equal to meeting schedule bar");
     }
 
     @And("^the Meeting information should be displayed in the Next section of Main page$")
     public void theMeetingInformationShouldBeDisplayedInTheNextSection(){
         mainTabletPage = schedulePage.goMainPage();
         String nameMeeting = meetingEntity.getSubject();
-        assertTrue(mainTabletPage.isMeetingPresent(nameMeeting));
-        assertTrue(mainTabletPage.isMeetingPresentInNextSection(nameMeeting));
-        assertEquals(nameMeeting, mainTabletPage.getNameMeetingInNextSection(nameMeeting));
+        assertTrue(mainTabletPage.isMeetingPresent(nameMeeting), "meeting is present in main page");
+        assertTrue(mainTabletPage.isMeetingPresentInNextSection(nameMeeting), "meeting is present in next section");
+        assertEquals(nameMeeting, mainTabletPage.getNameMeetingInNextSection(nameMeeting), "nameMeeting is equal to nameMeeting in next section");
     }
 
     @And("^the Meeting should be listed in the Meetings of Room using the API$")
     public void theMeetingShouldBeListedInTheMeetingsOfRoomUsingTheAPI(){
         String nameRoom = mainTabletPage.getMainTitle();
         String nameMeeting = meetingEntity.getSubject();
-        assertEquals(nameRoom, apiMeetingMethods.getMeetingValues(nameMeeting, "location", nameRoom));
-        assertEquals(nameMeeting, apiMeetingMethods.getMeetingValues(nameMeeting, "title", nameRoom));
+        assertEquals(nameRoom, apiMeetingMethods.getMeetingValues(nameMeeting, "location", nameRoom), "nameRoom is equal to nameRoom in meeting");
+        assertEquals(nameMeeting, apiMeetingMethods.getMeetingValues(nameMeeting, "title", nameRoom), "nameMeeting is equal to title meeting");
     }
 
     @When("^I create other Meeting with the following information: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
@@ -83,24 +83,24 @@ public class Meetings {
 
     @Then("^an error message should be displayed$")
     public void anErrorMessageShouldBeDisplayed(){
-        assertTrue(credentialsPage.isConflictMessageDisplayed());
+        assertTrue(credentialsPage.isConflictMessageDisplayed(), "error message is displayed");
         schedulePage = credentialsPage.clickCancelButton();
     }
 
     @And("^the second Meeting should not be displayed in the Schedule bar$")
     public void theSecondMeetingShouldNotBeDisplayedInTheScheduleBar(){
-        assertFalse(schedulePage.isMeetingDisplayed(meetingEntity2.getSubject()));
+        assertFalse(schedulePage.isMeetingDisplayed(meetingEntity2.getSubject()), "the second meeting is not present in schedule bar");
     }
 
     @And("^the second Meeting information should not be displayed in the Next section$")
     public void theSecondMeetingInformationShouldNotBeDisplayedInTheNextSection(){
         mainTabletPage = schedulePage.goMainPage();
-        assertFalse(mainTabletPage.isMeetingPresent(meetingEntity2.getSubject()));
+        assertFalse(mainTabletPage.isMeetingPresent(meetingEntity2.getSubject()), "the second meeting is not present in next section in main page");
     }
 
     @And("^the second Meeting should not be listed in the Meetings of Room using the API$")
     public void theSecondMeetingShouldNotBeListedInTheMeetingsOfRoomUsingTheAPI(){
-        assertFalse(apiMeetingMethods.isMeetingPresent(meetingEntity2.getSubject(),"title", mainTabletPage.getMainTitle()));
+        assertFalse(apiMeetingMethods.isMeetingPresent(meetingEntity2.getSubject(),"title", mainTabletPage.getMainTitle()), "the second meeting is not listed in the api");
     }
 
     @When("^I remove the Meeting$")
@@ -111,13 +111,13 @@ public class Meetings {
 
     @And("^the meeting should not be displayed in the Schedule bar$")
     public void theMeetingShouldBeRemovedFromTheTheScheduleBar(){
-        assertFalse(schedulePage.isMeetingDisplayed(meetingEntity.getSubject()));
+        assertFalse(schedulePage.isMeetingDisplayed(meetingEntity.getSubject()), "the meeting is removed from the schedule bar");
     }
 
     @And("^the meeting information should not be displayed in the Next section of Main page$")
     public void theMeetingInformationShouldBeRemovedFromTheNextSection(){
         mainTabletPage = schedulePage.goMainPage();
-        assertFalse(mainTabletPage.isMeetingPresent(meetingEntity.getSubject()));
+        assertFalse(mainTabletPage.isMeetingPresent(meetingEntity.getSubject()), "the meeting is removed from the next section of main page");
     }
 
     @When("^I update the meeting information: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
@@ -137,19 +137,19 @@ public class Meetings {
 
     @Then("^an error \"([^\"]*)\" message should be displayed$")
     public void anErrorMessageShouldBeDisplayed(String nameError){
-        assertTrue(schedulePage.isRequiredMessageDisplayed(nameError));
+        assertTrue(schedulePage.isRequiredMessageDisplayed(nameError), "an error message should be displayed");
     }
 
     @And("^the Meeting should not be listed in the meetings of Room using the API$")
     public void theMeetingShouldNotBeListedInTheMeetingsOfRoomUsingTheAPI(){
-        assertFalse(apiMeetingMethods.isMeetingPresent(meetingEntity.getSubject(),"title", mainTabletPage.getMainTitle()));
+        assertFalse(apiMeetingMethods.isMeetingPresent(meetingEntity.getSubject(),"title", mainTabletPage.getMainTitle()), "the meeting not should be listed using api");
     }
 
     @And("^I have a Meeting with the following information: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void iHaveAMeetingWithTheFollowingInformation(String organizer, String subject, String from, String to, String attendees, String body){
         String administrator = externalVariablesManager.getExchangeUserName();
         meetingEntity.setAllFields(administrator, subject, from, to, attendees, body);
-        apiMeetingMethods.createMeeting(meetingEntity, roomEntity.getDisplayName());
+        apiMeetingMethods.createMeeting(meetingEntity, roomEntity);
     }
 
     @After(value = "@Meetings")

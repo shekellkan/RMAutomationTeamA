@@ -3,6 +3,7 @@ package api;
 import Framework.ExternalVariablesManager;
 import db.MongoDBManager;
 import entities.MeetingEntity;
+import entities.RoomEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.text.SimpleDateFormat;
@@ -98,9 +99,9 @@ public class APIMeetingMethods {
     /**
      * this method create a meeting
      * @param meeting
-     * @param roomName
+     * @param room
      */
-    public void createMeeting(MeetingEntity meeting, String roomName){
+    public void createMeeting(MeetingEntity meeting, RoomEntity room){
         SimpleDateFormat current= new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String currentDate = current.format(date);
@@ -111,12 +112,12 @@ public class APIMeetingMethods {
         test.put("title", meeting.getSubject());
         test.put("start", currentDate+"T"+changeHour(meeting.getFrom())+":00.000Z");
         test.put("end", currentDate+"T"+changeHour(meeting.getTo())+":00.000Z");
-        test.put("location", roomName);
-        test.put("roomEmail", roomName+"@forest1.local");
-        test.put("resources", new JSONArray().put(roomName+"@forest1.local"));
+        test.put("location", room.getDisplayName());
+        test.put("roomEmail", room.getDisplayName()+"@forest1.local");
+        test.put("resources", new JSONArray().put(room.getDisplayName()+"@forest1.local"));
         test.put("attendees", new JSONArray().put(meeting.getAttendees()));
 
-        String createEndPoint = buildEndPointForCreate(roomName);
+        String createEndPoint = buildEndPointForCreate(room.getDisplayName());
         apiManager.postMeeting(test, createEndPoint, userAuthentication);
     }
 

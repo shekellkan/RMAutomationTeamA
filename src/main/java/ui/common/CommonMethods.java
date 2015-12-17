@@ -58,7 +58,7 @@ public class CommonMethods {
         }
     }
 
-    public static String buildMessageElement(String nameMessage){
+    public static String buildMessageElementLocator(String nameMessage){
         return "//div[contains(text(),'"+nameMessage+"')]";
     }
 
