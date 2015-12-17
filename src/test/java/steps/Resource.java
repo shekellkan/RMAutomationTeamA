@@ -13,7 +13,6 @@ import org.testng.Assert;
 import ui.common.CommonMethods;
 import ui.pages.admin.MainAdminPage;
 import ui.pages.admin.ResourceAssociationPage;
-import ui.pages.admin.ResourceInfoPage;
 import ui.pages.admin.ResourcesPage;
 
 import java.util.ArrayList;

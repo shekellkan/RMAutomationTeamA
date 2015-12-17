@@ -12,25 +12,34 @@ import ui.pages.admin.LoginAdminPage;
  * Time: 8:34 PM
  */
 public class LoginAdmin {
+    private static PageTransporter pageTransporter;
 
-    @Given("^I'm logged in with the user \"([^\\\"]*)\" in the admin page$")
-    public void imLoggedInWithTheUSer(String userName){
+    public LoginAdmin() {
+        pageTransporter = PageTransporter.getInstance();
+    }
 
-        PageTransporter pageTransporter = PageTransporter.getInstance();
-        if(!pageTransporter.imInTheRMAdminPage())
-            pageTransporter.goToLoginAdminPage();
+    @Given("^I'm logged in the admin page$")
+    public void imLoggedInWithTheUSer(){
 
-        if(!CommonMethods.isUserLoginInAdminPage())
-        {
-            LoginAdminPage loginAdminPage = new LoginAdminPage();
-            String user = ExternalVariablesManager.getInstance().getAdminUserName();
-            String password = ExternalVariablesManager.getInstance().getAdminUserPassword();
-
-            if(userName.equalsIgnoreCase("admin")){
-                loginAdminPage.loginSuccessful(user, password);
-            }
+        if (pageTransporter.imInTheRMATabletPage()){
+            loginInAdminPage();
         }else{
-            pageTransporter.goToAdminMainPage();
+            if(CommonMethods.isUserLoginInAdminPage()){
+                pageTransporter.goToAdminMainPage();
+            }else{
+                loginInAdminPage();
+            }
         }
+    }
+
+    /**
+     * go to login admin page and then log in
+     */
+    public void loginInAdminPage(){
+
+        LoginAdminPage loginAdminPage = pageTransporter.goToLoginAdminPage();
+        String user = ExternalVariablesManager.getInstance().getAdminUserName();
+        String password = ExternalVariablesManager.getInstance().getAdminUserPassword();
+        loginAdminPage.loginSuccessful(user, password);
     }
 }
