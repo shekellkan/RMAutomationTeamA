@@ -122,7 +122,7 @@ public class Resource {
                 .goToAssociationTab();
         boolean actualResult =resourceAssociationPage.isResourceAssociatedWithTheRoom(roomEntity);
 
-        Assert.assertEquals(actualResult,false, "");
+        Assert.assertEquals(actualResult,false, "the resource shows no association in the Resource Association Tab");
         resourceAssociationPage.clickOnCloseButton();
         //Walk around
         mainAdminPage.getLeftMenuPage().goToLocations();
