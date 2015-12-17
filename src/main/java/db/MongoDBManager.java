@@ -15,9 +15,11 @@ import static com.mongodb.client.model.Filters.eq;
  * Time: 11:13 AM
  */
 public class MongoDBManager {
+
     private static MongoDBManager instance;
     private static MongoClient mongoClient;
     private static MongoDatabase database;
+
     public static MongoDBManager getInstance(){
         if(instance==null)
         {
@@ -27,8 +29,9 @@ public class MongoDBManager {
         }
         return instance;
     }
+
     /**
-     * gets a collection from the Data Base
+     * Gets a collection from the Data Base
      * @param collectionName
      * @return
      */
@@ -42,8 +45,9 @@ public class MongoDBManager {
         mongoClient.close();
         instance = null;
     }
+
     /**
-     * search in the data base with some criteria
+     * Search in the data base with some criteria
      * @param collection
      * @param field
      * @param criteria
@@ -52,8 +56,8 @@ public class MongoDBManager {
     public ArrayList<String> likeFilterByCriteria(String collection, String field,String criteria) {
         final String fieldName = field;
         final ArrayList<String> list = new ArrayList<String>();
-        MongoCollection<Document> roomsCollation = MongoDBManager.getInstance().getCollection(collection);
-        FindIterable<Document> rooms = roomsCollation
+        MongoCollection<Document> documentsCollation = MongoDBManager.getInstance().getCollection(collection);
+        FindIterable<Document> rooms = documentsCollation
                 .find(new Document(fieldName, new BasicDBObject("$regex", criteria)));
         rooms.forEach(new Block<Document>() {
             @Override
@@ -63,18 +67,19 @@ public class MongoDBManager {
         });
         return list;
     }
+
     /**
      * This method allows get Id
-     * @param collation
+     * @param collection
      * @param findBy
      * @param value
      * @return a String
      */
-    public String getId(String collation, String findBy, String value) {
+    public String getId(String collection, String findBy, String value) {
         final Document[] idObject = new Document[1];
         String id;
-        MongoCollection<Document> roomsCollation = MongoDBManager.getInstance().getCollection(collation);
-        FindIterable<Document> idList = roomsCollation.find(eq(findBy, value));
+        MongoCollection<Document> roomsCollection = MongoDBManager.getInstance().getCollection(collection);
+        FindIterable<Document> idList = roomsCollection.find(eq(findBy, value));
         idList.forEach(new Block<Document>() {
             @Override
             public void apply(Document document) {

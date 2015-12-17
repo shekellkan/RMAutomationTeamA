@@ -13,23 +13,15 @@ import static java.util.Arrays.asList;
  * Time: 11:05 AM
  */
 public class DBRoomsMethods {
+
     MongoDBManager mongoDBManager;
     final static Logger logger = Logger.getLogger(DBRoomsMethods.class);
+
     public DBRoomsMethods() {
         logger.info("Using DBRoomsMethods");
         mongoDBManager = MongoDBManager.getInstance();
     }
-    /**
-     * This method allows filter rooms by a criteria
-     * @param field
-     * @param criteria
-     * @return an ArrayList of strings
-     */
-    public ArrayList<String> likeFilterByCriteria(String field, String criteria) {
-        ArrayList<String> roomsList = mongoDBManager.likeFilterByCriteria("rooms",field,criteria);
-        mongoDBManager.close();
-        return roomsList;
-    }
+
     /**
      * This method allows filter rooms by a criteria
      * @param criteria
@@ -52,6 +44,7 @@ public class DBRoomsMethods {
         mongoDBManager.close();
         return roomsList;
     }
+
     /**
      * This method allows get room id using the displayName
      * @param value
