@@ -5,8 +5,6 @@ import org.openqa.selenium.interactions.Actions;
 import ui.PageTransporter;
 import ui.pages.admin.MainAdminPage;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Jean Carlo Rodriguez
@@ -15,6 +13,8 @@ import java.util.concurrent.TimeUnit;
  * To change this template use File | Settings | File Templates.
  */
 public class CommonMethods {
+    private static PageTransporter pageTransporter = PageTransporter.getInstance();
+
     /**
      * this methods execute a javascript to high light a web element
      * @param element
@@ -41,42 +41,24 @@ public class CommonMethods {
      * this methods return true if the user is login in the admin page
      * @return
      */
-    public static boolean isUserLoginInAdminPage()
-    {
-        if(PageTransporter.getInstance().imInTheLoginAdminPage()){
+    public static boolean isUserLoginInAdminPage(){
+        if(pageTransporter.imInTheRMAdminPage()){
+            return !pageTransporter.imInTheLoginAdminPage();
+        }else
             return false;
-        }else{
-            return true;
-        }
     }
 
 
     public static boolean isUserLoginInTabletPage(){
-        PageTransporter pageTransporter = PageTransporter.getInstance();
-        if(pageTransporter.imInTheLoginTabletPage() || pageTransporter.imInTheLoginTabletPageStatus()){
-            return false;
-        }else{
-            return true;
+        if(pageTransporter.imInTheRMATabletPage()){
+            return !(pageTransporter.imInTheLoginTabletPage() || pageTransporter.imInTheLoginTabletPageStatus());
         }
-    }
-
-    public static boolean isUserLoginStatusURL(){
-        if(PageTransporter.getInstance().imInTheLoginTabletPageStatus()){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-    public static boolean isURLPresent(){
-        if (PageTransporter.getInstance().getCurrentURL().isEmpty()){
-            return true;
-        }else {
+        else{
             return false;
         }
     }
 
-    public static String buildMessageElement(String nameMessage){
+     public static String buildMessageElement(String nameMessage){
         return "//div[contains(text(),'"+nameMessage+"')]";
     }
 
@@ -90,10 +72,12 @@ public class CommonMethods {
     }
 
     /**
-     * logout from Admin page
+     * if the user is logged in the Admin page then logout from Admin page
      */
     public static void logoutFromAdminPage() {
-        MainAdminPage mainAdminPage = new MainAdminPage();
-        mainAdminPage.getTopHeaderPage().logout();
+        if (pageTransporter.imInTheRMAdminPage() && !pageTransporter.imInTheLoginAdminPage()){
+            MainAdminPage mainAdminPage = new MainAdminPage();
+            mainAdminPage.getTopHeaderPage().logout();
+        }
     }
 }

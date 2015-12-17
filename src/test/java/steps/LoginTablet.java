@@ -15,7 +15,7 @@ import ui.pages.tablet.MainTabletPage;
  */
 public class LoginTablet {
     LoginTabletPage loginTabletPage;
-    PageTransporter pageTransporter = PageTransporter.getInstance();
+    private static PageTransporter pageTransporter;
     MainTabletPage mainTabletPage;
     String userName;
     String userPasswordTablet;
@@ -24,30 +24,33 @@ public class LoginTablet {
 
     public LoginTablet(RoomEntity roomEntity){
         this.roomEntity = roomEntity;
+        pageTransporter = PageTransporter.getInstance();
     }
 
     @Given("^I'm logged in the tablet page$")
     public void loggedInWithTheUserInTheTabletMainPage(){
-
-        PageTransporter pageTransporter = PageTransporter.getInstance();
-        if(CommonMethods.isUserLoginInAdminPage()){
+        if (pageTransporter.imInTheRMAdminPage()){
             CommonMethods.logoutFromAdminPage();
+            loginInTabletPage();
+        }else{
+            if(CommonMethods.isUserLoginInTabletPage()){
+                pageTransporter.goToTabletMainPage();
+            }else{
+                loginInTabletPage();
+            }
         }
+    }
 
-        if(!pageTransporter.imInTheRMATabletPage())
-            pageTransporter.goToLoginTabletPage();
+    /**
+     * Go to login tablet page and then log in
+     */
+    private void loginInTabletPage() {
+        userName = ExternalVariablesManager.getInstance().getTabletUserName();
+        userPasswordTablet = ExternalVariablesManager.getInstance().getTabletUserPassword();
+        serviceURL = ExternalVariablesManager.getInstance().getRoomManagerService();
 
-        if(!CommonMethods.isUserLoginInTabletPage()){
-                userName = ExternalVariablesManager.getInstance().getTabletUserName();
-                userPasswordTablet = ExternalVariablesManager.getInstance().getTabletUserPassword();
-                serviceURL = ExternalVariablesManager.getInstance().getRoomManagerService();
-
-                loginTabletPage = pageTransporter.goToLoginTabletPage();
-                loginTabletPage.LoginTablet(serviceURL, userName, userPasswordTablet);
-        }
-        else{
-            pageTransporter.goToTabletMainPage();
-        }
+        loginTabletPage = pageTransporter.goToLoginTabletPage();
+        loginTabletPage.LoginTablet(serviceURL, userName, userPasswordTablet);
     }
 
     @And("^I select the room \"([^\"]*)\"$")
