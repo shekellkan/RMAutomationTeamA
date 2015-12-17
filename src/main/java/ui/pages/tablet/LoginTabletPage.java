@@ -26,6 +26,9 @@ public class LoginTabletPage extends BasePageObject{
     @FindBy(xpath = "//div[contains(@form,'account-register-for')]//span[contains(text(),'Sign In')]")
     WebElement singInButton;
 
+    @FindBy(xpath = "//i[@ng-show = 'login.form.serviceUrl.$valid']")
+    WebElement serviceURLValidIcon;
+
     WebElement listRoomSelect;
     WebElement startNowButton;
     WebElement searchRoomInput;
@@ -51,6 +54,7 @@ public class LoginTabletPage extends BasePageObject{
     public LoginTabletPage setServiceURL(String serviceURL){
         serviceURLInput.clear();
         serviceURLInput.sendKeys(serviceURL);
+        wait.until(ExpectedConditions.visibilityOf(serviceURLValidIcon));
         return this;
     }
 
