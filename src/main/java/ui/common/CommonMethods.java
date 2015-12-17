@@ -5,8 +5,6 @@ import org.openqa.selenium.interactions.Actions;
 import ui.PageTransporter;
 import ui.pages.admin.MainAdminPage;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Jean Carlo Rodriguez
@@ -43,8 +41,7 @@ public class CommonMethods {
      * this methods return true if the user is login in the admin page
      * @return
      */
-    public static boolean isUserLoginInAdminPage()
-    {
+    public static boolean isUserLoginInAdminPage(){
         if(pageTransporter.imInTheRMAdminPage()){
             return !pageTransporter.imInTheLoginAdminPage();
         }else
@@ -53,7 +50,6 @@ public class CommonMethods {
 
 
     public static boolean isUserLoginInTabletPage(){
-
         if(pageTransporter.imInTheRMATabletPage()){
             return !(pageTransporter.imInTheLoginTabletPage() || pageTransporter.imInTheLoginTabletPageStatus());
         }

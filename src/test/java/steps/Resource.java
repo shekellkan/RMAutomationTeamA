@@ -152,8 +152,7 @@ public class Resource {
     }
 
     @And("^the Resource assigned to the Room should be obtained using the API$")
-    public void theResourceAssignedToTheRoomShouldBeObtainedUsingTheAPI()
-    {
+    public void theResourceAssignedToTheRoomShouldBeObtainedUsingTheAPI(){
         APIResourcesMethods apiResourcesMethods = new APIResourcesMethods();
         boolean actualResult = apiResourcesMethods.isResourceAssociatedToTheRoom(roomEntity,resourceEntity);
         Assert.assertEquals(actualResult,true, "the resources is associated to the room?");

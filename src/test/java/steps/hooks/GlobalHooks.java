@@ -22,7 +22,7 @@ public class GlobalHooks {
         webDriver = DriverManager.getInstance().getWebDriver();
     }
 
-    @After(order = 999)
+    @After(order = 10000)
     public void ScreenShot(Scenario scenario) {
         if (scenario.isFailed()) {
             // Take a screenShot...
