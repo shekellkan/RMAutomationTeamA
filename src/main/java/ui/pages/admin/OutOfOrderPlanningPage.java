@@ -72,6 +72,8 @@ public class OutOfOrderPlanningPage extends RoomMenuPage {
         int hourExpectStart = Integer.parseInt(hourStart);
         int hourActualEnd = Integer.parseInt(getHourActualEnd());
         int hourExpectEnd = Integer.parseInt(hourEnd);
+
+        //Set Start
         while(hourActualStart != hourExpectStart) {
             if(hourExpectStart > hourActualStart ) {
                 if(!(getStateMeridianStart().equals(meridian))) {
@@ -121,6 +123,8 @@ public class OutOfOrderPlanningPage extends RoomMenuPage {
                 }
             }
         }
+
+
         if(!(getStateMeridianStart().equals(meridian))) {
             stateMeridianStartButton.click();
         }

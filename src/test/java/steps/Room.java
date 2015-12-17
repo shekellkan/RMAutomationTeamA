@@ -128,7 +128,7 @@ public class Room {
 
     @And("^should display an icon on the Out Of Order column$")
     public void displayIconOnTheOutOfOrderColumn() {
-        Assert.assertTrue(conferenceRoomsPage.isPresentOutOfOrderIcon());
+        Assert.assertTrue(conferenceRoomsPage.isPresentOutOfOrderIcon(), "aumentar");
     }
 
     @And("^the Out Of Order state should be obtained using the API$")

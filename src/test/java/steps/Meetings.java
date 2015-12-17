@@ -152,7 +152,7 @@ public class Meetings {
         apiMeetingMethods.createMeeting(meetingEntity, roomEntity.getDisplayName());
     }
 
-    @After(value = "@Meetings", order = 999)
+    @After(value = "@Meetings")
     public void afterMeetingScenario(){
         apiMeetingMethods.deleteMeeting(mainTabletPage.getMainTitle(), meetingEntity.getSubject());
     }

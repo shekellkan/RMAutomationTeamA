@@ -34,12 +34,13 @@ public class RunCukesTest  extends AbstractTestNGCucumberTests {
     @BeforeTest
     public void beforeTest(){
         logger.info("Test Start!!!!!");
-        System.out.println("Before all the execution");
     }
 
     @AfterTest
     public void afterExecution() {
         FeatureHooks.executeAfterHookMethod();
+
+
         if (CommonMethods.isUserLoginInAdminPage())
             CommonMethods.logoutFromAdminPage();
         try {

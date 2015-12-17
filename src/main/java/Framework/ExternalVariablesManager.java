@@ -6,6 +6,9 @@ package Framework;
 public class ExternalVariablesManager {
 
     private String browserName;
+
+
+    private String envId;
     private String adminURL;
     private String mainAdminURL;
     private String adminUserName;
@@ -18,14 +21,13 @@ public class ExternalVariablesManager {
 
     private String exchangeUserName;
     private String exchangeUserPassword;
-
-    private String envId;
     private String roomManagerService;
+    private String authenticationExchange;
+    private String roomManagerIP;
 
     private JsonReader jsonReader;
     private static ExternalVariablesManager instance;
-    private String authenticationExchange;
-    private String roomManagerIP;
+
 
     /**
      * construct of the class ExternalVariablesManager

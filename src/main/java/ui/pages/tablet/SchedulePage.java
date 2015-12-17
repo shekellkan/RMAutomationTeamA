@@ -239,7 +239,7 @@ public class SchedulePage extends BasePageObject {
      * @return true or false
      */
     public boolean isMessageDisplayed(String nameMessage){
-        messageElement = driver.findElement(By.xpath(CommonMethods.buildMessageElement(nameMessage)));
+        messageElement = driver.findElement(By.xpath(CommonMethods.buildMessageElementLocator(nameMessage)));
         return messageElement.isDisplayed();
     }
 

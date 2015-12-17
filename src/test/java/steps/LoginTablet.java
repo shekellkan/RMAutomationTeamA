@@ -38,12 +38,12 @@ public class LoginTablet {
             pageTransporter.goToLoginTabletPage();
 
         if(!CommonMethods.isUserLoginInTabletPage()){
-                userName = ExternalVariablesManager.getInstance().getTabletUserName();
-                userPasswordTablet = ExternalVariablesManager.getInstance().getTabletUserPassword();
-                serviceURL = ExternalVariablesManager.getInstance().getRoomManagerService();
+            userName = ExternalVariablesManager.getInstance().getTabletUserName();
+            userPasswordTablet = ExternalVariablesManager.getInstance().getTabletUserPassword();
+            serviceURL = ExternalVariablesManager.getInstance().getRoomManagerService();
 
-                loginTabletPage = pageTransporter.goToLoginTabletPage();
-                loginTabletPage.LoginTablet(serviceURL, userName, userPasswordTablet);
+            loginTabletPage = pageTransporter.goToLoginTabletPage();
+            loginTabletPage.LoginTablet(serviceURL, userName, userPasswordTablet);
         }
         else{
             pageTransporter.goToTabletMainPage();

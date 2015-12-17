@@ -32,7 +32,7 @@ public class MongoDBManager {
      * @param collectionName
      * @return
      */
-    public MongoCollection getCollection(String collectionName){
+    public MongoCollection getCollection(String collectionName) {
         return database.getCollection(collectionName);
     }
     /**
@@ -43,7 +43,7 @@ public class MongoDBManager {
         instance = null;
     }
     /**
-     * search in the data base with some criteria
+     * Search in the data base with some criteria
      * @param collection
      * @param field
      * @param criteria

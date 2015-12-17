@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit;
  * To change this template use File | Settings | File Templates.
  */
 public class CommonMethods {
+
+
     /**
      * this methods execute a javascript to high light a web element
      * @param element
@@ -31,6 +33,7 @@ public class CommonMethods {
                     element, "");
         }
     }
+
     public static void doubleClick(WebElement webElement) {
         Actions action = new Actions(DriverManager.getInstance().getWebDriver());
         action.doubleClick(webElement);
@@ -76,7 +79,7 @@ public class CommonMethods {
         }
     }
 
-    public static String buildMessageElement(String nameMessage){
+    public static String buildMessageElementLocator (String nameMessage){
         return "//div[contains(text(),'"+nameMessage+"')]";
     }
 
