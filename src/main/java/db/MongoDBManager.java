@@ -53,11 +53,11 @@ public class MongoDBManager {
      * @param criteria
      * @return
      */
-    public ArrayList<String> likeFilterByCriteria(String collection, String field,String criteria) {
+    public ArrayList<String> filterByCriteria(String collection, String field, String criteria) {
         final String fieldName = field;
         final ArrayList<String> list = new ArrayList<String>();
-        MongoCollection<Document> documentsCollation = MongoDBManager.getInstance().getCollection(collection);
-        FindIterable<Document> rooms = documentsCollation
+        MongoCollection<Document> documentsCollection = getCollection(collection);
+        FindIterable<Document> rooms = documentsCollection
                 .find(new Document(fieldName, new BasicDBObject("$regex", criteria)));
         rooms.forEach(new Block<Document>() {
             @Override
@@ -78,7 +78,7 @@ public class MongoDBManager {
     public String getId(String collection, String findBy, String value) {
         final Document[] idObject = new Document[1];
         String id;
-        MongoCollection<Document> roomsCollection = MongoDBManager.getInstance().getCollection(collection);
+        MongoCollection<Document> roomsCollection = getCollection(collection);
         FindIterable<Document> idList = roomsCollection.find(eq(findBy, value));
         idList.forEach(new Block<Document>() {
             @Override

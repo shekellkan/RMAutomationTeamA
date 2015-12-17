@@ -25,7 +25,7 @@ public class DBResourcesMethods {
      * @return a string array
      */
     public ArrayList<String> likeFilterByCriteria(String field, String criteria) {
-        ArrayList<String> resourceList =  mongoDBManager.likeFilterByCriteria("resourcemodels",field,criteria);
+        ArrayList<String> resourceList =  mongoDBManager.filterByCriteria("resourcemodels",field,criteria);
         mongoDBManager.close();
         return resourceList;
     }
