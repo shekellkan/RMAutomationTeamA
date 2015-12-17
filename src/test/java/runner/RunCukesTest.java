@@ -40,8 +40,7 @@ public class RunCukesTest  extends AbstractTestNGCucumberTests {
     @AfterTest
     public void afterExecution() {
         FeatureHooks.executeAfterHookMethod();
-        if (CommonMethods.isUserLoginInAdminPage())
-            CommonMethods.logoutFromAdminPage();
+        CommonMethods.logoutFromAdminPage();
         try {
             DriverManager.getInstance().quit();
         } catch (Exception e) {

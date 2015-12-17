@@ -1,7 +1,7 @@
 @Rooms
 Feature: Rooms
   Background:
-    Given I'm logged in with the user "admin" in the admin page
+    Given I'm logged in the admin page
       And I go to Conference Rooms page
 
   @Room

@@ -3,7 +3,7 @@ Feature: allocate resource
   allocate resource to room, remove resources of room
 
   Background:
-    Given I'm logged in with the user "admin" in the admin page
+    Given I'm logged in the admin page
 
   @createResource
   Scenario: Allocate resource to room
